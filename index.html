@@ -38,7 +38,7 @@
     background-color:#cfe6f8;
     background-image:var(--veil),url('c922469b42fc459a26f6d155a0ef1cb96498967a45143cb9e0230a23c3e7d101.png');
     background-size:cover,cover;
-    background-position:center,center;
+    background-position:center center,44% center;
     background-repeat:no-repeat,no-repeat;
     background-attachment:fixed,fixed;
     -webkit-font-smoothing:antialiased;
@@ -59,11 +59,8 @@
   .bar{display:flex;align-items:center;gap:18px;height:58px}
   .logo{display:flex;align-items:center;gap:7px;font-size:17px;font-weight:700;letter-spacing:-.2px;white-space:nowrap}
   .logo .mark{color:var(--brand);font-size:17px}
-  .menu{display:flex;gap:20px;flex:1}
-  .menu a{color:var(--ink-2);font-size:14px;transition:color .16s}
-  .menu a:hover{color:var(--brand)}
   .search{
-    display:flex;align-items:center;gap:8px;width:280px;
+    display:flex;align-items:center;gap:8px;flex:1;max-width:420px;margin:0 auto;
     background:var(--panel);border:1px solid var(--panel-brd);border-radius:var(--radius-sm);
     padding:0 12px;height:36px;transition:border-color .16s,background .16s;
   }
@@ -87,7 +84,7 @@
   .btn-up:hover{background:color-mix(in srgb,var(--brand) 86%,#000)}
 
   /* ============ Banner ============ */
-  .banner{padding:64px 0 34px;position:relative;z-index:1}
+  .banner{padding:104px 0 108px;position:relative;z-index:1}
   .banner-inner{
     display:flex;align-items:flex-end;justify-content:space-between;gap:30px;flex-wrap:wrap;
   }
@@ -243,18 +240,58 @@
   footer .fnav a:hover{color:var(--brand)}
 
   @media(max-width:820px){
-    .menu{display:none}
-    .search{width:auto;flex:1;min-width:0}
+    .search{max-width:none;min-width:0}
     .bar{gap:12px}
   }
   @media(max-width:520px){
-    .banner{padding:44px 0 26px}
+    .banner{padding:64px 0 40px}
     .banner-inner{align-items:flex-start}
     .btn-up{display:none}
     section{padding:26px 16px 4px}
     .cats{padding:13px 16px}
     .pgrid,.vgrid{grid-template-columns:1fr;gap:18px}
     footer{padding:18px 16px}
+  }
+
+  /* ============ 桌宠 ============ */
+  .pet{position:fixed;right:16px;bottom:0;width:196px;z-index:55;
+    user-select:none;-webkit-user-select:none;touch-action:none}
+  .pet-inner{position:relative;cursor:grab}
+  .pet.dragging .pet-inner{cursor:grabbing}
+  .pet img{width:100%;height:auto;display:block;
+    filter:drop-shadow(0 8px 16px rgba(16,44,80,.35));
+    -webkit-mask-image:linear-gradient(to bottom,#000 88%,transparent 100%);
+    mask-image:linear-gradient(to bottom,#000 88%,transparent 100%);
+    animation:petBob 4.2s ease-in-out infinite}
+  .pet.dragging img{animation:none}
+  @keyframes petBob{
+    0%,100%{transform:translateY(0) rotate(-1.2deg)}
+    50%{transform:translateY(-9px) rotate(1.2deg)}
+  }
+  .pet .bubble{
+    position:absolute;bottom:calc(100% + 2px);left:50%;
+    transform:translateX(-50%) translateY(5px) scale(.94);transform-origin:bottom center;
+    background:#fff;color:#1b1d22;font-size:12px;line-height:1.5;font-weight:500;
+    padding:7px 12px;border-radius:12px;white-space:nowrap;
+    box-shadow:0 8px 22px rgba(16,44,80,.22);opacity:0;pointer-events:none;
+    transition:opacity .22s,transform .22s;
+  }
+  .pet .bubble.on{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
+  .pet .bubble::after{content:"";position:absolute;top:100%;left:50%;margin-left:-5px;
+    border:5px solid transparent;border-top-color:#fff}
+  [data-theme="dark"] .pet .bubble{background:#22262e;color:#e9ecf1}
+  [data-theme="dark"] .pet .bubble::after{border-top-color:#22262e}
+  @media(max-width:640px){
+    .pet{width:150px;right:8px}
+    .pet img{animation:none}
+    .pet .bubble{font-size:11px;padding:6px 10px}
+  }
+  @media(max-width:430px){
+    .pet{width:112px;right:6px}
+    .pet .bubble{font-size:10px;padding:5px 9px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .pet img{animation:none}
   }
 </style>
 </head>
@@ -264,11 +301,6 @@
 <header class="topbar">
   <div class="wrap bar">
     <a class="logo" href="#top"><span class="mark">✦</span><span id="navName">ATRI 的小站</span></a>
-    <nav class="menu">
-      <a href="#projects">项目</a>
-      <a href="#videos">视频</a>
-      <a href="#links">链接</a>
-    </nav>
     <div class="search">
       <span class="si">🔍</span>
       <input id="q" type="search" placeholder="搜索项目 / 视频…" autocomplete="off" />
@@ -342,6 +374,12 @@
     </footer>
 
   </div>
+</div>
+
+<!-- ============ 桌宠 ============ -->
+<div class="pet" id="pet" title="点我切换表情 · 按住可以拖动">
+  <div class="bubble" id="petBubble">你好呀～</div>
+  <div class="pet-inner"><img id="petImg" src="pet-yes.png" alt="ATRI 桌宠" draggable="false"></div>
 </div>
 
 <script>
@@ -486,6 +524,89 @@ toggle.addEventListener("click", () => {
   if(dark){ document.documentElement.removeAttribute("data-theme"); toggle.textContent="🌙"; localStorage.setItem("theme","light"); }
   else { document.documentElement.setAttribute("data-theme","dark"); toggle.textContent="☀️"; localStorage.setItem("theme","dark"); }
 });
+
+/* ---------- 桌宠 ---------- */
+(function(){
+  const pet = document.getElementById("pet");
+  if(!pet) return;
+  const img = document.getElementById("petImg");
+  const bubble = document.getElementById("petBubble");
+
+  const SRC = { yes: "pet-yes.png", no: "pet-no.png" };
+  const LINES = {
+    yes: ["要看看我的项目吗？", "今天也来看我啦～", "试试顶上的搜索框！", "这两张图是我画的哦"],
+    no:  ["唔…不理你了", "好吧，我自己在玩", "真的不看一眼吗…"]
+  };
+
+  let mood = "yes", hideTimer = null, start = null;
+
+  function say(text){
+    bubble.textContent = text;
+    bubble.classList.add("on");
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => bubble.classList.remove("on"), 3400);
+  }
+  function setMood(next, speak){
+    mood = next;
+    if(img.getAttribute("src") !== SRC[next]) img.setAttribute("src", SRC[next]);
+    if(speak){
+      const pool = LINES[next];
+      say(pool[Math.floor(Math.random() * pool.length)]);
+    }
+  }
+
+  // 还原上次拖动的位置
+  try{
+    const p = JSON.parse(localStorage.getItem("petPos") || "null");
+    if(p && p.left){
+      pet.style.right = "auto"; pet.style.bottom = "auto";
+      pet.style.left = p.left; pet.style.top = p.top;
+    }
+  }catch(e){}
+
+  pet.addEventListener("pointerdown", e => {
+    if(e.target.closest(".bubble")) return;
+    const r = pet.getBoundingClientRect();
+    start = { px: e.clientX, py: e.clientY, left: r.left, top: r.top, moved: false };
+    pet.classList.add("dragging");
+    try{ pet.setPointerCapture(e.pointerId); }catch(err){}
+  });
+
+  pet.addEventListener("pointermove", e => {
+    if(!start) return;
+    const dx = e.clientX - start.px, dy = e.clientY - start.py;
+    if(!start.moved && Math.sqrt(dx*dx + dy*dy) < 6) return;   // 6px 以内算点击
+    start.moved = true;
+    const w = pet.offsetWidth, h = pet.offsetHeight;
+    const L = Math.min(Math.max(start.left + dx, 6), window.innerWidth - w - 6);
+    const T = Math.min(Math.max(start.top + dy, 6), window.innerHeight - h + 46);
+    pet.style.right = "auto"; pet.style.bottom = "auto";
+    pet.style.left = L + "px"; pet.style.top = T + "px";
+  });
+
+  function endDrag(){
+    if(!start) return;
+    const dragged = start.moved;
+    start = null;
+    pet.classList.remove("dragging");
+    if(!dragged) setMood(mood === "yes" ? "no" : "yes", true);   // 单击：切换心情
+    else { try{ localStorage.setItem("petPos", JSON.stringify({ left: pet.style.left, top: pet.style.top })); }catch(e){} }
+  }
+  pet.addEventListener("pointerup", endDrag);
+  pet.addEventListener("pointercancel", endDrag);
+
+  // 悬停时偶尔搭话
+  img.addEventListener("pointerenter", () => {
+    if(start) return;
+    if(Math.random() < 0.6){
+      const pool = LINES[mood];
+      say(pool[Math.floor(Math.random() * pool.length)]);
+    }
+  });
+
+  // 开场打招呼
+  setTimeout(() => say("你好呀，我是 " + (typeof profile !== "undefined" ? profile.name : "ATRI") + "～"), 1100);
+})();
 </script>
 </body>
 </html>
