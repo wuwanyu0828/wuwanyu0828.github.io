@@ -1,4 +1,284 @@
-<p>Hello 大家好</p>
-<p>我是zero，这是我的个人网站。 </p>
-<p>很高兴你来到这里, 你可以在以下的网站找到我</p>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>zero 的个人网站</title>
+<style>
+  :root{
+    --bg:#f6f7fb; --bg-soft:#ffffff; --text:#1f2330; --muted:#6b7280;
+    --accent:#6366f1; --accent2:#8b5cf6; --border:#e7e9f2;
+    --shadow:0 8px 30px rgba(30,32,70,.08); --radius:16px;
+  }
+  [data-theme="dark"]{
+    --bg:#0e1016; --bg-soft:#171a23; --text:#e9ebf2; --muted:#9aa3b2;
+    --border:#262a36; --shadow:0 8px 30px rgba(0,0,0,.45);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--text);line-height:1.7;transition:background .3s,color .3s;
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:980px;margin:0 auto;padding:0 20px}
+
+  /* NAV */
+  nav{
+    position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(12px);
+    background:color-mix(in srgb,var(--bg-soft) 78%,transparent);
+    border-bottom:1px solid var(--border);
+  }
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .brand{font-weight:700;font-size:18px;display:flex;align-items:center;gap:8px}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2))}
+  .nav-links{display:flex;gap:18px;align-items:center}
+  .nav-links a{color:var(--muted);font-size:14px;transition:color .2s}
+  .nav-links a:hover{color:var(--accent)}
+  .theme-btn{
+    border:1px solid var(--border);background:var(--bg-soft);color:var(--text);
+    width:36px;height:36px;border-radius:10px;cursor:pointer;font-size:16px;transition:.2s;
+  }
+  .theme-btn:hover{border-color:var(--accent)}
+  @media(max-width:560px){.nav-links a:not(.theme-wrap){display:none}}
+
+  /* HERO */
+  header.hero{padding:90px 0 70px;text-align:center}
+  .hero h1{font-size:clamp(34px,6vw,60px);font-weight:800;letter-spacing:-1px}
+  .hero h1 .grad{
+    background:linear-gradient(120deg,var(--accent),var(--accent2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p{color:var(--muted);font-size:clamp(15px,2.4vw,19px);max-width:620px;margin:18px auto 0}
+  .hero .cta{margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn{
+    padding:11px 22px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;
+    border:1px solid var(--border);transition:.2s;
+  }
+  .btn.primary{background:linear-gradient(120deg,var(--accent),var(--accent2));color:#fff;border:none}
+  .btn:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+
+  /* SECTIONS */
+  section{padding:54px 0}
+  .sec-head{margin-bottom:28px}
+  .sec-head h2{font-size:26px;font-weight:700;display:flex;align-items:center;gap:10px}
+  .sec-head .bar{width:6px;height:24px;border-radius:4px;background:linear-gradient(var(--accent),var(--accent2))}
+  .sec-head p{color:var(--muted);font-size:14px;margin-top:6px}
+
+  /* PROJECT GRID */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+  .card{
+    background:var(--bg-soft);border:1px solid var(--border);border-radius:var(--radius);
+    padding:22px;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s;
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .card:hover{transform:translateY(-4px)}
+  .card h3{font-size:18px;font-weight:700}
+  .card p{color:var(--muted);font-size:14px;flex:1}
+  .tags{display:flex;flex-wrap:wrap;gap:6px}
+  .tag{font-size:12px;padding:3px 10px;border-radius:99px;background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);font-weight:600}
+  .card .go{font-size:14px;font-weight:600;color:var(--accent);margin-top:4px}
+
+  /* VIDEO GRID */
+  .vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+  .video{
+    background:var(--bg-soft);border:1px solid var(--border);border-radius:var(--radius);
+    overflow:hidden;box-shadow:var(--shadow);transition:transform .25s;
+  }
+  .video:hover{transform:translateY(-4px)}
+  .thumb{position:relative;aspect-ratio:16/9;background:#000;cursor:pointer;display:block}
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block;opacity:.92;transition:.2s}
+  .thumb:hover img{opacity:1}
+  .thumb .play{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  }
+  .thumb .play span{
+    width:58px;height:58px;border-radius:50%;background:rgba(255,255,255,.92);
+    display:flex;align-items:center;justify-content:center;font-size:22px;color:#111;
+    box-shadow:0 4px 16px rgba(0,0,0,.3);
+  }
+  .video .meta{padding:14px 16px}
+  .video .meta h3{font-size:15px;font-weight:700;line-height:1.4}
+  .video .meta p{color:var(--muted);font-size:13px;margin-top:4px}
+
+  /* SOCIAL */
+  .socials{display:flex;flex-wrap:wrap;gap:12px}
+  .socials a{
+    display:flex;align-items:center;gap:8px;padding:10px 18px;border-radius:12px;
+    border:1px solid var(--border);background:var(--bg-soft);font-weight:600;font-size:14px;transition:.2s;
+  }
+  .socials a:hover{border-color:var(--accent);color:var(--accent)}
+
+  footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:30px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span><span id="navName">zero</span></div>
+    <div class="nav-links">
+      <a href="#projects">项目</a>
+      <a href="#videos">视频</a>
+      <a href="#links">链接</a>
+      <button class="theme-btn" id="themeToggle" title="切换深色 / 浅色">🌙</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>你好，我是 <span class="grad" id="heroName">zero</span></h1>
+    <p id="heroTagline">这里是我的个人空间，记录我做过的项目和我录的一些视频。</p>
+    <div class="cta">
+      <a class="btn primary" href="#projects">看我的项目</a>
+      <a class="btn" href="#videos">看录的视频</a>
+    </div>
+  </div>
+</header>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2><span class="bar"></span>做过的项目</h2>
+      <p>一些我折腾出来的小东西。</p>
+    </div>
+    <div class="grid" id="projectGrid"></div>
+  </div>
+</section>
+
+<section id="videos">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2><span class="bar"></span>录过的视频</h2>
+      <p>点击封面即可在 YouTube 观看。</p>
+    </div>
+    <div class="vgrid" id="videoGrid"></div>
+  </div>
+</section>
+
+<section id="links">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2><span class="bar"></span>在下面找到我</h2>
+      <p>其他平台和联系方式。</p>
+    </div>
+    <div class="socials" id="socialList"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p id="footerText">© <span id="year"></span> zero · 用 GitHub Pages 搭建</p>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   只需要改下面这一块就能维护整个网站
+   ============================================================ */
+const profile = {
+  name: "zero",
+  tagline: "这里是我的个人空间，记录我做过的项目和我录的一些视频。",
+  // 社交 / 外链，可自由增删
+  socials: [
+    { label: "GitHub",   url: "https://github.com/wuwanyu0828" },
+    { label: "YouTube",  url: "https://www.youtube.com/" },
+    { label: "Bilibili", url: "https://space.bilibili.com/" }
+  ]
+};
+
+// 项目卡片：title 标题 / desc 描述 / tags 标签数组 / link 链接 / linkLabel 按钮文字
+const projects = [
+  {
+    title: "示例项目 A",
+    desc: "一句话介绍这个项目做了什么、用了什么技术。把这里换成你自己的描述。",
+    tags: ["HTML", "CSS", "JS"],
+    link: "https://github.com/wuwanyu0828",
+    linkLabel: "查看仓库"
+  },
+  {
+    title: "示例项目 B",
+    desc: "再放一个项目，比如一个小工具、一个网页、或者一个游戏。",
+    tags: ["Python", "工具"],
+    link: "https://github.com/wuwanyu0828",
+    linkLabel: "在线访问"
+  }
+  // 复制上面这一段 { ... } 就能继续加项目
+];
+
+// 视频卡片：title 标题 / youtube 填视频ID 或完整链接 / note 备注(可留空 "")
+const videos = [
+  {
+    title: "示例视频 1",
+    youtube: "aqz-KE-bpKQ",          // 例如 https://youtu.be/aqz-KE-bpKQ 里的 aqz-KE-bpKQ
+    note: "录的一期游戏实况（占位示例）"
+  },
+  {
+    title: "示例视频 2",
+    youtube: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    note: "另一个视频示例"
+  }
+  // 复制上面这一段 { ... } 就能继续加视频
+];
+/* ============================================================
+   以下内容一般不用动
+   ============================================================ */
+
+function ytId(input){
+  if(!input) return "";
+  input = input.trim();
+  if(/^[A-Za-z0-9_-]{11}$/.test(input)) return input;
+  const m = input.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([A-Za-z0-9_-]{11})/);
+  return m ? m[1] : input;
+}
+
+document.getElementById("navName").textContent = profile.name;
+document.getElementById("heroName").textContent = profile.name;
+document.getElementById("heroTagline").textContent = profile.tagline;
+document.getElementById("year").textContent = new Date().getFullYear();
+
+document.getElementById("projectGrid").innerHTML = projects.map(p => `
+  <div class="card">
+    <h3>${p.title}</h3>
+    <p>${p.desc || ""}</p>
+    <div class="tags">${(p.tags||[]).map(t=>`<span class="tag">${t}</span>`).join("")}</div>
+    <a class="go" href="${p.link||"#"}" target="_blank" rel="noopener">${p.linkLabel||"查看"} →</a>
+  </div>
+`).join("");
+
+document.getElementById("videoGrid").innerHTML = videos.map(v => {
+  const id = ytId(v.youtube);
+  const img = id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : "";
+  const href = id ? `https://www.youtube.com/watch?v=${id}` : (v.youtube||"#");
+  return `
+  <div class="video">
+    <a class="thumb" href="${href}" target="_blank" rel="noopener" title="在 YouTube 观看">
+      ${img ? `<img src="${img}" alt="${v.title}" loading="lazy">` : ""}
+      <span class="play"><span>▶</span></span>
+    </a>
+    <div class="meta">
+      <h3>${v.title}</h3>
+      ${v.note ? `<p>${v.note}</p>` : ""}
+    </div>
+  </div>`;
+}).join("");
+
+document.getElementById("socialList").innerHTML = profile.socials.map(s => `
+  <a href="${s.url}" target="_blank" rel="noopener">🔗 ${s.label}</a>
+`).join("");
+
+// 深色 / 浅色切换
+const toggle = document.getElementById("themeToggle");
+const saved = localStorage.getItem("theme");
+if(saved === "dark"){ document.documentElement.setAttribute("data-theme","dark"); toggle.textContent="☀️"; }
+toggle.addEventListener("click", () => {
+  const dark = document.documentElement.getAttribute("data-theme") === "dark";
+  if(dark){ document.documentElement.removeAttribute("data-theme"); toggle.textContent="🌙"; localStorage.setItem("theme","light"); }
+  else { document.documentElement.setAttribute("data-theme","dark"); toggle.textContent="☀️"; localStorage.setItem("theme","dark"); }
+});
+</script>
+</body>
+</html>
+
 https://4be7e32d959748799e9b6bac1eb7826d.bj2.agentos-app.net
