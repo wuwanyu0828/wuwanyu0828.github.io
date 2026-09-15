@@ -254,12 +254,15 @@
   }
 
   /* ============ 桌宠（会散步的互动宠物） ============ */
+  /* 探针：用于让 JS 读到 env(safe-area-inset-bottom)（刘海屏手势条 / iOS home 指示条） */
+  #sabProbe{position:fixed;left:-9999px;top:0;width:1px;
+    height:env(safe-area-inset-bottom,0px);pointer-events:none}
   .pet{position:fixed;right:16px;bottom:0;width:196px;z-index:55;
     user-select:none;-webkit-user-select:none;touch-action:none;will-change:left}
   .pet-inner{position:relative;cursor:grab;transform:scaleX(1);transition:transform .18s ease}
   .pet.dragging .pet-inner{cursor:grabbing}
   .pet img{width:100%;height:auto;display:block;pointer-events:none;
-    filter:drop-shadow(0 6px 12px rgba(16,44,80,.30))}
+    filter:drop-shadow(0 5px 10px rgba(16,44,80,.45))}
   .pet.idle img{animation:petBob 4.2s ease-in-out infinite}
   .pet.walking img{animation:petWalkBob .52s ease-in-out infinite}
   .pet.dragging img{animation:none}
@@ -296,6 +299,11 @@
     0%{transform:translateY(0) scale(.5);opacity:0}
     20%{opacity:1}
     100%{transform:translateY(-64px) scale(1.25);opacity:0}
+  }
+  /* 手机端：很多手机浏览器 / App 内置浏览器的底部工具条会盖住视口底部，
+     桌宠若贴死 bottom:0 就只剩头顶露出来 → 先整体抬起，JS 再按视觉视口与安全区精调 */
+  @media(max-width:700px){
+    .pet{right:8px;bottom:64px}
   }
   @media(max-width:640px){
     .pet{width:150px;right:8px}
@@ -390,6 +398,9 @@
 
   </div>
 </div>
+
+<!-- 探针：让 JS 读到底部安全区高度（不显示） -->
+<div id="sabProbe" aria-hidden="true"></div>
 
 <!-- ============ 桌宠 ============ -->
 <div class="pet" id="pet" title="我是ATRI～点我摸摸，按住能拖动，我还会自己散步哦">
@@ -581,6 +592,8 @@ toggle.addEventListener("click", () => {
   let state = "idle", dir = 0, targetX = null, dragging = false;
   let x = null, start = null, hideTimer = null, nextWander = 0;
   let frameIdx = 0, frameClock = 0;
+  let bottomMode = true;   // true=贴底站立（bottom 定位）；false=被拖到别处（top 定位）
+  let liftPx = 0;          // 从视口底部抬起多少，避开浏览器 / App 底部工具条与安全区
 
   function setImg(s){ if(img.getAttribute("src") !== s) img.setAttribute("src", s); }
   function setDir(d){ if(dir === d) return; dir = d; inner.style.transform = "scaleX(" + d + ")"; }
@@ -590,7 +603,38 @@ toggle.addEventListener("click", () => {
   }
   function petW(){ return pet.offsetWidth || 196; }
   function clampX(v){ const w = petW(); return Math.min(Math.max(v, 8), window.innerWidth - w - 8); }
-  function place(){ pet.style.right = "auto"; pet.style.bottom = "0"; pet.style.left = x + "px"; }
+  function place(){
+    bottomMode = true;
+    pet.style.right = "auto"; pet.style.top = "auto";
+    pet.style.bottom = liftPx + "px"; pet.style.left = x + "px";
+  }
+
+  /* 算出桌宠该从视口底部抬起多少像素。
+     手机上「贴死底部」会被浏览器 / App 内置浏览器的底部工具条挡住 —— 只露出头顶。 */
+  function computeLift(){
+    let lift = 0;
+    // 1) 安全区：刘海屏手势条 / iOS home 指示条
+    const probe = document.getElementById("sabProbe");
+    if(probe) lift = Math.max(lift, Math.round(probe.getBoundingClientRect().height));
+    // 2) 工具条 / 地址栏的遮挡：视觉视口比布局视口矮掉的那部分
+    const vv = window.visualViewport;
+    if(vv && vv.height){
+      lift = Math.max(lift, Math.round(window.innerHeight - (vv.offsetTop + vv.height)));
+    }
+    // 3) 手机 + 国内 App 内置浏览器：底部工具条常常不计入布局视口 → 保守再抬一截
+    if(window.innerWidth <= 700){
+      const ua = navigator.userAgent || "";
+      const inApp = /DingTalk|MicroMessenger|QQ\/|QQBrowser|UCBrowser|Weibo|Alipay|Baidu|HuaweiBrowser|MiuiBrowser|VivoBrowser|HeytapBrowser/i.test(ua);
+      lift = Math.max(lift, inApp ? 76 : 0);
+    }
+    // 上限：最多抬到视口高度的 45%，免得把宠物顶到屏幕中间
+    return Math.min(lift, Math.round(window.innerHeight * 0.45));
+  }
+  function applyLift(){
+    const before = liftPx;
+    liftPx = computeLift();
+    if(liftPx !== before && bottomMode && !dragging) place();
+  }
   function setState(s){
     state = s;
     pet.classList.toggle("idle", s === "idle");
@@ -660,7 +704,8 @@ toggle.addEventListener("click", () => {
     start.moved = true;
     const w = pet.offsetWidth, h = pet.offsetHeight;
     const L = Math.min(Math.max(start.left + dx, 6), window.innerWidth - w - 6);
-    const T = Math.min(Math.max(start.top + dy, 6), window.innerHeight - h + 46);
+    const T = Math.min(Math.max(start.top + dy, 6), window.innerHeight - liftPx - h + 46);
+    bottomMode = false;
     pet.style.bottom = "auto"; pet.style.right = "auto";
     pet.style.left = L + "px"; pet.style.top = T + "px";
   });
@@ -677,7 +722,7 @@ toggle.addEventListener("click", () => {
     const wasDrag = start.moved; start = null; dragging = false; pet.classList.remove("dragging");
     if(wasDrag){
       x = clampX(pet.getBoundingClientRect().left);
-      pet.style.top = "auto"; pet.style.bottom = "0"; place();
+      place();
       try{ localStorage.setItem("petX", String(x)); }catch(_){}
       enterIdle(performance.now());
     } else {
@@ -692,13 +737,20 @@ toggle.addEventListener("click", () => {
     if(Math.random() < .5) say(pick(state === "idle" ? LINES.yes : LINES.walk));
   });
 
-  window.addEventListener("resize", () => { if(!dragging){ x = clampX(x); place(); } });
+  function relayout(){
+    applyLift();
+    if(!dragging){ x = clampX(x); place(); }
+  }
+  window.addEventListener("resize", relayout);
+  window.addEventListener("orientationchange", () => setTimeout(relayout, 150));
+  if(window.visualViewport) window.visualViewport.addEventListener("resize", applyLift);
   window.addEventListener("beforeunload", () => { try{ localStorage.setItem("petX", String(x)); }catch(_){} });
 
   // 初始位置：优先用上次保存的横向位置
   let savedX = null;
   try{ const v = localStorage.getItem("petX"); if(v) savedX = clampX(parseFloat(v)); }catch(_){}
   x = savedX != null ? savedX : clampX(window.innerWidth - petW() - 16);
+  liftPx = computeLift();
   setDir(-1); setState("idle"); setImg(IDLE); place();
   nextWander = performance.now() + 4000 + Math.random()*4000;
 
