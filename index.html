@@ -3,136 +3,154 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>zero 的个人网站</title>
+<title>zero の小宇宙 ✦ 个人主页</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f6f7fb; --bg-soft:#ffffff; --text:#1f2330; --muted:#6b7280;
-    --accent:#6366f1; --accent2:#8b5cf6; --border:#e7e9f2;
-    --shadow:0 8px 30px rgba(30,32,70,.08); --radius:16px;
+    --pink:#ff8fc4; --purple:#9b7bff; --cyan:#6fd6ff; --mint:#9af5d0;
+    --bg1:#ffe6f3; --bg2:#ede7ff; --bg3:#dff1ff;
+    --card:rgba(255,255,255,.62);
+    --text:#4a3a5e; --muted:#8a7ca0;
+    --border:rgba(255,255,255,.7);
+    --glow:0 10px 34px rgba(255,143,196,.34);
+    --radius:20px;
   }
   [data-theme="dark"]{
-    --bg:#0e1016; --bg-soft:#171a23; --text:#e9ebf2; --muted:#9aa3b2;
-    --border:#262a36; --shadow:0 8px 30px rgba(0,0,0,.45);
+    --bg1:#2a1147; --bg2:#1a0f3a; --bg3:#102a4d;
+    --card:rgba(46,30,78,.55);
+    --text:#f3e9ff; --muted:#b6a6d6;
+    --border:rgba(155,123,255,.35);
+    --glow:0 10px 34px rgba(155,123,255,.45);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   body{
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Roboto,Helvetica,Arial,sans-serif;
-    background:var(--bg);color:var(--text);line-height:1.7;transition:background .3s,color .3s;
+    font-family:"Zen Maru Gothic","PingFang SC","Microsoft YaHei",-apple-system,sans-serif;
+    color:var(--text);line-height:1.75;min-height:100vh;
+    background:linear-gradient(125deg,var(--bg1),var(--bg2),var(--bg3),var(--bg1));
+    background-size:300% 300%;animation:flow 18s ease infinite;overflow-x:hidden;
+    transition:color .3s;
   }
+  @keyframes flow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+  h1,h2,h3,.display{font-family:"ZCOOL KuaiLe","Zen Maru Gothic",sans-serif;letter-spacing:.5px}
   a{color:inherit;text-decoration:none}
-  .wrap{max-width:980px;margin:0 auto;padding:0 20px}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 22px}
+  .petals{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+  .petal{position:absolute;top:-40px;font-size:22px;opacity:.75;animation:fall linear infinite}
+  @keyframes fall{0%{transform:translateY(-10vh) rotate(0)}100%{transform:translateY(110vh) rotate(360deg)}}
 
   /* NAV */
-  nav{
-    position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(12px);
-    background:color-mix(in srgb,var(--bg-soft) 78%,transparent);
-    border-bottom:1px solid var(--border);
-  }
-  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
-  .brand{font-weight:700;font-size:18px;display:flex;align-items:center;gap:8px}
-  .brand .dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2))}
-  .nav-links{display:flex;gap:18px;align-items:center}
-  .nav-links a{color:var(--muted);font-size:14px;transition:color .2s}
-  .nav-links a:hover{color:var(--accent)}
-  .theme-btn{
-    border:1px solid var(--border);background:var(--bg-soft);color:var(--text);
-    width:36px;height:36px;border-radius:10px;cursor:pointer;font-size:16px;transition:.2s;
-  }
-  .theme-btn:hover{border-color:var(--accent)}
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
+    background:color-mix(in srgb,var(--card) 80%,transparent);border-bottom:1px solid var(--border)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .brand{font-family:"ZCOOL KuaiLe",sans-serif;font-size:20px;display:flex;align-items:center;gap:8px}
+  .brand .star{font-size:20px;filter:drop-shadow(0 0 6px var(--pink))}
+  .nav-links{display:flex;gap:16px;align-items:center}
+  .nav-links a{color:var(--muted);font-size:14px;transition:.2s}
+  .nav-links a:hover{color:var(--purple)}
+  .theme-btn{border:1px solid var(--border);background:var(--card);color:var(--text);
+    width:38px;height:38px;border-radius:12px;cursor:pointer;font-size:17px;transition:.2s}
+  .theme-btn:hover{border-color:var(--pink);box-shadow:var(--glow)}
   @media(max-width:560px){.nav-links a:not(.theme-wrap){display:none}}
 
   /* HERO */
-  header.hero{padding:90px 0 70px;text-align:center}
-  .hero h1{font-size:clamp(34px,6vw,60px);font-weight:800;letter-spacing:-1px}
-  .hero h1 .grad{
-    background:linear-gradient(120deg,var(--accent),var(--accent2));
+  header.hero{padding:96px 0 72px;text-align:center;position:relative;z-index:1}
+  .badge{display:inline-block;font-size:13px;padding:5px 16px;border-radius:99px;
+    background:var(--card);border:1px solid var(--border);color:var(--purple);margin-bottom:18px;
+    box-shadow:var(--glow)}
+  .hero h1{font-size:clamp(36px,6.5vw,66px);font-weight:400;line-height:1.2}
+  .hero h1 .grad{background:linear-gradient(100deg,var(--pink),var(--purple),var(--cyan));
     -webkit-background-clip:text;background-clip:text;color:transparent;
-  }
-  .hero p{color:var(--muted);font-size:clamp(15px,2.4vw,19px);max-width:620px;margin:18px auto 0}
-  .hero .cta{margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-  .btn{
-    padding:11px 22px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;
-    border:1px solid var(--border);transition:.2s;
-  }
-  .btn.primary{background:linear-gradient(120deg,var(--accent),var(--accent2));color:#fff;border:none}
-  .btn:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+    filter:drop-shadow(0 2px 10px rgba(155,123,255,.35))}
+  .hero p{color:var(--muted);font-size:clamp(15px,2.4vw,19px);max-width:640px;margin:20px auto 0}
+  .hero .cta{margin-top:32px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .btn{padding:12px 26px;border-radius:99px;font-size:14px;font-weight:700;cursor:pointer;
+    border:1px solid transparent;transition:.22s;font-family:"ZCOOL KuaiLe",sans-serif}
+  .btn.primary{background:linear-gradient(100deg,var(--pink),var(--purple));color:#fff;box-shadow:var(--glow)}
+  .btn.primary:hover{transform:translateY(-3px) scale(1.03)}
+  .btn.ghost{background:var(--card);border:1px solid var(--border);color:var(--text)}
+  .btn.ghost:hover{transform:translateY(-3px);border-color:var(--purple);box-shadow:var(--glow)}
 
   /* SECTIONS */
-  section{padding:54px 0}
-  .sec-head{margin-bottom:28px}
-  .sec-head h2{font-size:26px;font-weight:700;display:flex;align-items:center;gap:10px}
-  .sec-head .bar{width:6px;height:24px;border-radius:4px;background:linear-gradient(var(--accent),var(--accent2))}
-  .sec-head p{color:var(--muted);font-size:14px;margin-top:6px}
+  section{padding:56px 0;position:relative;z-index:1}
+  .sec-head{margin-bottom:30px;text-align:center}
+  .sec-head h2{font-size:30px;font-weight:400;display:inline-flex;align-items:center;gap:12px}
+  .sec-head h2 .ic{font-size:26px;filter:drop-shadow(0 0 8px var(--pink))}
+  .sec-head p{color:var(--muted);font-size:14px;margin-top:8px}
 
   /* PROJECT GRID */
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
-  .card{
-    background:var(--bg-soft);border:1px solid var(--border);border-radius:var(--radius);
-    padding:22px;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s;
-    display:flex;flex-direction:column;gap:10px;
-  }
-  .card:hover{transform:translateY(-4px)}
-  .card h3{font-size:18px;font-weight:700}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:20px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+    padding:24px;box-shadow:var(--glow);backdrop-filter:blur(8px);
+    transition:transform .28s,box-shadow .28s;display:flex;flex-direction:column;gap:12px;
+    border-top:3px solid transparent}
+  .card:hover{transform:translateY(-6px);border-top-color:var(--pink);box-shadow:0 16px 44px rgba(155,123,255,.5)}
+  .card .emoji{font-size:34px}
+  .card h3{font-size:20px;font-weight:400}
   .card p{color:var(--muted);font-size:14px;flex:1}
-  .tags{display:flex;flex-wrap:wrap;gap:6px}
-  .tag{font-size:12px;padding:3px 10px;border-radius:99px;background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);font-weight:600}
-  .card .go{font-size:14px;font-weight:600;color:var(--accent);margin-top:4px}
+  .tags{display:flex;flex-wrap:wrap;gap:7px}
+  .tag{font-size:12px;padding:4px 12px;border-radius:99px;
+    background:linear-gradient(100deg,rgba(255,143,196,.18),rgba(155,123,255,.18));color:var(--purple);font-weight:700}
+  .card .go{font-size:14px;font-weight:700;color:var(--purple);margin-top:4px;
+    display:inline-flex;align-items:center;gap:6px;transition:.2s}
+  .card .go:hover{gap:10px;color:var(--pink)}
 
   /* VIDEO GRID */
-  .vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
-  .video{
-    background:var(--bg-soft);border:1px solid var(--border);border-radius:var(--radius);
-    overflow:hidden;box-shadow:var(--shadow);transition:transform .25s;
-  }
-  .video:hover{transform:translateY(-4px)}
+  .vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:20px}
+  .video{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+    overflow:hidden;box-shadow:var(--glow);backdrop-filter:blur(8px);transition:transform .28s}
+  .video:hover{transform:translateY(-6px);box-shadow:0 16px 44px rgba(255,143,196,.5)}
   .thumb{position:relative;aspect-ratio:16/9;background:#000;cursor:pointer;display:block}
-  .thumb img{width:100%;height:100%;object-fit:cover;display:block;opacity:.92;transition:.2s}
-  .thumb:hover img{opacity:1}
-  .thumb .play{
-    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  }
-  .thumb .play span{
-    width:58px;height:58px;border-radius:50%;background:rgba(255,255,255,.92);
-    display:flex;align-items:center;justify-content:center;font-size:22px;color:#111;
-    box-shadow:0 4px 16px rgba(0,0,0,.3);
-  }
-  .video .meta{padding:14px 16px}
-  .video .meta h3{font-size:15px;font-weight:700;line-height:1.4}
-  .video .meta p{color:var(--muted);font-size:13px;margin-top:4px}
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block;opacity:.9;transition:.25s}
+  .thumb:hover img{opacity:1;transform:scale(1.04)}
+  .thumb .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+  .thumb .play span{width:62px;height:62px;border-radius:50%;
+    background:linear-gradient(100deg,var(--pink),var(--purple));color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:24px;
+    box-shadow:0 6px 20px rgba(155,123,255,.6);transition:.25s}
+  .thumb:hover .play span{transform:scale(1.12)}
+  .video .meta{padding:16px 18px}
+  .video .meta h3{font-size:16px;font-weight:400;line-height:1.45}
+  .video .meta p{color:var(--muted);font-size:13px;margin-top:5px}
 
   /* SOCIAL */
-  .socials{display:flex;flex-wrap:wrap;gap:12px}
-  .socials a{
-    display:flex;align-items:center;gap:8px;padding:10px 18px;border-radius:12px;
-    border:1px solid var(--border);background:var(--bg-soft);font-weight:600;font-size:14px;transition:.2s;
-  }
-  .socials a:hover{border-color:var(--accent);color:var(--accent)}
+  .socials{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+  .socials a{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:99px;
+    border:1px solid var(--border);background:var(--card);font-weight:700;font-size:14px;
+    font-family:"ZCOOL KuaiLe",sans-serif;transition:.22s;backdrop-filter:blur(8px)}
+  .socials a:hover{border-color:var(--purple);color:#fff;background:linear-gradient(100deg,var(--pink),var(--purple));box-shadow:var(--glow);transform:translateY(-3px)}
 
-  footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:30px}
+  footer{padding:42px 0 34px;text-align:center;color:var(--muted);font-size:13px;
+    border-top:1px solid var(--border);margin-top:30px;position:relative;z-index:1}
+  footer .heart{color:var(--pink)}
 </style>
 </head>
 <body>
 
+<div class="petals" id="petals" aria-hidden="true"></div>
+
 <nav>
   <div class="wrap">
-    <div class="brand"><span class="dot"></span><span id="navName">zero</span></div>
+    <div class="brand"><span class="star">✦</span><span id="navName">zero の小宇宙</span></div>
     <div class="nav-links">
       <a href="#projects">项目</a>
       <a href="#videos">视频</a>
       <a href="#links">链接</a>
-      <button class="theme-btn" id="themeToggle" title="切换深色 / 浅色">🌙</button>
+      <button class="theme-btn" id="themeToggle" title="切换昼 / 夜">🌙</button>
     </div>
   </div>
 </nav>
 
 <header class="hero">
   <div class="wrap">
+    <span class="badge">★ welcome to my world ★</span>
     <h1>你好，我是 <span class="grad" id="heroName">zero</span></h1>
-    <p id="heroTagline">这里是我的个人空间，记录我做过的项目和我录的一些视频。</p>
+    <p id="heroTagline">这里收藏着我做过的项目和我录下的游戏实况，欢迎来玩～</p>
     <div class="cta">
-      <a class="btn primary" href="#projects">看我的项目</a>
-      <a class="btn" href="#videos">看录的视频</a>
+      <a class="btn primary" href="#projects">看我的项目 ✿</a>
+      <a class="btn ghost" href="#videos">看录的视频 ▶</a>
     </div>
   </div>
 </header>
@@ -140,8 +158,8 @@
 <section id="projects">
   <div class="wrap">
     <div class="sec-head">
-      <h2><span class="bar"></span>做过的项目</h2>
-      <p>一些我折腾出来的小东西。</p>
+      <h2><span class="ic">🎮</span>做过的项目</h2>
+      <p>一些我折腾出来的小世界。</p>
     </div>
     <div class="grid" id="projectGrid"></div>
   </div>
@@ -150,8 +168,8 @@
 <section id="videos">
   <div class="wrap">
     <div class="sec-head">
-      <h2><span class="bar"></span>录过的视频</h2>
-      <p>点击封面即可在 YouTube 观看。</p>
+      <h2><span class="ic">📺</span>录过的视频</h2>
+      <p>点封面就能在 YouTube 看录屏啦～</p>
     </div>
     <div class="vgrid" id="videoGrid"></div>
   </div>
@@ -160,7 +178,7 @@
 <section id="links">
   <div class="wrap">
     <div class="sec-head">
-      <h2><span class="bar"></span>在下面找到我</h2>
+      <h2><span class="ic">🔗</span>在下面找到我</h2>
       <p>其他平台和联系方式。</p>
     </div>
     <div class="socials" id="socialList"></div>
@@ -169,7 +187,7 @@
 
 <footer>
   <div class="wrap">
-    <p id="footerText">© <span id="year"></span> zero · 用 GitHub Pages 搭建</p>
+    <p>© <span id="year"></span> <span class="heart">♥</span> zero · 用 GitHub Pages 搭建 · Made with 二次元之力</p>
   </div>
 </footer>
 
@@ -179,8 +197,7 @@
    ============================================================ */
 const profile = {
   name: "zero",
-  tagline: "这里是我的个人空间，记录我做过的项目和我录的一些视频。",
-  // 社交 / 外链，可自由增删
+  tagline: "这里收藏着我做过的项目和我录下的游戏实况，欢迎来玩～",
   socials: [
     { label: "GitHub",   url: "https://github.com/wuwanyu0828" },
     { label: "YouTube",  url: "https://www.youtube.com/" },
@@ -188,36 +205,30 @@ const profile = {
   ]
 };
 
-// 项目卡片：title 标题 / desc 描述 / tags 标签数组 / link 链接 / linkLabel 按钮文字
+// 项目卡片：emoji 图标 / title 标题 / desc 描述 / tags 标签 / link 链接 / linkLabel 按钮文字
 const projects = [
   {
-    title: "示例项目 A",
-    desc: "一句话介绍这个项目做了什么、用了什么技术。把这里换成你自己的描述。",
-    tags: ["HTML", "CSS", "JS"],
-    link: "https://github.com/wuwanyu0828",
-    linkLabel: "查看仓库"
-  },
-  {
-    title: "示例项目 B",
-    desc: "再放一个项目，比如一个小工具、一个网页、或者一个游戏。",
-    tags: ["Python", "工具"],
-    link: "https://github.com/wuwanyu0828",
-    linkLabel: "在线访问"
+    emoji: "🔍",
+    title: "无人生还 · 游戏化改编",
+    desc: "把阿加莎·克里斯蒂经典悬疑《无人生还》改编成可互动的视觉小说游戏，让没读过原著的人也能沉浸体验这场孤岛谜案。",
+    tags: ["视觉小说", "悬疑推理", "互动游戏"],
+    link: "https://4be7e32d959748799e9b6bac1eb7826d.bj2.agentos-app.net",
+    linkLabel: "开始游玩 →"
   }
   // 复制上面这一段 { ... } 就能继续加项目
 ];
 
-// 视频卡片：title 标题 / youtube 填视频ID 或完整链接 / note 备注(可留空 "")
+// 视频卡片：title 标题 / youtube 填视频ID 或完整链接 / note 备注
 const videos = [
   {
-    title: "示例视频 1",
-    youtube: "aqz-KE-bpKQ",          // 例如 https://youtu.be/aqz-KE-bpKQ 里的 aqz-KE-bpKQ
-    note: "录的一期游戏实况（占位示例）"
+    title: "恶校游戏 · 实况录屏",
+    youtube: "https://www.youtube.com/watch?v=sa1bMgWF78M&list=PLUz-_q-Bc874",
+    note: "恶校游戏通关实况录屏"
   },
   {
-    title: "示例视频 2",
-    youtube: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    note: "另一个视频示例"
+    title: "与美女合租的99种死法 · 实况录屏",
+    youtube: "https://www.youtube.com/watch?v=SI5ZHFjVElo&list=PLMmlNZapsSb0",
+    note: "与美女合租的99种死法 录屏"
   }
   // 复制上面这一段 { ... } 就能继续加视频
 ];
@@ -233,17 +244,18 @@ function ytId(input){
   return m ? m[1] : input;
 }
 
-document.getElementById("navName").textContent = profile.name;
+document.getElementById("navName").textContent = profile.name + " の小宇宙";
 document.getElementById("heroName").textContent = profile.name;
 document.getElementById("heroTagline").textContent = profile.tagline;
 document.getElementById("year").textContent = new Date().getFullYear();
 
 document.getElementById("projectGrid").innerHTML = projects.map(p => `
   <div class="card">
+    <div class="emoji">${p.emoji||"✨"}</div>
     <h3>${p.title}</h3>
     <p>${p.desc || ""}</p>
     <div class="tags">${(p.tags||[]).map(t=>`<span class="tag">${t}</span>`).join("")}</div>
-    <a class="go" href="${p.link||"#"}" target="_blank" rel="noopener">${p.linkLabel||"查看"} →</a>
+    <a class="go" href="${p.link||"#"}" target="_blank" rel="noopener">${p.linkLabel||"查看"}</a>
   </div>
 `).join("");
 
@@ -268,6 +280,20 @@ document.getElementById("socialList").innerHTML = profile.socials.map(s => `
   <a href="${s.url}" target="_blank" rel="noopener">🔗 ${s.label}</a>
 `).join("");
 
+// 飘落的花瓣 / 星星
+const petalBox = document.getElementById("petals");
+const glyphs = ["🌸","🌸","💮","✿","⭐","✦"];
+for(let i=0;i<14;i++){
+  const s = document.createElement("span");
+  s.className = "petal";
+  s.textContent = glyphs[Math.floor(Math.random()*glyphs.length)];
+  s.style.left = Math.random()*100 + "vw";
+  s.style.animationDuration = (7 + Math.random()*8) + "s";
+  s.style.animationDelay = (-Math.random()*10) + "s";
+  s.style.fontSize = (16 + Math.random()*16) + "px";
+  petalBox.appendChild(s);
+}
+
 // 深色 / 浅色切换
 const toggle = document.getElementById("themeToggle");
 const saved = localStorage.getItem("theme");
@@ -280,5 +306,3 @@ toggle.addEventListener("click", () => {
 </script>
 </body>
 </html>
-
-https://4be7e32d959748799e9b6bac1eb7826d.bj2.agentos-app.net
