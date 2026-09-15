@@ -253,21 +253,32 @@
     footer{padding:18px 16px}
   }
 
-  /* ============ 桌宠 ============ */
+  /* ============ 桌宠（会散步的互动宠物） ============ */
   .pet{position:fixed;right:16px;bottom:0;width:196px;z-index:55;
-    user-select:none;-webkit-user-select:none;touch-action:none}
-  .pet-inner{position:relative;cursor:grab}
+    user-select:none;-webkit-user-select:none;touch-action:none;will-change:left}
+  .pet-inner{position:relative;cursor:grab;transform:scaleX(1);transition:transform .18s ease}
   .pet.dragging .pet-inner{cursor:grabbing}
-  .pet img{width:100%;height:auto;display:block;
+  .pet img{width:100%;height:auto;display:block;pointer-events:none;
     filter:drop-shadow(0 8px 16px rgba(16,44,80,.35));
     -webkit-mask-image:linear-gradient(to bottom,#000 88%,transparent 100%);
     mask-image:linear-gradient(to bottom,#000 88%,transparent 100%);
     animation:petBob 4.2s ease-in-out infinite}
+  .pet.walking .pet-inner > img{animation:petStep .5s ease-in-out infinite}
   .pet.dragging img{animation:none}
   @keyframes petBob{
     0%,100%{transform:translateY(0) rotate(-1.2deg)}
     50%{transform:translateY(-9px) rotate(1.2deg)}
   }
+  @keyframes petStep{
+    0%,100%{transform:translateY(0) rotate(-3deg)}
+    50%{transform:translateY(-7px) rotate(3deg)}
+  }
+  @keyframes petBounce{
+    0%,100%{transform:translateY(0)}
+    30%{transform:translateY(-20px)}
+    60%{transform:translateY(-7px)}
+  }
+  .pet.bounce .pet-inner > img{animation:petBounce .55s ease}
   .pet .bubble{
     position:absolute;bottom:calc(100% + 2px);left:50%;
     transform:translateX(-50%) translateY(5px) scale(.94);transform-origin:bottom center;
@@ -281,9 +292,15 @@
     border:5px solid transparent;border-top-color:#fff}
   [data-theme="dark"] .pet .bubble{background:#22262e;color:#e9ecf1}
   [data-theme="dark"] .pet .bubble::after{border-top-color:#22262e}
+  .heart{position:fixed;z-index:56;pointer-events:none;color:#ff5b8d;
+    animation:heartFloat 1.1s ease-out forwards;will-change:transform,opacity}
+  @keyframes heartFloat{
+    0%{transform:translateY(0) scale(.5);opacity:0}
+    20%{opacity:1}
+    100%{transform:translateY(-64px) scale(1.25);opacity:0}
+  }
   @media(max-width:640px){
     .pet{width:150px;right:8px}
-    .pet img{animation:none}
     .pet .bubble{font-size:11px;padding:6px 10px}
   }
   @media(max-width:430px){
@@ -292,6 +309,7 @@
   }
   @media(prefers-reduced-motion:reduce){
     .pet img{animation:none}
+    .pet.walking .pet-inner > img{animation:none}
   }
 </style>
 </head>
@@ -377,7 +395,7 @@
 </div>
 
 <!-- ============ 桌宠 ============ -->
-<div class="pet" id="pet" title="点我切换表情 · 按住可以拖动">
+<div class="pet" id="pet" title="点我摸摸它 · 按住可以拖动 · 它会自己散步">
   <div class="bubble" id="petBubble">你好呀～</div>
   <div class="pet-inner"><img id="petImg" src="pet-yes.png" alt="ATRI 桌宠" draggable="false"></div>
 </div>
@@ -525,86 +543,135 @@ toggle.addEventListener("click", () => {
   else { document.documentElement.setAttribute("data-theme","dark"); toggle.textContent="☀️"; localStorage.setItem("theme","dark"); }
 });
 
-/* ---------- 桌宠 ---------- */
+/* ---------- 桌宠：会散步 · 会坐下 · 摸它会开心 ---------- */
 (function(){
   const pet = document.getElementById("pet");
   if(!pet) return;
   const img = document.getElementById("petImg");
   const bubble = document.getElementById("petBubble");
+  const inner = pet.querySelector(".pet-inner");
 
   const SRC = { yes: "pet-yes.png", no: "pet-no.png" };
   const LINES = {
-    yes: ["要看看我的项目吗？", "今天也来看我啦～", "试试顶上的搜索框！", "这两张图是我画的哦"],
-    no:  ["唔…不理你了", "好吧，我自己在玩", "真的不看一眼吗…"]
+    yes:  ["要看看我的项目吗？","今天也来看我啦～","试试顶上的搜索框！","这两张图是我画的哦"],
+    no:   ["唔…不理你了","好吧，我自己在玩","真的不看一眼吗…"],
+    walk: ["去逛逛～","我去那边看看！","散步时间到～"],
+    pet:  ["谢谢你摸我♥","好开心～","最喜欢你了♥"]
   };
 
-  let mood = "yes", hideTimer = null, start = null;
+  let mood = "yes", state = "idle", dir = -1, targetX = null, dragging = false;
+  let x = null, start = null, hideTimer = null, nextWander = 0;
 
+  function setImg(s){ if(img.getAttribute("src") !== SRC[s]) img.setAttribute("src", SRC[s]); }
+  function setDir(d){ dir = d; inner.style.transform = "scaleX(" + d + ")"; }
   function say(text){
-    bubble.textContent = text;
-    bubble.classList.add("on");
-    clearTimeout(hideTimer);
-    hideTimer = setTimeout(() => bubble.classList.remove("on"), 3400);
+    bubble.textContent = text; bubble.classList.add("on");
+    clearTimeout(hideTimer); hideTimer = setTimeout(() => bubble.classList.remove("on"), 3400);
   }
-  function setMood(next, speak){
-    mood = next;
-    if(img.getAttribute("src") !== SRC[next]) img.setAttribute("src", SRC[next]);
-    if(speak){
-      const pool = LINES[next];
-      say(pool[Math.floor(Math.random() * pool.length)]);
-    }
+  function setMood(s, speak){
+    mood = s; setImg(s);
+    if(speak){ const p = LINES[s]; say(p[Math.floor(Math.random()*p.length)]); }
+  }
+  function petW(){ return pet.offsetWidth || 196; }
+  function clampX(v){ const w = petW(); return Math.min(Math.max(v, 8), window.innerWidth - w - 8); }
+  function place(){ pet.style.right = "auto"; pet.style.bottom = "0"; pet.style.left = x + "px"; setDir(dir); }
+
+  function pickWander(){
+    const w = petW();
+    let t = 8 + Math.random() * (window.innerWidth - w - 16);
+    if(Math.abs(t - x) < 80) t = clampX(x + (Math.random() < .5 ? -1 : 1) * (180 + Math.random()*220));
+    targetX = clampX(t);
+    state = "walking"; pet.classList.add("walking");
+    if(Math.random() < .5) say(LINES.walk[Math.floor(Math.random()*LINES.walk.length)]);
   }
 
-  // 还原上次拖动的位置
-  try{
-    const p = JSON.parse(localStorage.getItem("petPos") || "null");
-    if(p && p.left){
-      pet.style.right = "auto"; pet.style.bottom = "auto";
-      pet.style.left = p.left; pet.style.top = p.top;
+  function tick(now){
+    if(dragging){ requestAnimationFrame(tick); return; }
+    if(state === "walking" && targetX != null){
+      const step = 1.9;
+      if(Math.abs(targetX - x) <= step){
+        x = targetX; state = "idle"; targetX = null; pet.classList.remove("walking");
+        nextWander = now + 4000 + Math.random()*5000;
+      } else {
+        setDir(targetX > x ? 1 : -1); x += dir * step; place();
+      }
+    } else if(state === "idle"){
+      if(now > nextWander){
+        if(Math.random() < .7) pickWander();
+        else { nextWander = now + 9000; setMood("no", true);
+               setTimeout(() => { if(mood === "no" && state === "idle") setMood("yes", false); }, 2600); }
+      }
     }
-  }catch(e){}
+    requestAnimationFrame(tick);
+  }
+
+  function hearts(){
+    const r = pet.getBoundingClientRect();
+    const cx = r.left + r.width/2, cy = r.top + r.height*0.42;
+    for(let i=0;i<4;i++){
+      const h = document.createElement("div"); h.className = "heart"; h.textContent = "♥";
+      h.style.left = (cx + (Math.random()*44 - 22)) + "px";
+      h.style.top  = (cy + (Math.random()*20 - 10)) + "px";
+      h.style.fontSize = (14 + Math.random()*10) + "px";
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 1200);
+    }
+  }
 
   pet.addEventListener("pointerdown", e => {
     if(e.target.closest(".bubble")) return;
+    dragging = true; state = "dragging"; pet.classList.remove("walking");
     const r = pet.getBoundingClientRect();
-    start = { px: e.clientX, py: e.clientY, left: r.left, top: r.top, moved: false };
+    start = { px:e.clientX, py:e.clientY, left:r.left, top:r.top, moved:false };
     pet.classList.add("dragging");
-    try{ pet.setPointerCapture(e.pointerId); }catch(err){}
+    try{ pet.setPointerCapture(e.pointerId); }catch(_){}
   });
-
   pet.addEventListener("pointermove", e => {
     if(!start) return;
     const dx = e.clientX - start.px, dy = e.clientY - start.py;
-    if(!start.moved && Math.sqrt(dx*dx + dy*dy) < 6) return;   // 6px 以内算点击
+    if(!start.moved && Math.hypot(dx, dy) < 6) return;
     start.moved = true;
     const w = pet.offsetWidth, h = pet.offsetHeight;
     const L = Math.min(Math.max(start.left + dx, 6), window.innerWidth - w - 6);
     const T = Math.min(Math.max(start.top + dy, 6), window.innerHeight - h + 46);
-    pet.style.right = "auto"; pet.style.bottom = "auto";
+    pet.style.bottom = "auto"; pet.style.right = "auto";
     pet.style.left = L + "px"; pet.style.top = T + "px";
   });
-
   function endDrag(){
     if(!start) return;
-    const dragged = start.moved;
-    start = null;
-    pet.classList.remove("dragging");
-    if(!dragged) setMood(mood === "yes" ? "no" : "yes", true);   // 单击：切换心情
-    else { try{ localStorage.setItem("petPos", JSON.stringify({ left: pet.style.left, top: pet.style.top })); }catch(e){} }
+    const wasDrag = start.moved; start = null; dragging = false; pet.classList.remove("dragging");
+    if(wasDrag){
+      x = clampX(pet.getBoundingClientRect().left);
+      pet.style.top = "auto"; pet.style.bottom = "0"; place();
+      try{ localStorage.setItem("petX", String(x)); }catch(_){}
+      nextWander = performance.now() + 3000 + Math.random()*3000; state = "idle";
+    } else {
+      hearts(); setMood("yes", true);
+      const p = LINES.pet; say(p[Math.floor(Math.random()*p.length)]);
+      pet.classList.add("bounce");
+      setTimeout(() => pet.classList.remove("bounce"), 560);
+      nextWander = performance.now() + 5000;
+    }
   }
   pet.addEventListener("pointerup", endDrag);
   pet.addEventListener("pointercancel", endDrag);
 
-  // 悬停时偶尔搭话
-  img.addEventListener("pointerenter", () => {
-    if(start) return;
-    if(Math.random() < 0.6){
-      const pool = LINES[mood];
-      say(pool[Math.floor(Math.random() * pool.length)]);
-    }
+  pet.addEventListener("pointerenter", () => {
+    if(start || dragging) return;
+    if(Math.random() < .5){ const p = LINES[mood]; say(p[Math.floor(Math.random()*p.length)]); }
   });
 
-  // 开场打招呼
+  window.addEventListener("resize", () => { if(!dragging){ x = clampX(x); place(); } });
+  window.addEventListener("beforeunload", () => { try{ localStorage.setItem("petX", String(x)); }catch(_){} });
+
+  // 初始位置：优先用上次保存的横向位置
+  let savedX = null;
+  try{ const v = localStorage.getItem("petX"); if(v) savedX = clampX(parseFloat(v)); }catch(_){}
+  x = savedX != null ? savedX : clampX(window.innerWidth - petW() - 16);
+  setDir(-1); place();
+  nextWander = performance.now() + 4000 + Math.random()*4000;
+
+  requestAnimationFrame(tick);
   setTimeout(() => say("你好呀，我是 " + (typeof profile !== "undefined" ? profile.name : "ATRI") + "～"), 1100);
 })();
 </script>
