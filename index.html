@@ -244,30 +244,53 @@
   .arow .ak{flex:none;color:var(--muted);min-width:64px}
   .arow .aval{color:var(--ink-2);font-weight:500;flex:1;min-width:0;word-break:break-word}
 
-  /* 页面内「新增记录」表单 */
-  .addwrap{padding:6px 0 24px}
-  .addbtn{
-    display:inline-flex;align-items:center;gap:6px;padding:8px 15px;border-radius:var(--radius-sm);
-    border:1px dashed var(--panel-brd);background:transparent;color:var(--brand);font-size:13px;font-weight:500;
-    cursor:pointer;transition:.16s;font-family:inherit;
+  /* 待办事项（右侧悬浮，可隐藏，存浏览器本地仅自己可见） */
+  .todo-fab{
+    position:fixed;right:18px;top:36%;z-index:60;width:46px;height:46px;border-radius:50%;
+    border:1px solid var(--panel-brd);background:var(--panel);font-size:19px;cursor:pointer;
+    box-shadow:0 6px 18px rgba(0,0,0,.12);transition:.18s;display:grid;place-items:center;
   }
-  .addbtn:hover{border-color:var(--brand);background:var(--brand-soft)}
-  .addform{
-    margin-top:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;
-    background:var(--panel);border:1px solid var(--panel-brd);border-radius:var(--radius);padding:14px;
+  .todo-fab:hover{border-color:var(--brand);transform:translateY(-2px)}
+  .todo-badge{
+    position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;border-radius:9px;
+    background:var(--brand);color:#fff;font-size:11px;font-weight:700;line-height:18px;
+    text-align:center;padding:0 4px;pointer-events:none;
   }
-  .addform input{
-    border:1px solid var(--panel-brd);background:var(--page);border-radius:var(--radius-sm);
-    padding:9px 12px;font-size:13px;font-family:inherit;color:var(--ink);outline:0;min-width:0;
+  .todo-panel{
+    position:fixed;right:18px;top:calc(36% + 56px);z-index:60;width:300px;max-width:calc(100vw - 36px);
+    background:var(--panel);border:1px solid var(--panel-brd);border-radius:var(--radius);
+    box-shadow:0 14px 40px rgba(0,0,0,.18);display:none;flex-direction:column;overflow:hidden;
   }
-  .addform input:focus{border-color:var(--brand)}
-  .addform .fbtns{grid-column:1/-1;display:flex;gap:10px;justify-content:flex-end}
-  .addform button{
-    padding:8px 16px;border-radius:var(--radius-sm);font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;
-    border:1px solid var(--panel-brd);background:var(--panel);color:var(--ink);transition:.16s;
+  .todo-panel.on{display:flex}
+  .todo-head{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-bottom:1px solid var(--panel-brd)}
+  .todo-head b{font-size:14px}
+  .todo-head .tclose{border:0;background:transparent;color:var(--muted);font-size:15px;cursor:pointer;padding:2px 4px}
+  .todo-head .tclose:hover{color:var(--ink)}
+  .todo-form{display:flex;gap:8px;padding:12px 14px;border-bottom:1px solid var(--panel-brd)}
+  .todo-form input{
+    flex:1;min-width:0;border:1px solid var(--panel-brd);background:var(--page);border-radius:var(--radius-sm);
+    padding:8px 11px;font-size:13px;font-family:inherit;color:var(--ink);outline:0;
   }
-  .addform button[data-act="save"]{background:var(--brand);color:#fff;border-color:var(--brand)}
-  .addform button:hover{opacity:.9}
+  .todo-form input:focus{border-color:var(--brand)}
+  .todo-form button{
+    flex:none;width:36px;border:1px solid var(--brand);background:var(--brand);color:#fff;
+    border-radius:var(--radius-sm);font-size:15px;cursor:pointer;font-family:inherit;
+  }
+  .todo-form button:hover{opacity:.9}
+  .todo-list{list-style:none;margin:0;padding:6px;max-height:320px;overflow:auto}
+  .todo-list li{display:flex;align-items:flex-start;gap:9px;padding:8px 10px;border-radius:var(--radius-sm);font-size:13px;color:var(--ink-2)}
+  .todo-list li:hover{background:var(--brand-soft)}
+  .todo-list input[type=checkbox]{margin-top:2px;accent-color:var(--brand);cursor:pointer;flex:none}
+  .todo-list .txt{flex:1;min-width:0;word-break:break-word}
+  .todo-list li.done .txt{color:var(--muted);text-decoration:line-through}
+  .todo-list .del{border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:13px;opacity:0;transition:.15s;flex:none;padding:0 2px}
+  .todo-list li:hover .del{opacity:1}
+  .todo-list .del:hover{color:#e5484d}
+  .todo-empty{padding:18px 14px;color:var(--muted);font-size:12px;text-align:center}
+  .todo-foot{padding:8px 14px;border-top:1px solid var(--panel-brd);color:var(--muted);font-size:11px;display:flex;justify-content:space-between;align-items:center}
+  .todo-foot .tclear{border:0;background:transparent;color:var(--muted);font-size:11px;cursor:pointer;font-family:inherit}
+  .todo-foot .tclear:hover{color:#e5484d}
+  [data-theme="dark"] .todo-panel{box-shadow:0 14px 40px rgba(0,0,0,.5)}
 
   /* 社交链接 */
   .socials{display:flex;flex-wrap:wrap;gap:10px;padding:4px 0 26px}
@@ -442,19 +465,6 @@
         <span class="sub">看过的番 / 剧 · 点 📖 查维基</span>
       </div>
       <div class="agrid" id="animeGrid"></div>
-      <div class="addwrap" id="animeAdd">
-        <button class="addbtn" type="button">＋ 新增番剧 / 剧集</button>
-        <div class="addform" hidden>
-          <input data-f="title" placeholder="番名 / 剧名 *" />
-          <input data-f="heroine" placeholder="女主角" />
-          <input data-f="cv" placeholder="声优 / 演员" />
-          <input data-f="wiki" placeholder="维基链接（可选，留空自动生成）" />
-          <div class="fbtns">
-            <button data-act="cancel" type="button">取消</button>
-            <button data-act="save" type="button">保存</button>
-          </div>
-        </div>
-      </div>
     </section>
 
     <section id="novels">
@@ -463,18 +473,6 @@
         <span class="sub">读过的书 · 点 📖 查维基</span>
       </div>
       <div class="agrid" id="novelGrid"></div>
-      <div class="addwrap" id="novelsAdd">
-        <button class="addbtn" type="button">＋ 新增小说</button>
-        <div class="addform" hidden>
-          <input data-f="title" placeholder="书名 *" />
-          <input data-f="author" placeholder="作者（可选）" />
-          <input data-f="wiki" placeholder="维基链接（可选，留空自动生成）" />
-          <div class="fbtns">
-            <button data-act="cancel" type="button">取消</button>
-            <button data-act="save" type="button">保存</button>
-          </div>
-        </div>
-      </div>
     </section>
 
     <section id="links">
@@ -505,6 +503,18 @@
 <div id="sabProbe" aria-hidden="true"></div>
 
 <!-- ============ 桌宠 ============ -->
+<!-- 待办事项：右侧悬浮，可隐藏，数据只存在自己浏览器里 -->
+<button class="todo-fab" id="todoFab" type="button" title="待办事项">📝<span class="todo-badge" id="todoBadge" hidden></span></button>
+<div class="todo-panel" id="todoPanel" role="dialog" aria-label="待办事项">
+  <div class="todo-head"><b>📝 待办事项</b><button class="tclose" id="todoClose" type="button" title="收起">✕</button></div>
+  <form class="todo-form" id="todoForm">
+    <input id="todoInput" placeholder="添加待办，回车确认" maxlength="200" autocomplete="off" />
+    <button type="submit" title="添加">＋</button>
+  </form>
+  <ul class="todo-list" id="todoList"></ul>
+  <div class="todo-foot"><span id="todoCount"></span><button class="tclear" id="todoClear" type="button">清空已完成</button></div>
+</div>
+
 <div class="pet" id="pet" title="我是ATRI～点我摸摸，按住能拖动，我还会自己散步哦">
   <div class="bubble" id="petBubble">你好呀～</div>
   <div class="pet-inner"><img id="petImg" src="pet-idle.png" alt="ATRI 桌宠" draggable="false"></div>
@@ -1485,14 +1495,10 @@ function wikiUrl(entry, key){
   const t = (entry[key] || "").trim();
   return "https://zh.wikipedia.org/wiki/" + encodeURIComponent(t);
 }
-// 页面内「新增」的数据存在浏览器本地，刷新仍在；与上方数据源数组合并显示
-const LS_KEY = { anime: "wuwanyu_anime_extra", novels: "wuwanyu_novels_extra" };
-function loadExtra(type){ try{ return JSON.parse(localStorage.getItem(LS_KEY[type]) || "[]"); }catch(_){ return []; } }
-function saveExtra(type, arr){ try{ localStorage.setItem(LS_KEY[type], JSON.stringify(arr)); }catch(_){} }
+// 记录内容固定写在页面上方数据数组里，访客不能在页面上添加，保证内容不被改乱
 
 function renderAnime(){
-  const all = anime.concat(loadExtra("anime"));
-  document.getElementById("animeGrid").innerHTML = all.map(a => `
+  document.getElementById("animeGrid").innerHTML = anime.map(a => `
     <article class="acard" data-title="${a.title||""}">
       <div class="acard-top">
         <span class="acard-kind">番剧</span>
@@ -1512,7 +1518,7 @@ function novelFile(n){
   return null;
 }
 function renderNovels(){
-  const all = novels.concat(loadExtra("novels"));
+  const all = novels;
   // 按作者排序（中文拼音序），同一作者的书排在一起；无作者的书排在最后，按书名排序
   const byAuthor = all.slice().sort((a,b) => {
     const x = (a.author||"").trim(), y = (b.author||"").trim();
@@ -1541,27 +1547,75 @@ function renderNovels(){
 renderAnime();
 renderNovels();
 
-// 页面内「新增」：点按钮展开表单，保存即写入本地并即时刷新
-function wireAdd(type, fields){
-  const wrap = document.getElementById(type + "Add");
-  if(!wrap) return;
-  const btn = wrap.querySelector(".addbtn");
-  const form = wrap.querySelector(".addform");
-  btn.addEventListener("click", () => { form.hidden = !form.hidden; });
-  form.querySelector('[data-act="cancel"]').addEventListener("click", () => { form.hidden = true; });
-  form.querySelector('[data-act="save"]').addEventListener("click", () => {
-    const obj = {};
-    fields.forEach(f => obj[f] = form.querySelector('[data-f="'+f+'"]').value.trim());
-    if(!obj.title){ alert("请至少填写名称"); return; }
-    const arr = loadExtra(type); arr.push(obj); saveExtra(type, arr);
-    form.hidden = true; form.reset();
-    if(type === "anime") renderAnime(); else renderNovels();
-  });
-}
-wireAdd("anime", ["title","heroine","cv","wiki"]);
-wireAdd("novels", ["title","author","wiki"]);
+/* ---------- 待办事项（存浏览器本地，仅本机可见） ---------- */
+const TODO_KEY = "wuwanyu_todo_v1";
+function todoLoad(){ try{ return JSON.parse(localStorage.getItem(TODO_KEY) || "[]"); }catch(_){ return []; } }
+function todoSave(a){ try{ localStorage.setItem(TODO_KEY, JSON.stringify(a)); }catch(_){} }
+let todos = todoLoad();
+const todoFab   = document.getElementById("todoFab");
+const todoPanel = document.getElementById("todoPanel");
+const todoList  = document.getElementById("todoList");
+const todoForm  = document.getElementById("todoForm");
+const todoInput = document.getElementById("todoInput");
+const todoBadge = document.getElementById("todoBadge");
+const todoCount = document.getElementById("todoCount");
 
-// 搜索：按标题实时过滤全部卡片（每次重新扫描，含页面内新增的记录）
+function renderTodo(){
+  if(!todos.length){
+    todoList.innerHTML = `<div class="todo-empty">还没有待办，添加一条吧～</div>`;
+  }else{
+    todoList.innerHTML = todos.map((t,i) => `
+      <li class="${t.done ? "done" : ""}">
+        <input type="checkbox" data-i="${i}" ${t.done ? "checked" : ""} title="标记完成" />
+        <span class="txt">${t.text}</span>
+        <button class="del" data-i="${i}" type="button" title="删除">✕</button>
+      </li>
+    `).join("");
+  }
+  const left = todos.filter(t => !t.done).length;
+  todoCount.textContent = todos.length ? `共 ${todos.length} 条 · 未完成 ${left} 条` : "";
+  todoBadge.hidden = left === 0;
+  todoBadge.textContent = left;
+  todoFab.title = left ? `待办事项（${left} 条未完成）` : "待办事项";
+}
+todoForm.addEventListener("submit", e => {
+  e.preventDefault();
+  const text = todoInput.value.trim();
+  if(!text) return;
+  todos.unshift({ text, done:false, at:Date.now() });
+  todoInput.value = "";
+  todoSave(todos); renderTodo();
+});
+todoList.addEventListener("change", e => {
+  const i = e.target.dataset && e.target.dataset.i;
+  if(i === undefined) return;
+  todos[i].done = e.target.checked;
+  todoSave(todos); renderTodo();
+});
+todoList.addEventListener("click", e => {
+  const i = e.target.dataset && e.target.dataset.i;
+  if(i === undefined || !e.target.classList.contains("del")) return;
+  todos.splice(+i, 1);
+  todoSave(todos); renderTodo();
+});
+document.getElementById("todoClear").addEventListener("click", () => {
+  if(!todos.some(t => t.done)) return;
+  todos = todos.filter(t => !t.done);
+  todoSave(todos); renderTodo();
+});
+function todoToggle(force){
+  const on = force !== undefined ? force : !todoPanel.classList.contains("on");
+  todoPanel.classList.toggle("on", on);
+  if(on) todoInput.focus();
+}
+todoFab.addEventListener("click", () => todoToggle());
+document.getElementById("todoClose").addEventListener("click", () => todoToggle(false));
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape" && todoPanel.classList.contains("on")) todoToggle(false);
+});
+renderTodo();
+
+// 搜索：按标题实时过滤全部卡片（每次重新扫描）
 const q = document.getElementById("q");
 const empty = document.getElementById("empty");
 q.addEventListener("input", () => {
