@@ -242,7 +242,7 @@
   .acard h3{font-size:16px;font-weight:700;letter-spacing:-.2px;line-height:1.45}
   .arow{display:flex;gap:8px;margin-top:10px;font-size:13px;align-items:baseline}
   .arow .ak{flex:none;color:var(--muted);min-width:64px}
-  .arow .av{color:var(--ink-2);font-weight:500}
+  .arow .aval{color:var(--ink-2);font-weight:500;flex:1;min-width:0;word-break:break-word}
 
   /* 页面内「新增记录」表单 */
   .addwrap{padding:6px 0 24px}
@@ -1442,8 +1442,8 @@ function renderAnime(){
         <a class="acard-wiki" href="${wikiUrl(a,"title")}" target="_blank" rel="noopener" title="在维基百科查看">📖</a>
       </div>
       <h3>${a.title||""}</h3>
-      ${a.heroine ? `<div class="arow"><span class="ak">女主角</span><span class="av">${a.heroine}</span></div>` : ""}
-      ${a.cv ? `<div class="arow"><span class="ak">声优/演员</span><span class="av">${a.cv}</span></div>` : ""}
+      ${a.heroine ? `<div class="arow"><span class="ak">女主角</span><span class="aval">${a.heroine}</span></div>` : ""}
+      ${a.cv ? `<div class="arow"><span class="ak">声优/演员</span><span class="aval">${a.cv}</span></div>` : ""}
     </article>
   `).join("");
 }
@@ -1468,7 +1468,7 @@ function renderNovels(){
         </div>
       </div>
       <h3>${n.title||""}</h3>
-      ${n.author ? `<div class="arow"><span class="ak">作者</span><span class="av">${n.author}</span></div>` : ""}
+      ${n.author ? `<div class="arow"><span class="ak">作者</span><span class="aval">${n.author}</span></div>` : ""}
     </article>
   `}).join("");
 }
