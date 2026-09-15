@@ -679,14 +679,9 @@ const anime = [
     "cv": "种崎敦美、早见沙织"
   },
   {
-    "title": "（内田真礼）",
-    "heroine": "小鸟游六花",
-    "cv": ""
-  },
-  {
     "title": "中二病也想谈恋爱",
-    "heroine": "",
-    "cv": ""
+    "heroine": "小鸟游六花",
+    "cv": "内田真礼"
   },
   {
     "title": "Charlotte",
@@ -831,37 +826,37 @@ const anime = [
   {
     "title": "未确认进行式",
     "heroine": "夜之森小红、三峰真白",
-    "cv": ""
+    "cv": "照井春佳、吉田有里"
   },
   {
     "title": "跃动青春",
     "heroine": "岩仓美津未",
-    "cv": ""
+    "cv": "黑泽朋世"
   },
   {
     "title": "从零开始的异世界生活",
     "heroine": "爱蜜莉雅、蕾姆",
-    "cv": ""
+    "cv": "高桥李依、水濑祈"
   },
   {
     "title": "夏日重现",
     "heroine": "小舟潮、小舟澪",
-    "cv": ""
+    "cv": "永濑安奈、白砂沙帆"
   },
   {
     "title": "我推的孩子",
-    "heroine": "新野爱、新野露比、黑川茜",
-    "cv": ""
+    "heroine": "星野爱、星野露比、黑川茜",
+    "cv": "高桥李依、伊驹百合绘、石见舞菜香"
   },
   {
     "title": "继母的拖油瓶是我的前女友",
     "heroine": "伊理户结女",
-    "cv": ""
+    "cv": "日高里菜"
   },
   {
     "title": "缘之空",
-    "heroine": "泷川和音、致我、佐藤栞、致深爱你、春日野穹",
-    "cv": "泷川和音）深爱的每个你（高崎历、佐藤栞）的那个我（日高历、田口宏子"
+    "heroine": "春日野穹、天女目瑛、依媛奈绪、渚一叶",
+    "cv": "田口宏子、阪田佳代、猪口有佳、小野凉子"
   },
   {
     "title": "间谍教室",
@@ -1456,7 +1451,16 @@ function novelFile(n){
 }
 function renderNovels(){
   const all = novels.concat(loadExtra("novels"));
-  document.getElementById("novelGrid").innerHTML = all.map(n => {
+  // 按作者排序（中文拼音序），同一作者的书排在一起；无作者的书排在最后，按书名排序
+  const byAuthor = all.slice().sort((a,b) => {
+    const x = (a.author||"").trim(), y = (b.author||"").trim();
+    if (!x && !y) return (a.title||"").localeCompare(b.title||"", "zh-Hans-CN");
+    if (!x) return 1;
+    if (!y) return -1;
+    const c = x.localeCompare(y, "zh-Hans-CN");
+    return c !== 0 ? c : (a.title||"").localeCompare(b.title||"", "zh-Hans-CN");
+  });
+  document.getElementById("novelGrid").innerHTML = byAuthor.map(n => {
     const f = novelFile(n);
     return `
     <article class="acard" data-title="${n.title||""}">
