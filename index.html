@@ -259,26 +259,24 @@
   .pet-inner{position:relative;cursor:grab;transform:scaleX(1);transition:transform .18s ease}
   .pet.dragging .pet-inner{cursor:grabbing}
   .pet img{width:100%;height:auto;display:block;pointer-events:none;
-    filter:drop-shadow(0 8px 16px rgba(16,44,80,.35));
-    -webkit-mask-image:linear-gradient(to bottom,#000 88%,transparent 100%);
-    mask-image:linear-gradient(to bottom,#000 88%,transparent 100%);
-    animation:petBob 4.2s ease-in-out infinite}
-  .pet.walking .pet-inner > img{animation:petStep .5s ease-in-out infinite}
+    filter:drop-shadow(0 6px 12px rgba(16,44,80,.30))}
+  .pet.idle img{animation:petBob 4.2s ease-in-out infinite}
+  .pet.walking img{animation:petWalkBob .52s ease-in-out infinite}
   .pet.dragging img{animation:none}
   @keyframes petBob{
-    0%,100%{transform:translateY(0) rotate(-1.2deg)}
-    50%{transform:translateY(-9px) rotate(1.2deg)}
+    0%,100%{transform:translateY(0) rotate(-1deg)}
+    50%{transform:translateY(-6px) rotate(1deg)}
   }
-  @keyframes petStep{
-    0%,100%{transform:translateY(0) rotate(-3deg)}
-    50%{transform:translateY(-7px) rotate(3deg)}
+  @keyframes petWalkBob{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-3px)}
   }
   @keyframes petBounce{
     0%,100%{transform:translateY(0)}
-    30%{transform:translateY(-20px)}
-    60%{transform:translateY(-7px)}
+    30%{transform:translateY(-22px)}
+    60%{transform:translateY(-8px)}
   }
-  .pet.bounce .pet-inner > img{animation:petBounce .55s ease}
+  .pet.bounce .pet-inner > img{animation:petBounce .6s ease}
   .pet .bubble{
     position:absolute;bottom:calc(100% + 2px);left:50%;
     transform:translateX(-50%) translateY(5px) scale(.94);transform-origin:bottom center;
@@ -309,7 +307,6 @@
   }
   @media(prefers-reduced-motion:reduce){
     .pet img{animation:none}
-    .pet.walking .pet-inner > img{animation:none}
   }
 </style>
 </head>
@@ -395,9 +392,9 @@
 </div>
 
 <!-- ============ 桌宠 ============ -->
-<div class="pet" id="pet" title="点我摸摸它 · 按住可以拖动 · 它会自己散步">
+<div class="pet" id="pet" title="我是ATRI～点我摸摸，按住能拖动，我还会自己散步哦">
   <div class="bubble" id="petBubble">你好呀～</div>
-  <div class="pet-inner"><img id="petImg" src="pet-yes.png" alt="ATRI 桌宠" draggable="false"></div>
+  <div class="pet-inner"><img id="petImg" src="pet-idle.png" alt="ATRI 桌宠" draggable="false"></div>
 </div>
 
 <script>
@@ -543,7 +540,7 @@ toggle.addEventListener("click", () => {
   else { document.documentElement.setAttribute("data-theme","dark"); toggle.textContent="☀️"; localStorage.setItem("theme","dark"); }
 });
 
-/* ---------- 桌宠：会散步 · 会坐下 · 摸它会开心 ---------- */
+/* ---------- 桌宠：全身 Q 版 ATRI · 会散步 · 会走 · 摸它开心 ---------- */
 (function(){
   const pet = document.getElementById("pet");
   if(!pet) return;
@@ -551,38 +548,67 @@ toggle.addEventListener("click", () => {
   const bubble = document.getElementById("petBubble");
   const inner = pet.querySelector(".pet-inner");
 
-  const SRC = { yes: "pet-yes.png", no: "pet-no.png" };
+  // 素材：全身 Q 版 ATRI —— 由图像生成 + 抠图 + 归一化得到（角色高/脚底基线已对齐）
+  const IDLE = "pet-idle.png", HAPPY = "pet-happy.png";
+  const WALK = ["pet-walk-1.png","pet-walk-2.png","pet-walk-3.png","pet-walk-4.png"];
+  const FRAME_MS = 130;   // 每帧停留时长，越小迈步越快
+
+  // ATRI 性格：高性能仿生机器人少女，感情丰富 / 好奇心旺盛 / 乐观天真 / 有点笨拙 / 常走神回忆丢失的记忆
   const LINES = {
-    yes:  ["要看看我的项目吗？","今天也来看我啦～","试试顶上的搜索框！","这两张图是我画的哦"],
-    no:   ["唔…不理你了","好吧，我自己在玩","真的不看一眼吗…"],
-    walk: ["去逛逛～","我去那边看看！","散步时间到～"],
-    pet:  ["谢谢你摸我♥","好开心～","最喜欢你了♥"]
+    yes:  ["我是高性能的嘛！主人的小站我也在学着打理～",
+           "今天也来看我啦，主人♪",
+           "上面那些项目都是主人做的哦，要不要看看？",
+           "我虽然家务不太行…但陪主人聊天是高性能的！",
+           "好吃就是高兴嘛！…啊，我刚在想螃蟹的事",
+           "主人的事，我都会好好记着的♪"],
+    // 走神 / 回忆：原作里她因沉睡海底丢失了部分记忆，常常发呆回想
+    no:   ["……（好像想起了一点什么，又模糊了）",
+           "海底沉睡的那段，记不太清了呢…",
+           "在发呆想想主人说过的话～",
+           "唔…我的记忆库，偶尔会卡一下"],
+    walk: ["去那边散散步～海边空气真好♪",
+           "走走走走～我可是高性能的腿脚哦！",
+           "去逛逛主人的小站角落！"],
+    pet:  ["谢谢你摸我，主人♥",
+           "好开心～最喜欢主人了♥",
+           "……（满足地哼起了小曲）♪"]
   };
+  const pick = a => a[Math.floor(Math.random()*a.length)];
 
-  let mood = "yes", state = "idle", dir = -1, targetX = null, dragging = false;
+  // 预加载所有帧，切换时不闪白
+  [IDLE, HAPPY].concat(WALK).forEach(s => { const i = new Image(); i.src = s; });
+
+  let state = "idle", dir = 0, targetX = null, dragging = false;
   let x = null, start = null, hideTimer = null, nextWander = 0;
+  let frameIdx = 0, frameClock = 0;
 
-  function setImg(s){ if(img.getAttribute("src") !== SRC[s]) img.setAttribute("src", SRC[s]); }
-  function setDir(d){ dir = d; inner.style.transform = "scaleX(" + d + ")"; }
+  function setImg(s){ if(img.getAttribute("src") !== s) img.setAttribute("src", s); }
+  function setDir(d){ if(dir === d) return; dir = d; inner.style.transform = "scaleX(" + d + ")"; }
   function say(text){
     bubble.textContent = text; bubble.classList.add("on");
     clearTimeout(hideTimer); hideTimer = setTimeout(() => bubble.classList.remove("on"), 3400);
   }
-  function setMood(s, speak){
-    mood = s; setImg(s);
-    if(speak){ const p = LINES[s]; say(p[Math.floor(Math.random()*p.length)]); }
-  }
   function petW(){ return pet.offsetWidth || 196; }
   function clampX(v){ const w = petW(); return Math.min(Math.max(v, 8), window.innerWidth - w - 8); }
-  function place(){ pet.style.right = "auto"; pet.style.bottom = "0"; pet.style.left = x + "px"; setDir(dir); }
+  function place(){ pet.style.right = "auto"; pet.style.bottom = "0"; pet.style.left = x + "px"; }
+  function setState(s){
+    state = s;
+    pet.classList.toggle("idle", s === "idle");
+    pet.classList.toggle("walking", s === "walking");
+  }
 
-  function pickWander(){
+  function enterIdle(now){
+    targetX = null; setState("idle"); setImg(IDLE);
+    nextWander = now + 4000 + Math.random()*5000;
+  }
+
+  function pickWander(now){
     const w = petW();
     let t = 8 + Math.random() * (window.innerWidth - w - 16);
     if(Math.abs(t - x) < 80) t = clampX(x + (Math.random() < .5 ? -1 : 1) * (180 + Math.random()*220));
     targetX = clampX(t);
-    state = "walking"; pet.classList.add("walking");
-    if(Math.random() < .5) say(LINES.walk[Math.floor(Math.random()*LINES.walk.length)]);
+    setState("walking"); setImg(WALK[0]); frameIdx = 0; frameClock = now;
+    if(Math.random() < .5) say(pick(LINES.walk));
   }
 
   function tick(now){
@@ -590,16 +616,17 @@ toggle.addEventListener("click", () => {
     if(state === "walking" && targetX != null){
       const step = 1.9;
       if(Math.abs(targetX - x) <= step){
-        x = targetX; state = "idle"; targetX = null; pet.classList.remove("walking");
-        nextWander = now + 4000 + Math.random()*5000;
+        x = targetX; place(); enterIdle(now);
       } else {
         setDir(targetX > x ? 1 : -1); x += dir * step; place();
+        if(now - frameClock >= FRAME_MS){            // 循环切换走路分解帧
+          frameClock = now; frameIdx = (frameIdx + 1) % WALK.length; setImg(WALK[frameIdx]);
+        }
       }
     } else if(state === "idle"){
       if(now > nextWander){
-        if(Math.random() < .7) pickWander();
-        else { nextWander = now + 9000; setMood("no", true);
-               setTimeout(() => { if(mood === "no" && state === "idle") setMood("yes", false); }, 2600); }
+        if(Math.random() < .7) pickWander(now);
+        else { nextWander = now + 9000; say(pick(LINES.no)); }   // 走神发呆
       }
     }
     requestAnimationFrame(tick);
@@ -607,7 +634,7 @@ toggle.addEventListener("click", () => {
 
   function hearts(){
     const r = pet.getBoundingClientRect();
-    const cx = r.left + r.width/2, cy = r.top + r.height*0.42;
+    const cx = r.left + r.width/2, cy = r.top + r.height*0.22;
     for(let i=0;i<4;i++){
       const h = document.createElement("div"); h.className = "heart"; h.textContent = "♥";
       h.style.left = (cx + (Math.random()*44 - 22)) + "px";
@@ -620,7 +647,7 @@ toggle.addEventListener("click", () => {
 
   pet.addEventListener("pointerdown", e => {
     if(e.target.closest(".bubble")) return;
-    dragging = true; state = "dragging"; pet.classList.remove("walking");
+    dragging = true; targetX = null; setState("dragging");
     const r = pet.getBoundingClientRect();
     start = { px:e.clientX, py:e.clientY, left:r.left, top:r.top, moved:false };
     pet.classList.add("dragging");
@@ -637,6 +664,14 @@ toggle.addEventListener("click", () => {
     pet.style.bottom = "auto"; pet.style.right = "auto";
     pet.style.left = L + "px"; pet.style.top = T + "px";
   });
+  function beHappy(){
+    setState("happy");                              // 关掉 idle / walking 动画
+    setImg(HAPPY); hearts(); say(pick(LINES.pet));
+    pet.classList.add("bounce");
+    setTimeout(() => pet.classList.remove("bounce"), 640);
+    setTimeout(() => { if(state === "happy") enterIdle(performance.now()); }, 1300);
+  }
+
   function endDrag(){
     if(!start) return;
     const wasDrag = start.moved; start = null; dragging = false; pet.classList.remove("dragging");
@@ -644,13 +679,9 @@ toggle.addEventListener("click", () => {
       x = clampX(pet.getBoundingClientRect().left);
       pet.style.top = "auto"; pet.style.bottom = "0"; place();
       try{ localStorage.setItem("petX", String(x)); }catch(_){}
-      nextWander = performance.now() + 3000 + Math.random()*3000; state = "idle";
+      enterIdle(performance.now());
     } else {
-      hearts(); setMood("yes", true);
-      const p = LINES.pet; say(p[Math.floor(Math.random()*p.length)]);
-      pet.classList.add("bounce");
-      setTimeout(() => pet.classList.remove("bounce"), 560);
-      nextWander = performance.now() + 5000;
+      beHappy();                                    // 单击＝摸摸它
     }
   }
   pet.addEventListener("pointerup", endDrag);
@@ -658,7 +689,7 @@ toggle.addEventListener("click", () => {
 
   pet.addEventListener("pointerenter", () => {
     if(start || dragging) return;
-    if(Math.random() < .5){ const p = LINES[mood]; say(p[Math.floor(Math.random()*p.length)]); }
+    if(Math.random() < .5) say(pick(state === "idle" ? LINES.yes : LINES.walk));
   });
 
   window.addEventListener("resize", () => { if(!dragging){ x = clampX(x); place(); } });
@@ -668,11 +699,11 @@ toggle.addEventListener("click", () => {
   let savedX = null;
   try{ const v = localStorage.getItem("petX"); if(v) savedX = clampX(parseFloat(v)); }catch(_){}
   x = savedX != null ? savedX : clampX(window.innerWidth - petW() - 16);
-  setDir(-1); place();
+  setDir(-1); setState("idle"); setImg(IDLE); place();
   nextWander = performance.now() + 4000 + Math.random()*4000;
 
   requestAnimationFrame(tick);
-  setTimeout(() => say("你好呀，我是 " + (typeof profile !== "undefined" ? profile.name : "ATRI") + "～"), 1100);
+  setTimeout(() => say("你好呀，我是高性能机器人 ATRI～主人把这小站交给我看着啦！"), 1100);
 })();
 </script>
 </body>
