@@ -30,7 +30,7 @@
     font-family:"Zen Maru Gothic","PingFang SC","Microsoft YaHei",-apple-system,sans-serif;
     color:var(--ink);line-height:1.75;min-height:100vh;overflow-x:hidden;
     background-color:#bfe0ff;
-    background-image:var(--veil),url('bg.jpg');
+    background-image:var(--veil),url('c922469b42fc459a26f6d155a0ef1cb96498967a45143cb9e0230a23c3e7d101.png');
     background-size:cover,cover;
     background-position:center,center;
     background-repeat:no-repeat,no-repeat;
@@ -66,26 +66,28 @@
   .theme-btn:hover{border-color:var(--accent);box-shadow:var(--glow)}
   @media(max-width:560px){.nav-links a:not(.theme-wrap){display:none}}
 
-   /* 日系标题描边字效果：白字 + 深蓝描边 + 多层发光，描边压在填充下方 */
-  .hero h1{font-size:clamp(36px,6.5vw,66px);font-weight:400;line-height:1.3;
+     /* 日系标题描边字：统一深蓝描边 + 亮色渐变填充，名字额外加光晕 */
+  .hero h1{font-size:clamp(36px,6.5vw,66px);font-weight:400;line-height:1.32;
     color:#ffffff;
-    -webkit-text-stroke:1.6px #0f3a6b;
+    -webkit-text-stroke:1.3px #0f3a6b;
     paint-order:stroke fill;
-    text-shadow:0 2px 0 #0f3a6b, 0 5px 14px rgba(8,26,52,.5), 0 0 22px rgba(143,208,255,.5);
-    letter-spacing:1px}
+    text-shadow:0 4px 14px rgba(10,40,80,.45), 0 0 20px rgba(143,208,255,.5);
+    letter-spacing:.5px}
   .hero h1 .grad{
-    background:linear-gradient(100deg,#eafaff,var(--accent3) 45%,var(--accent2));
+    background:linear-gradient(180deg,#ffffff 22%,#c7ebff 74%,#8fd8ff);
     -webkit-background-clip:text;background-clip:text;color:transparent;
-    -webkit-text-stroke:2px #ffffff;
+    -webkit-text-stroke:1.3px #0f3a6b;
     paint-order:stroke fill;
     text-shadow:none;
-    filter:drop-shadow(0 2px 8px rgba(47,155,255,.7))}
+    filter:drop-shadow(0 3px 10px rgba(30,120,200,.55));
+    margin-left:.18em}
   [data-theme="dark"] .hero h1{
-    -webkit-text-stroke-color:#bfe6ff;
-    text-shadow:0 2px 0 #06223f, 0 5px 16px rgba(0,0,0,.6), 0 0 26px rgba(53,211,224,.5)}
+    -webkit-text-stroke-color:#7cc4ff;
+    text-shadow:0 4px 16px rgba(0,0,0,.6), 0 0 22px rgba(53,211,224,.5)}
   [data-theme="dark"] .hero h1 .grad{
-    -webkit-text-stroke-color:#bff3ff;
-    filter:drop-shadow(0 0 14px rgba(53,211,224,.8))}
+    background:linear-gradient(180deg,#ffffff 20%,#a9e9ff 78%);
+    -webkit-text-stroke-color:#7cc4ff;
+    filter:drop-shadow(0 0 12px rgba(53,211,224,.8))}
 
 
   /* SECTIONS */
@@ -151,7 +153,7 @@
 
 <nav>
   <div class="wrap">
-    <div class="brand"><span class="star">✦</span><span id="navName">zero の小宇宙</span></div>
+    <div class="brand"><span class="star">✦</span><span id="navName">ATRI の小宇宙</span></div>
     <div class="nav-links">
       <a href="#projects">项目</a>
       <a href="#videos">视频</a>
@@ -164,7 +166,7 @@
 <header class="hero">
   <div class="wrap">
     <span class="badge">★ welcome to my world ★</span>
-    <h1>你好，我是 <span class="grad" id="heroName">zero</span></h1>
+   <h1>你好，我是<span class="grad" id="heroName">ATRI</span></h1>
     <p id="heroTagline">这里收藏着我做过的项目和我录下的游戏实况，欢迎来玩～</p>
     <div class="cta">
       <a class="btn primary" href="#projects">看我的项目 ✿</a>
@@ -205,7 +207,7 @@
 
 <footer>
   <div class="wrap">
-    <p>© <span id="year"></span> <span class="heart">♥</span> zero · 用 GitHub Pages 搭建 · Made with 二次元之力</p>
+    <p>© <span id="year"></span> <span class="heart">♥</span> ATRI · 用 GitHub Pages 搭建 · Made with 二次元之力</p>
   </div>
 </footer>
 
@@ -214,7 +216,7 @@
    只需要改下面这一块就能维护整个网站
    ============================================================ */
 const profile = {
-  name: "zero",
+  name: "ATRI",
   tagline: "这里收藏着我做过的项目和我录下的游戏实况，欢迎来玩～",
   socials: [
     { label: "GitHub",   url: "https://github.com/wuwanyu0828" },
