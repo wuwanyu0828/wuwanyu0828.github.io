@@ -37,8 +37,8 @@
     font-size:14px;color:var(--ink);line-height:1.6;min-height:100vh;overflow-x:hidden;
     background-color:#cfe6f8;
     background-image:var(--veil),url('c922469b42fc459a26f6d155a0ef1cb96498967a45143cb9e0230a23c3e7d101.png');
-    background-size:cover,cover;
-    background-position:center center,44% center;
+    background-size:cover,auto 160%;            /* 层级顺序＝先遮罩后照片：照片按高度放大，才能两轴平移 */
+    background-position:center center,75% 100%; /* 照片第2层：她的脸在图内(0.62,0.53)，这里把它顶进顶部横幅区 */
     background-repeat:no-repeat,no-repeat;
     background-attachment:fixed,fixed;
     -webkit-font-smoothing:antialiased;
@@ -300,10 +300,16 @@
     20%{opacity:1}
     100%{transform:translateY(-64px) scale(1.25);opacity:0}
   }
+  /* 竖屏（平板/手机竖着拿）：横幅更高、照片被放得更大，取景再往左收一点、并多放大些把脸抬上去 */
+  @media(orientation:portrait){
+    body{background-size:cover,auto 175%;background-position:center center,70% 100%}
+  }
   /* 手机端：很多手机浏览器 / App 内置浏览器的底部工具条会盖住视口底部，
      桌宠若贴死 bottom:0 就只剩头顶露出来 → 先整体抬起，JS 再按视觉视口与安全区精调 */
   @media(max-width:700px){
     .pet{right:8px;bottom:64px}
+    /* 窄屏：横幅更高、没有右上角数据卡，取景往左收一点，让她的脸居中 */
+    body{background-position:center center,68% 100%}
   }
   @media(max-width:640px){
     .pet{width:150px;right:8px}
