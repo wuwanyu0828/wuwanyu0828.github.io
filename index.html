@@ -331,64 +331,34 @@
   /* 探针：用于让 JS 读到 env(safe-area-inset-bottom)（刘海屏手势条 / iOS home 指示条） */
   #sabProbe{position:fixed;left:-9999px;top:0;width:1px;
     height:env(safe-area-inset-bottom,0px);pointer-events:none}
-  .pet{position:fixed;right:16px;bottom:0;width:200px;z-index:55;
-    user-select:none;-webkit-user-select:none;touch-action:none;will-change:left;
-    /* 皮肤配色变量（默认 = ATRI） */
-    --hair:#5fd6c8; --hair2:#2fb3a3; --skin:#ffe6d6; --skin2:#ffd3bd;
-    --cloth:#eaf3fb; --cloth2:#cfe1f6; --cloth3:#a9c8ee;
-    --eye:#e23b3b; --blush:#ff9aa9; --mouth:#d2607e; --accent:#7fe0d3;
-    --bow:#e2483f; --bow2:#c2332b; --flower:#ffd24a; --flower2:#ff9e2c}
-  /* —— ATRI 的其他服装（同一个人，只是换衣服） —— */
-  .pet.skin-atri-casual{--cloth:#ffe3ea;--cloth2:#ffc2d1;--cloth3:#ff9bb4;
-    --accent:#ffb3c6;--bow:#e98ba0;--bow2:#d96f88}
-  .pet.skin-atri-beach{--cloth:#bdeede;--cloth2:#8fd9c9;--cloth3:#5fc4b0;
-    --accent:#79e0c8;--bow:#3fae93;--bow2:#2f9279}
-  .pet-inner{position:relative;cursor:grab;transition:transform .18s ease;transform-origin:50% 100%}
+  .pet{position:fixed;right:16px;bottom:0;width:196px;z-index:55;
+    user-select:none;-webkit-user-select:none;touch-action:none;will-change:left}
+  .pet-inner{position:relative;cursor:grab;transform:scaleX(1);transition:transform .18s ease}
   .pet.dragging .pet-inner{cursor:grabbing}
-  .pet svg{width:100%;height:auto;display:block;overflow:visible;
-    filter:drop-shadow(0 6px 10px rgba(16,44,80,.38))}
-  /* 四肢 / 身体 / 头：独立分组，可分别旋转（transform-box:fill-box 让旋转轴落在自身包围盒） */
-  .pet-leg,.pet-arm{transform-box:fill-box}
-  .pet-leg-l,.pet-leg-r{transform-origin:50% 10%}
-  .pet-arm-l,.pet-arm-r{transform-origin:50% 12%}
-  .pet-body{transform-box:fill-box;transform-origin:50% 100%}
-  .pet-head{transform-box:fill-box;transform-origin:50% 100%}
-  #petEyes{transform-box:fill-box;transform-origin:50% 50%}
-  .atri-bow,.atri-flower{display:none}
-  .pet.skin-atri .atri-bow{display:block}
-  .pet.skin-atri-beach .atri-flower{display:block}
-  /* —— idle：呼吸 + 双臂轻摆 + 点头 + 眨眼 —— */
-  @keyframes petIdleBreath{0%,100%{transform:scaleY(1) translateY(0)}50%{transform:scaleY(1.035) translateY(-2px)}}
-  @keyframes petIdleArm{0%,100%{transform:rotate(5deg)}50%{transform:rotate(-5deg)}}
-  @keyframes petIdleHead{0%,100%{transform:rotate(0deg)}50%{transform:rotate(2.5deg)}}
-  @keyframes petBlink{0%,93%,100%{transform:scaleY(1)}96.5%{transform:scaleY(.08)}}
-  /* —— walk：双腿交替 + 双臂反向摆动 + 整体起伏 + 轻微点头 —— */
-  @keyframes petWalkLegL{0%,100%{transform:rotate(22deg)}50%{transform:rotate(-22deg)}}
-  @keyframes petWalkLegR{0%,100%{transform:rotate(-22deg)}50%{transform:rotate(22deg)}}
-  @keyframes petWalkArmL{0%,100%{transform:rotate(-15deg)}50%{transform:rotate(15deg)}}
-  @keyframes petWalkArmR{0%,100%{transform:rotate(15deg)}50%{transform:rotate(-15deg)}}
-  @keyframes petWalkBob{0%,100%{transform:translateY(0)}25%,75%{transform:translateY(-6px)}50%{transform:translateY(-2px)}}
-  @keyframes petWalkHead{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
-  @keyframes petBounce{0%,100%{transform:translateY(0)}30%{transform:translateY(-26px)}60%{transform:translateY(-9px)}}
-  .pet.idle .pet-body{animation:petIdleBreath 3.4s ease-in-out infinite}
-  .pet.idle .pet-arm-l,.pet.idle .pet-arm-r{animation:petIdleArm 3.4s ease-in-out infinite}
-  .pet.idle .pet-head{animation:petIdleHead 3.4s ease-in-out infinite}
-  .pet.idle #petEyes{animation:petBlink 4.6s ease-in-out infinite}
-  .pet.walking .pet-leg-l{animation:petWalkLegL .62s ease-in-out infinite}
-  .pet.walking .pet-leg-r{animation:petWalkLegR .62s ease-in-out infinite}
-  .pet.walking .pet-arm-l{animation:petWalkArmL .62s ease-in-out infinite}
-  .pet.walking .pet-arm-r{animation:petWalkArmR .62s ease-in-out infinite}
-  .pet.walking #petBob{animation:petWalkBob .62s ease-in-out infinite}
-  .pet.walking .pet-head{animation:petWalkHead .62s ease-in-out infinite}
-  .pet.dragging .pet-body,.pet.dragging .pet-arm-l,.pet.dragging .pet-arm-r,
-  .pet.dragging .pet-leg-l,.pet.dragging .pet-leg-r,.pet.dragging .pet-head,
-  .pet.dragging #petBob,.pet.dragging #petEyes{animation:none}
-  .pet.bounce #petBob{animation:petBounce .6s ease}
+  .pet img{width:100%;height:auto;display:block;pointer-events:none;
+    filter:drop-shadow(0 5px 10px rgba(16,44,80,.45))}
+  .pet.idle img{animation:petBob 4.2s ease-in-out infinite}
+  .pet.walking img{animation:petWalkBob .52s ease-in-out infinite}
+  .pet.dragging img{animation:none}
+  @keyframes petBob{
+    0%,100%{transform:translateY(0) rotate(-1deg)}
+    50%{transform:translateY(-6px) rotate(1deg)}
+  }
+  @keyframes petWalkBob{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-3px)}
+  }
+  @keyframes petBounce{
+    0%,100%{transform:translateY(0)}
+    30%{transform:translateY(-22px)}
+    60%{transform:translateY(-8px)}
+  }
+  .pet.bounce .pet-inner > img{animation:petBounce .6s ease}
   .pet .bubble{
-    position:absolute;bottom:calc(100% + 8px);left:50%;
+    position:absolute;bottom:calc(100% + 2px);left:50%;
     transform:translateX(-50%) translateY(5px) scale(.94);transform-origin:bottom center;
     background:#fff;color:#1b1d22;font-size:12px;line-height:1.5;font-weight:500;
-    padding:7px 12px;border-radius:12px;white-space:nowrap;max-width:240px;
+    padding:7px 12px;border-radius:12px;white-space:nowrap;
     box-shadow:0 8px 22px rgba(16,44,80,.22);opacity:0;pointer-events:none;
     transition:opacity .22s,transform .22s;
   }
@@ -397,17 +367,6 @@
     border:5px solid transparent;border-top-color:#fff}
   [data-theme="dark"] .pet .bubble{background:#22262e;color:#e9ecf1}
   [data-theme="dark"] .pet .bubble::after{border-top-color:#22262e}
-  /* 控制条：缩放 / 换肤（悬停或拖动时浮现） */
-  .pet-ctrl{position:absolute;left:50%;bottom:calc(100% + 46px);transform:translateX(-50%);
-    display:flex;gap:6px;opacity:0;transition:opacity .2s;pointer-events:none}
-  .pet:hover .pet-ctrl,.pet.show-ctrl .pet-ctrl{opacity:1;pointer-events:auto}
-  .pet-ctrl button{width:30px;height:30px;border-radius:50%;border:0;cursor:pointer;
-    background:rgba(255,255,255,.92);color:#1b1d22;font-size:15px;line-height:1;
-    box-shadow:0 4px 12px rgba(16,44,80,.25);display:flex;align-items:center;justify-content:center;
-    transition:transform .12s}
-  .pet-ctrl button:hover{transform:translateY(-2px)}
-  .pet-ctrl button:active{transform:translateY(0) scale(.92)}
-  [data-theme="dark"] .pet-ctrl button{background:rgba(40,45,54,.92);color:#e9ecf1}
   .heart{position:fixed;z-index:56;pointer-events:none;color:#ff5b8d;
     animation:heartFloat 1.1s ease-out forwards;will-change:transform,opacity}
   @keyframes heartFloat{
@@ -423,19 +382,19 @@
      桌宠若贴死 bottom:0 就只剩头顶露出来 → 先整体抬起，JS 再按视觉视口与安全区精调 */
   @media(max-width:700px){
     .pet{right:8px;bottom:64px}
+    /* 窄屏：横幅更高、没有右上角数据卡，取景往左收一点，让她的脸居中 */
     body{background-position:center center,68% 100%}
   }
   @media(max-width:640px){
-    .pet{width:158px;right:8px}
+    .pet{width:150px;right:8px}
     .pet .bubble{font-size:11px;padding:6px 10px}
-    .pet-ctrl button{width:26px;height:26px;font-size:13px}
   }
   @media(max-width:430px){
-    .pet{width:120px;right:6px}
+    .pet{width:112px;right:6px}
     .pet .bubble{font-size:10px;padding:5px 9px}
   }
   @media(prefers-reduced-motion:reduce){
-    .pet svg *{animation:none!important}
+    .pet img{animation:none}
   }
 </style>
 </head>
@@ -555,79 +514,7 @@
 
 <div class="pet" id="pet" title="我是ATRI～点我摸摸，按住能拖动，我还会自己散步哦">
   <div class="bubble" id="petBubble">你好呀～</div>
-  <div class="pet-ctrl" id="petCtrl">
-    <button type="button" data-act="small" title="变小">－</button>
-    <button type="button" data-act="big" title="变大">＋</button>
-    <button type="button" data-act="skin" title="换个 ATRI 的服装">🎨</button>
-  </div>
-  <div class="pet-inner">
-    <svg viewBox="0 0 220 300" id="petSvg" aria-label="桌宠 ATRI">
-      <ellipse class="pet-shadow" cx="110" cy="288" rx="46" ry="9" fill="rgba(16,44,80,.18)"/>
-      <g id="petLean">
-        <g id="petBob">
-          <!-- 腿 -->
-          <g class="pet-leg pet-leg-l">
-            <rect x="86" y="196" width="20" height="80" rx="10" style="fill:var(--cloth2)"/>
-            <ellipse cx="96" cy="278" rx="16" ry="9" style="fill:var(--skin2)"/>
-          </g>
-          <g class="pet-leg pet-leg-r">
-            <rect x="114" y="196" width="20" height="80" rx="10" style="fill:var(--cloth2)"/>
-            <ellipse cx="124" cy="278" rx="16" ry="9" style="fill:var(--skin2)"/>
-          </g>
-          <!-- 手臂（在身体两侧，肩在顶端） -->
-          <g class="pet-arm pet-arm-l">
-            <rect x="55" y="118" width="17" height="70" rx="8.5" style="fill:var(--skin)"/>
-            <circle cx="63.5" cy="188" r="10.5" style="fill:var(--skin)"/>
-          </g>
-          <g class="pet-arm pet-arm-r">
-            <rect x="148" y="118" width="17" height="70" rx="8.5" style="fill:var(--skin)"/>
-            <circle cx="156.5" cy="188" r="10.5" style="fill:var(--skin)"/>
-          </g>
-          <!-- 身体 -->
-          <g class="pet-body">
-            <path d="M74 122 Q110 110 146 122 L150 198 Q110 212 70 198 Z" style="fill:var(--cloth)"/>
-            <path d="M74 122 Q110 110 146 122 L148 152 Q110 164 72 152 Z" style="fill:var(--cloth2)"/>
-            <rect x="96" y="150" width="28" height="44" rx="7" style="fill:var(--cloth3)" opacity=".5"/>
-            <rect x="100" y="104" width="20" height="22" style="fill:var(--skin)"/>
-          </g>
-          <!-- 头 -->
-          <g class="pet-head">
-            <path d="M62 84 Q58 22 110 20 Q162 22 158 84 Q160 116 138 128 L82 128 Q60 116 62 84 Z" style="fill:var(--hair2)"/>
-            <circle cx="110" cy="78" r="44" style="fill:var(--skin)"/>
-            <circle cx="74" cy="82" r="7" style="fill:var(--skin)"/>
-            <circle cx="146" cy="82" r="7" style="fill:var(--skin)"/>
-            <path d="M70 94 Q63 120 74 134 Q80 116 78 98 Z" style="fill:var(--hair2)"/>
-            <path d="M150 94 Q157 120 146 134 Q140 116 142 98 Z" style="fill:var(--hair2)"/>
-            <ellipse cx="84" cy="92" rx="9" ry="5.5" style="fill:var(--blush)" opacity=".75"/>
-            <ellipse cx="136" cy="92" rx="9" ry="5.5" style="fill:var(--blush)" opacity=".75"/>
-            <g id="petEyes">
-              <ellipse cx="90" cy="78" rx="11" ry="13.5" fill="#fff"/>
-              <circle class="pupil" cx="90" cy="80" r="7" style="fill:var(--eye)"/>
-              <circle cx="87" cy="76" r="2.6" fill="#fff"/>
-              <ellipse cx="130" cy="78" rx="11" ry="13.5" fill="#fff"/>
-              <circle class="pupil" cx="130" cy="80" r="7" style="fill:var(--eye)"/>
-              <circle cx="127" cy="76" r="2.6" fill="#fff"/>
-            </g>
-            <path d="M104 95 Q110 101 116 95" style="stroke:var(--mouth)" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-            <path d="M68 72 Q72 34 110 32 Q148 34 152 72 Q146 54 130 54 Q136 70 120 62 Q122 48 110 48 Q98 48 100 62 Q84 70 90 54 Q74 54 68 72 Z" style="fill:var(--hair)"/>
-            <g class="atri-bow">
-              <path d="M110 130 L91 121 L91 139 Z" style="fill:var(--bow)"/>
-              <path d="M110 130 L129 121 L129 139 Z" style="fill:var(--bow)"/>
-              <rect x="104" y="124" width="12" height="12" rx="3.5" style="fill:var(--bow2)"/>
-            </g>
-            <g class="atri-flower">
-              <circle cx="150" cy="33" r="5" style="fill:var(--flower)"/>
-              <circle cx="141" cy="40" r="5" style="fill:var(--flower)"/>
-              <circle cx="146" cy="28" r="5" style="fill:var(--flower)"/>
-              <circle cx="159" cy="40" r="5" style="fill:var(--flower)"/>
-              <circle cx="154" cy="28" r="5" style="fill:var(--flower)"/>
-              <circle cx="150" cy="34" r="3.6" style="fill:var(--flower2)"/>
-            </g>
-          </g>
-        </g>
-      </g>
-    </svg>
-  </div>
+  <div class="pet-inner"><img id="petImg" src="pet-idle.png" alt="ATRI 桌宠" draggable="false"></div>
 </div>
 
 <script>
@@ -1849,15 +1736,18 @@ toggle.addEventListener("click", () => {
   else { document.documentElement.setAttribute("data-theme","dark"); toggle.textContent="☀️"; localStorage.setItem("theme","dark"); }
 });
 
-/* ---------- 桌宠：内联 SVG 角色 · 自然走路（双手双腿）· 视线跟随 · 缩放 · 换肤 · 悬停对话 ---------- */
+/* ---------- 桌宠：全身 Q 版 ATRI · 会散步 · 会走 · 摸它开心 ---------- */
 (function(){
   const pet = document.getElementById("pet");
   if(!pet) return;
-  const bubble  = document.getElementById("petBubble");
-  const inner   = pet.querySelector(".pet-inner");
-  const petHead = pet.querySelector(".pet-head");
-  const pupils  = pet.querySelectorAll(".pupil");
-  const petCtrl = document.getElementById("petCtrl");
+  const img = document.getElementById("petImg");
+  const bubble = document.getElementById("petBubble");
+  const inner = pet.querySelector(".pet-inner");
+
+  // 素材：全身 Q 版 ATRI —— 由图像生成 + 抠图 + 归一化得到（角色高/脚底基线已对齐）
+  const IDLE = "pet-idle.png", HAPPY = "pet-happy.png";
+  const WALK = ["pet-walk-1.png","pet-walk-2.png","pet-walk-3.png","pet-walk-4.png"];
+  const FRAME_MS = 130;   // 每帧停留时长，越小迈步越快
 
   // ATRI 性格：高性能仿生机器人少女，感情丰富 / 好奇心旺盛 / 乐观天真 / 有点笨拙 / 常走神回忆丢失的记忆
   const LINES = {
@@ -1867,6 +1757,7 @@ toggle.addEventListener("click", () => {
            "我虽然家务不太行…但陪主人聊天是高性能的！",
            "好吃就是高兴嘛！…啊，我刚在想螃蟹的事",
            "主人的事，我都会好好记着的♪"],
+    // 走神 / 回忆：原作里她因沉睡海底丢失了部分记忆，常常发呆回想
     no:   ["……（好像想起了一点什么，又模糊了）",
            "海底沉睡的那段，记不太清了呢…",
            "在发呆想想主人说过的话～",
@@ -1880,49 +1771,53 @@ toggle.addEventListener("click", () => {
   };
   const pick = a => a[Math.floor(Math.random()*a.length)];
 
-  // 外观（皮肤）循环：默认 ATRI / 猫耳 / 月亮星
-  const SKINS = ["atri","atri-casual","atri-beach"];
-  let skin = "atri", scale = 1;
-  try{ const s = localStorage.getItem("petSkin"); if(SKINS.indexOf(s) >= 0) skin = s; }catch(_){}
-  try{ const v = parseFloat(localStorage.getItem("petScale")); if(v >= 0.5 && v <= 2) scale = v; }catch(_){}
+  // 预加载所有帧，切换时不闪白
+  [IDLE, HAPPY].concat(WALK).forEach(s => { const i = new Image(); i.src = s; });
 
-  let state = "idle", targetX = null, dragging = false;
+  let state = "idle", dir = 0, targetX = null, dragging = false;
   let x = null, start = null, hideTimer = null, nextWander = 0;
-  let bottomMode = true, liftPx = 0;
-  let mx = window.innerWidth/2, my = window.innerHeight/2;     // 鼠标位置（视线跟随用）
-  let lastLine = null, lastLineT = 0;
+  let frameIdx = 0, frameClock = 0;
+  let bottomMode = true;   // true=贴底站立（bottom 定位）；false=被拖到别处（top 定位）
+  let liftPx = 0;          // 从视口底部抬起多少，避开浏览器 / App 底部工具条与安全区
 
+  function setImg(s){ if(img.getAttribute("src") !== s) img.setAttribute("src", s); }
+  function setDir(d){ if(dir === d) return; dir = d; inner.style.transform = "scaleX(" + d + ")"; }
   function say(text){
     bubble.textContent = text; bubble.classList.add("on");
-    clearTimeout(hideTimer); hideTimer = setTimeout(() => bubble.classList.remove("on"), 3600);
+    clearTimeout(hideTimer); hideTimer = setTimeout(() => bubble.classList.remove("on"), 3400);
   }
-  function petW(){ return pet.offsetWidth || 200; }
+  function petW(){ return pet.offsetWidth || 196; }
   function clampX(v){ const w = petW(); return Math.min(Math.max(v, 8), window.innerWidth - w - 8); }
   function place(){
     bottomMode = true;
     pet.style.right = "auto"; pet.style.top = "auto";
     pet.style.bottom = liftPx + "px"; pet.style.left = x + "px";
   }
-  function applySkin(){ pet.classList.remove("skin-atri","skin-atri-casual","skin-atri-beach"); pet.classList.add("skin-" + skin); }
-  function applyScale(){ inner.style.transform = "scale(" + scale + ")"; }
 
-  /* 算出桌宠该从视口底部抬起多少像素。手机上「贴死底部」会被浏览器 / App 内置浏览器
-     的底部工具条挡住 —— 只露出头顶。 */
+  /* 算出桌宠该从视口底部抬起多少像素。
+     手机上「贴死底部」会被浏览器 / App 内置浏览器的底部工具条挡住 —— 只露出头顶。 */
   function computeLift(){
     let lift = 0;
+    // 1) 安全区：刘海屏手势条 / iOS home 指示条
     const probe = document.getElementById("sabProbe");
     if(probe) lift = Math.max(lift, Math.round(probe.getBoundingClientRect().height));
+    // 2) 工具条 / 地址栏的遮挡：视觉视口比布局视口矮掉的那部分
     const vv = window.visualViewport;
-    if(vv && vv.height) lift = Math.max(lift, Math.round(window.innerHeight - (vv.offsetTop + vv.height)));
+    if(vv && vv.height){
+      lift = Math.max(lift, Math.round(window.innerHeight - (vv.offsetTop + vv.height)));
+    }
+    // 3) 手机 + 国内 App 内置浏览器：底部工具条常常不计入布局视口 → 保守再抬一截
     if(window.innerWidth <= 700){
       const ua = navigator.userAgent || "";
       const inApp = /DingTalk|MicroMessenger|QQ\/|QQBrowser|UCBrowser|Weibo|Alipay|Baidu|HuaweiBrowser|MiuiBrowser|VivoBrowser|HeytapBrowser/i.test(ua);
       lift = Math.max(lift, inApp ? 76 : 0);
     }
+    // 上限：最多抬到视口高度的 45%，免得把宠物顶到屏幕中间
     return Math.min(lift, Math.round(window.innerHeight * 0.45));
   }
   function applyLift(){
-    const before = liftPx; liftPx = computeLift();
+    const before = liftPx;
+    liftPx = computeLift();
     if(liftPx !== before && bottomMode && !dragging) place();
   }
   function setState(s){
@@ -1930,59 +1825,41 @@ toggle.addEventListener("click", () => {
     pet.classList.toggle("idle", s === "idle");
     pet.classList.toggle("walking", s === "walking");
   }
-  function enterIdle(now){ targetX = null; setState("idle"); nextWander = now + 4000 + Math.random()*5000; }
+
+  function enterIdle(now){
+    targetX = null; setState("idle"); setImg(IDLE);
+    nextWander = now + 4000 + Math.random()*5000;
+  }
+
   function pickWander(now){
-    let t = 8 + Math.random() * (window.innerWidth - petW() - 16);
+    const w = petW();
+    let t = 8 + Math.random() * (window.innerWidth - w - 16);
     if(Math.abs(t - x) < 80) t = clampX(x + (Math.random() < .5 ? -1 : 1) * (180 + Math.random()*220));
-    targetX = clampX(t); setState("walking");
+    targetX = clampX(t);
+    setState("walking"); setImg(WALK[0]); frameIdx = 0; frameClock = now;
     if(Math.random() < .5) say(pick(LINES.walk));
   }
 
-  // 视线跟随：瞳孔朝鼠标方向，幅度受限（角色正脸，无需左右翻转）
-  function moveEyes(){
-    if(!petHead || !pupils.length) return;
-    const hr = petHead.getBoundingClientRect();
-    const cx = hr.left + hr.width/2, cy = hr.top + hr.height*0.42;
-    const dx = mx - cx, dy = my - cy;
-    const dist = Math.min(Math.hypot(dx, dy) / 45, 1);
-    const ang = Math.atan2(dy, dx), max = 5;
-    const tf = "translate(" + (Math.cos(ang)*max*dist).toFixed(2) + " " + (Math.sin(ang)*max*dist*0.7).toFixed(2) + ")";
-    pupils.forEach(p => p.setAttribute("transform", tf));
-  }
-
-  // 悬停对话：探测桌宠中心下方的带 data-pet-line 内容（临时关掉宠物自身命中，好“看穿”它）
-  function petLineNow(){
-    const r = pet.getBoundingClientRect();
-    const cx = r.left + r.width/2, cy = r.top + r.height*0.5;
-    const prev = pet.style.pointerEvents; pet.style.pointerEvents = "none";
-    let el = null; try{ el = document.elementFromPoint(cx, cy); }catch(_){}
-    pet.style.pointerEvents = prev;
-    if(!el || !el.closest) return null;
-    const card = el.closest("[data-pet-line]");
-    return card ? card.getAttribute("data-pet-line") : null;
-  }
-  function checkHover(now){
-    const line = petLineNow();
-    if(line && line !== lastLine && now - lastLineT > 1500){ lastLine = line; lastLineT = now; say(line); }
-    else if(!line){ lastLine = null; }
-  }
-
   function tick(now){
-    if(!dragging){
-      if(state === "walking" && targetX != null){
-        const step = 1.9;
-        if(Math.abs(targetX - x) <= step){ x = targetX; place(); enterIdle(now); }
-        else { x += (targetX > x ? 1 : -1) * step; place(); }
-      } else if(state === "idle" && now > nextWander){
+    if(dragging){ requestAnimationFrame(tick); return; }
+    if(state === "walking" && targetX != null){
+      const step = 1.9;
+      if(Math.abs(targetX - x) <= step){
+        x = targetX; place(); enterIdle(now);
+      } else {
+        setDir(targetX > x ? 1 : -1); x += dir * step; place();
+        if(now - frameClock >= FRAME_MS){            // 循环切换走路分解帧
+          frameClock = now; frameIdx = (frameIdx + 1) % WALK.length; setImg(WALK[frameIdx]);
+        }
+      }
+    } else if(state === "idle"){
+      if(now > nextWander){
         if(Math.random() < .7) pickWander(now);
-        else { nextWander = now + 9000; say(pick(LINES.no)); }
+        else { nextWander = now + 9000; say(pick(LINES.no)); }   // 走神发呆
       }
     }
-    moveEyes();
-    checkHover(now);
     requestAnimationFrame(tick);
   }
-  window.addEventListener("pointermove", e => { mx = e.clientX; my = e.clientY; }, {passive:true});
 
   function hearts(){
     const r = pet.getBoundingClientRect();
@@ -1998,11 +1875,11 @@ toggle.addEventListener("click", () => {
   }
 
   pet.addEventListener("pointerdown", e => {
-    if(e.target.closest(".pet-ctrl") || e.target.closest(".bubble")) return;
+    if(e.target.closest(".bubble")) return;
     dragging = true; targetX = null; setState("dragging");
-    pet.classList.add("dragging","show-ctrl");
     const r = pet.getBoundingClientRect();
     start = { px:e.clientX, py:e.clientY, left:r.left, top:r.top, moved:false };
+    pet.classList.add("dragging");
     try{ pet.setPointerCapture(e.pointerId); }catch(_){}
   });
   pet.addEventListener("pointermove", e => {
@@ -2018,21 +1895,24 @@ toggle.addEventListener("click", () => {
     pet.style.left = L + "px"; pet.style.top = T + "px";
   });
   function beHappy(){
-    setState("happy");
-    hearts(); say(pick(LINES.pet));
+    setState("happy");                              // 关掉 idle / walking 动画
+    setImg(HAPPY); hearts(); say(pick(LINES.pet));
     pet.classList.add("bounce");
     setTimeout(() => pet.classList.remove("bounce"), 640);
     setTimeout(() => { if(state === "happy") enterIdle(performance.now()); }, 1300);
   }
+
   function endDrag(){
     if(!start) return;
     const wasDrag = start.moved; start = null; dragging = false; pet.classList.remove("dragging");
-    setTimeout(() => pet.classList.remove("show-ctrl"), 1600);
     if(wasDrag){
-      x = clampX(pet.getBoundingClientRect().left); place();
+      x = clampX(pet.getBoundingClientRect().left);
+      place();
       try{ localStorage.setItem("petX", String(x)); }catch(_){}
       enterIdle(performance.now());
-    } else { beHappy(); }
+    } else {
+      beHappy();                                    // 单击＝摸摸它
+    }
   }
   pet.addEventListener("pointerup", endDrag);
   pet.addEventListener("pointercancel", endDrag);
@@ -2042,36 +1922,21 @@ toggle.addEventListener("click", () => {
     if(Math.random() < .5) say(pick(state === "idle" ? LINES.yes : LINES.walk));
   });
 
-  // 控制条：缩放 / 换肤
-  if(petCtrl){
-    petCtrl.addEventListener("pointerdown", e => e.stopPropagation());   // 不触发拖动
-    petCtrl.addEventListener("click", e => {
-      const b = e.target.closest("button"); if(!b) return;
-      const act = b.getAttribute("data-act");
-      if(act === "small"){ scale = Math.max(0.5, +(scale - 0.15).toFixed(2)); applyScale(); try{ localStorage.setItem("petScale", String(scale)); }catch(_){} }
-      else if(act === "big"){ scale = Math.min(2, +(scale + 0.15).toFixed(2)); applyScale(); try{ localStorage.setItem("petScale", String(scale)); }catch(_){} }
-      else if(act === "skin"){
-        skin = SKINS[(SKINS.indexOf(skin) + 1) % SKINS.length];
-        applySkin(); try{ localStorage.setItem("petSkin", skin); }catch(_){}
-        say(skin === "atri" ? "经典水手服，还是最像我啦♪"
-            : skin === "atri-casual" ? "换上便服，轻松一点～"
-            : "戏水去咯，海边最棒了♪");
-      }
-    });
+  function relayout(){
+    applyLift();
+    if(!dragging){ x = clampX(x); place(); }
   }
-
-  function relayout(){ applyLift(); if(!dragging){ x = clampX(x); place(); } }
   window.addEventListener("resize", relayout);
   window.addEventListener("orientationchange", () => setTimeout(relayout, 150));
   if(window.visualViewport) window.visualViewport.addEventListener("resize", applyLift);
   window.addEventListener("beforeunload", () => { try{ localStorage.setItem("petX", String(x)); }catch(_){} });
 
-  // 初始化
+  // 初始位置：优先用上次保存的横向位置
   let savedX = null;
   try{ const v = localStorage.getItem("petX"); if(v) savedX = clampX(parseFloat(v)); }catch(_){}
   x = savedX != null ? savedX : clampX(window.innerWidth - petW() - 16);
   liftPx = computeLift();
-  applySkin(); applyScale(); setState("idle"); place();
+  setDir(-1); setState("idle"); setImg(IDLE); place();
   nextWander = performance.now() + 4000 + Math.random()*4000;
 
   requestAnimationFrame(tick);
