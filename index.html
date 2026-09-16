@@ -337,16 +337,11 @@
   .pet.dragging .pet-inner{cursor:grabbing}
   .pet img{width:100%;height:auto;display:block;pointer-events:none;
     filter:drop-shadow(0 5px 10px rgba(16,44,80,.45))}
-  .pet.idle img{animation:petBob 4.2s ease-in-out infinite}
-  .pet.walking img{animation:petWalkBob .52s ease-in-out infinite}
+  .pet.stand img,.pet.sit img{animation:petBob 4.2s ease-in-out infinite}
   .pet.dragging img{animation:none}
   @keyframes petBob{
     0%,100%{transform:translateY(0) rotate(-1deg)}
     50%{transform:translateY(-6px) rotate(1deg)}
-  }
-  @keyframes petWalkBob{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-3px)}
   }
   @keyframes petBounce{
     0%,100%{transform:translateY(0)}
@@ -378,7 +373,7 @@
   .pet .pet-eye{filter:none}
   .pet-eye{position:absolute;pointer-events:none;opacity:0;
     translate:var(--ex,0px) var(--ey,0px);transition:opacity .25s;will-change:translate}
-  .pet.idle .pet-eye{opacity:1}
+  .pet.stand .pet-eye,.pet.sit .pet-eye{opacity:1}
   .pet-ctl{position:absolute;top:-8px;right:-4px;display:flex;gap:4px;z-index:3;
     opacity:0;transition:opacity .2s}
   .pet:hover .pet-ctl{opacity:1}
@@ -1762,30 +1757,39 @@ toggle.addEventListener("click", () => {
   // 三套皮肤：水手服 / 便服 / 戏水。eyes 为瞳孔贴片（src + 相对 idle 画布的定位百分比，由裁眼脚本算出）。
   const SKINS = [
     { id:"sailor", label:"水手服", line:"换回水手服啦，标准配置！",
-      idle:"pet-idle.png", happy:"pet-happy.png",
-      walk:["pet-walk-1.png","pet-walk-2.png","pet-walk-3.png","pet-walk-2.png"],   // 跨步→并拢→换边跨步→并拢
-      eyes:[{src:"pet-eye-l.png",left:41.2,top:28.67,width:7.87},
-            {src:"pet-eye-r.png",left:59.21,top:28,width:7.04}] },
+      happy:"pet-happy.png",
+      stand:{ img:"pet-idle.png",
+        eyes:[{src:"pet-eye-l.png",left:41.2,top:28.67,width:7.87},
+              {src:"pet-eye-r.png",left:59.21,top:28,width:7.04}] },
+      sit:{ img:"pet-sit.png",
+        eyes:[{src:"pet-sit-eye-l.png",left:38.92,top:44.17,width:12.42},
+              {src:"pet-sit-eye-r.png",left:56.94,top:43.5,width:11.8}] } },
     { id:"casual", label:"便服", line:"换上便服啦～连帽衫最舒服了♪",
-      idle:"pet-casual-idle.png", happy:"pet-casual-happy.png",
-      walk:["pet-casual-walk-1.png","pet-casual-walk-2.png","pet-casual-walk-3.png","pet-casual-walk-2.png"],
-      eyes:[{src:"pet-casual-eye-l.png",left:40.17,top:27.67,width:9.52},
-            {src:"pet-casual-eye-r.png",left:57.97,top:27.17,width:8.9}] },
+      happy:"pet-casual-happy.png",
+      stand:{ img:"pet-casual-idle.png",
+        eyes:[{src:"pet-casual-eye-l.png",left:40.17,top:27.67,width:9.52},
+              {src:"pet-casual-eye-r.png",left:57.97,top:27.17,width:8.9}] },
+      sit:{ img:"pet-casual-sit.png",
+        eyes:[{src:"pet-casual-sit-eye-l.png",left:38.92,top:42.5,width:12.42},
+              {src:"pet-casual-sit-eye-r.png",left:56.73,top:41.67,width:11.8}] } },
     { id:"beach", label:"戏水", line:"去戏水咯！海边我最喜欢了♥",
-      idle:"pet-beach-idle.png", happy:"pet-beach-happy.png",
-      walk:["pet-beach-walk-1.png","pet-beach-walk-2.png","pet-beach-walk-3.png","pet-beach-walk-2.png"],
-      eyes:[{src:"pet-beach-eye-l.png",left:40.58,top:28.33,width:8.9},
-            {src:"pet-beach-eye-r.png",left:57.97,top:27.33,width:8.9}] }
+      happy:"pet-beach-happy.png",
+      stand:{ img:"pet-beach-idle.png",
+        eyes:[{src:"pet-beach-eye-l.png",left:40.58,top:28.33,width:8.9},
+              {src:"pet-beach-eye-r.png",left:57.97,top:27.33,width:8.9}] },
+      sit:{ img:"pet-beach-sit.png",
+        eyes:[{src:"pet-beach-sit-eye-l.png",left:38.92,top:45.67,width:12.42},
+              {src:"pet-beach-sit-eye-r.png",left:57.14,top:45.17,width:10.97}] } }
   ];
-  const FRAME_MS = 130;   // 每帧停留时长，越小迈步越快
-  let IDLE = "", HAPPY = "", WALK = [];
+  let HAPPY = "";
   let skinIdx = 0;
   try{ const v = parseInt(localStorage.getItem("petSkin"), 10); if(v >= 0 && v < SKINS.length) skinIdx = v; }catch(_){}
   const eyeImgs = inner.querySelectorAll(".pet-eye");
   function applySkin(){
     const sk = SKINS[skinIdx];
-    IDLE = sk.idle; HAPPY = sk.happy; WALK = sk.walk;
-    sk.eyes.forEach(function(e, i){
+    HAPPY = sk.happy;
+    poseImg = sk[posture].img;                      // 当前姿势(站/坐)的图与瞳孔贴片
+    sk[posture].eyes.forEach(function(e, i){
       const el = eyeImgs[i];
       el.setAttribute("src", e.src);
       el.style.left = e.left + "%"; el.style.top = e.top + "%"; el.style.width = e.width + "%";
@@ -1796,7 +1800,7 @@ toggle.addEventListener("click", () => {
   function cycleSkin(){
     skinIdx = (skinIdx + 1) % SKINS.length;
     const sk = applySkin();
-    if(state === "idle") setImg(IDLE);
+    if(state === "stand" || state === "sit") setImg(poseImg);
     say(sk.line);
   }
 
@@ -1813,9 +1817,12 @@ toggle.addEventListener("click", () => {
            "海底沉睡的那段，记不太清了呢…",
            "在发呆想想主人说过的话～",
            "唔…我的记忆库，偶尔会卡一下"],
-    walk: ["去那边散散步～海边空气真好♪",
-           "走走走走～我可是高性能的腿脚哦！",
-           "去逛逛主人的小站角落！"],
+    sitDown: ["坐下来歇一会儿～地面也挺舒服的",
+              "（坐下望向远处，想起了海边的风）",
+              "坐好啦，主人也歇会儿吧♪"],
+    standUp: ["站起身来活动一下♪",
+              "（伸了个懒腰）咻——坐久啦",
+              "换了个姿势，精神多了！"],
     pet:  ["谢谢你摸我，主人♥",
            "好开心～最喜欢主人了♥",
            "……（满足地哼起了小曲）♪"]
@@ -1824,18 +1831,17 @@ toggle.addEventListener("click", () => {
 
   // 预加载三套皮肤全部帧，切换不闪白
   SKINS.forEach(function(sk){
-    [sk.idle, sk.happy].concat(sk.walk, sk.eyes.map(function(e){ return e.src; }))
-      .forEach(function(src){ const i = new Image(); i.src = src; });
+    [sk.happy, sk.stand.img, sk.sit.img]
+      .concat(sk.stand.eyes, sk.sit.eyes)
+      .forEach(function(e){ const i = new Image(); i.src = (typeof e === "string") ? e : e.src; });
   });
 
-  let state = "idle", dir = 0, targetX = null, dragging = false;
-  let x = null, start = null, hideTimer = null, nextWander = 0;
-  let frameIdx = 0, frameClock = 0;
+  let state = "stand", posture = "stand", poseImg = "", dragging = false;
+  let x = null, start = null, hideTimer = null, nextPosture = 0;
   let bottomMode = true;   // true=贴底站立（bottom 定位）；false=被拖到别处（top 定位）
   let liftPx = 0;          // 从视口底部抬起多少，避开浏览器 / App 底部工具条与安全区
 
   function setImg(s){ if(img.getAttribute("src") !== s) img.setAttribute("src", s); }
-  function setDir(d){ if(dir === d) return; dir = d; inner.style.transform = "scaleX(" + d + ")"; }
   function say(text){
     bubble.textContent = text; bubble.classList.add("on");
     clearTimeout(hideTimer); hideTimer = setTimeout(() => bubble.classList.remove("on"), 3400);
@@ -1876,45 +1882,35 @@ toggle.addEventListener("click", () => {
   }
   function setState(s){
     state = s;
-    pet.classList.toggle("idle", s === "idle");
-    pet.classList.toggle("walking", s === "walking");
-    // 非静止状态时把视线回正，避免走路停下时眼睛"唰"地转向鼠标（只在 idle 跟随）
-    if(s !== "idle"){ inner.style.setProperty("--ex","0px"); inner.style.setProperty("--ey","0px"); }
+    pet.classList.toggle("stand", s === "stand");
+    pet.classList.toggle("sit", s === "sit");
+    // 只有站立/坐着(静止)时眼睛才跟随,其他状态回正
+    if(s !== "stand" && s !== "sit"){ inner.style.setProperty("--ex","0px"); inner.style.setProperty("--ey","0px"); }
   }
 
-  function enterIdle(now){
-    targetX = null; setState("idle"); setImg(IDLE);
-    nextWander = now + 4000 + Math.random()*5000;
+  // 站立/坐着交替:站一会儿,坐一会儿,不再走动
+  function enterRest(now){
+    setState(posture); setImg(poseImg);
+    nextPosture = now + 6000 + Math.random()*8000;
   }
-
-  function pickWander(now){
-    const w = petW();
-    let t = 8 + Math.random() * (window.innerWidth - w - 16);
-    if(Math.abs(t - x) < 80) t = clampX(x + (Math.random() < .5 ? -1 : 1) * (180 + Math.random()*220));
-    targetX = clampX(t);
-    setState("walking"); setImg(WALK[0]); frameIdx = 0; frameClock = now;
-    if(Math.random() < .5) say(pick(LINES.walk));
+  function togglePosture(now){
+    posture = (posture === "stand") ? "sit" : "stand";
+    applySkin();                                    // 重设当前姿势的图与瞳孔贴片
+    setState(posture); setImg(poseImg);
+    nextPosture = now + (posture === "stand" ? 14000 + Math.random()*6000
+                                            : 10000 + Math.random()*6000);
+    if(Math.random() < .35) say(pick(posture === "sit" ? LINES.sitDown : LINES.standUp));
   }
 
   function tick(now){
     if(dragging){ requestAnimationFrame(tick); return; }
-    if(state === "walking" && targetX != null){
-      const step = 1.9;
-      if(Math.abs(targetX - x) <= step){
-        x = targetX; place(); enterIdle(now);
-      } else {
-        x += (targetX > x ? 1 : -1) * step; place();
-        if(now - frameClock >= FRAME_MS){            // 循环切换走路分解帧
-          frameClock = now; frameIdx = (frameIdx + 1) % WALK.length; setImg(WALK[frameIdx]);
-        }
-      }
-    } else if(state === "idle"){
+    if(state === "stand" || state === "sit"){
       if(eyeLastMove && now - eyeLastMove > 2500){   // 鼠标停了一会儿,视线回正
         eyeLastMove = 0; inner.style.setProperty("--ex","0px"); inner.style.setProperty("--ey","0px");
       }
-      if(now > nextWander){
-        if(Math.random() < .7) pickWander(now);
-        else { nextWander = now + 9000; say(pick(LINES.no)); }   // 走神发呆
+      if(now > nextPosture){
+        if(Math.random() < .8) togglePosture(now);
+        else { nextPosture = now + 9000; say(pick(LINES.no)); }   // 走神发呆
       }
     }
     requestAnimationFrame(tick);
@@ -1935,7 +1931,7 @@ toggle.addEventListener("click", () => {
 
   pet.addEventListener("pointerdown", e => {
     if(e.target.closest(".bubble")) return;
-    dragging = true; targetX = null; setState("dragging");
+    dragging = true; setState("dragging");
     const r = pet.getBoundingClientRect();
     start = { px:e.clientX, py:e.clientY, left:r.left, top:r.top, moved:false };
     pet.classList.add("dragging");
@@ -1958,7 +1954,7 @@ toggle.addEventListener("click", () => {
     setImg(HAPPY); hearts(); say(pick(LINES.pet));
     pet.classList.add("bounce");
     setTimeout(() => pet.classList.remove("bounce"), 640);
-    setTimeout(() => { if(state === "happy") enterIdle(performance.now()); }, 1300);
+    setTimeout(() => { if(state === "happy") enterRest(performance.now()); }, 1300);
   }
 
   function endDrag(){
@@ -1968,7 +1964,7 @@ toggle.addEventListener("click", () => {
       x = clampX(pet.getBoundingClientRect().left);
       place();
       try{ localStorage.setItem("petX", String(x)); }catch(_){}
-      enterIdle(performance.now());
+      enterRest(performance.now());
     } else {
       beHappy();                                    // 单击＝摸摸它
     }
@@ -1978,7 +1974,7 @@ toggle.addEventListener("click", () => {
 
   pet.addEventListener("pointerenter", () => {
     if(start || dragging) return;
-    if(Math.random() < .5) say(pick(state === "idle" ? LINES.yes : LINES.walk));
+    if(Math.random() < .5) say(pick((state === "stand" || state === "sit") ? LINES.yes : LINES.pet));
   });
 
   function relayout(){
@@ -1990,7 +1986,7 @@ toggle.addEventListener("click", () => {
   if(window.visualViewport) window.visualViewport.addEventListener("resize", applyLift);
   window.addEventListener("beforeunload", () => { try{ localStorage.setItem("petX", String(x)); }catch(_){} });
 
-  /* ---- 视线跟随:瞳孔贴片随鼠标微移(仅站立时可见,走路时隐藏避免帧间错位) ---- */
+  /* ---- 视线跟随:瞳孔贴片随鼠标微移(仅站立/坐姿可见,开心/拖拽时隐藏) ---- */
   let eyeLastMove = 0, eyeRaf = 0;
   function lookAt(mx, my){
     const r = pet.getBoundingClientRect();
@@ -2001,7 +1997,7 @@ toggle.addEventListener("click", () => {
     inner.style.setProperty("--ey", (dy * 1.8 * k).toFixed(2) + "px");
   }
   window.addEventListener("pointermove", e => {
-    if(state !== "idle") return;          // 只在静止(idle)时跟随鼠标；走路/开心/拖动时不看鼠标方向
+    if(state !== "stand" && state !== "sit") return;   // 仅站立/坐姿跟随鼠标
     if(eyeRaf) return;
     eyeRaf = requestAnimationFrame(() => { eyeRaf = 0; lookAt(e.clientX, e.clientY); eyeLastMove = performance.now(); });
   }, {passive:true});
@@ -2048,8 +2044,8 @@ toggle.addEventListener("click", () => {
   try{ const v = localStorage.getItem("petX"); if(v) savedX = clampX(parseFloat(v)); }catch(_){}
   x = savedX != null ? savedX : clampX(window.innerWidth - petW() - 16);
   liftPx = computeLift();
-  setDir(1); applySkin(); setState("idle"); setImg(IDLE); place();
-  nextWander = performance.now() + 4000 + Math.random()*4000;
+  applySkin(); setState(posture); setImg(poseImg); place();
+  nextPosture = performance.now() + 10000 + Math.random()*8000;
 
   requestAnimationFrame(tick);
   // 开场白：若用户在 1.1s 内已互动（换装/摸摸/悬停台词），不打断
