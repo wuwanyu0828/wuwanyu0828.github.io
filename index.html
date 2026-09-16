@@ -250,6 +250,28 @@
   .acard.has-cover .acard-read{background:rgba(0,0,0,.38);border-color:rgba(255,255,255,.75);color:#fff}
   .acard.has-cover .acard-read:hover{background:#fff;border-color:#fff;color:#16181d}
   .acard-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+
+  /* 小说卡：不做满铺海报，改为左侧小书封 + 右侧干净文字，观感清爽不压字 */
+  .acard-body{position:relative;z-index:1;flex:1;min-width:0;display:flex;flex-direction:column}
+  .acard.is-book{
+    min-height:0;padding:12px 13px;flex-direction:row;align-items:flex-start;
+    gap:12px;justify-content:flex-start;
+  }
+  .acard.is-book .acard-bg{
+    position:relative;inset:auto;flex:none;width:64px;height:94px;border-radius:4px;
+    background-size:cover;background-position:center;
+    box-shadow:0 2px 8px rgba(0,0,0,.20),0 0 0 1px rgba(0,0,0,.06);
+  }
+  .acard.is-book .acard-bg::after{
+    content:"";position:absolute;top:0;bottom:0;left:0;width:4px;border-radius:4px 0 0 4px;
+    background:rgba(0,0,0,.18);
+  }
+  .acard.is-book:hover .acard-bg{transform:none}
+  .acard.is-book .acard-shade{display:none}
+  .acard.is-book h3{font-size:15px;line-height:1.4}
+  .acard.is-book .arow{margin-top:7px;font-size:12.5px}
+  .acard.is-book .arow .ak{min-width:40px}
+  .acard.is-book .acard-top{margin-bottom:9px}
   .acard-kind{font-size:11px;font-weight:500;color:var(--brand);background:var(--brand-soft);padding:3px 9px;border-radius:4px}
   .acard-links{display:flex;align-items:center;gap:6px}
   .acard-read{
@@ -1663,6 +1685,8 @@ function wikiUrl(entry, key, kind){
 // 封面映射：番剧为官方海报(经 AniList API 下载存本地)，小说为按主题程序化生成的设计封面
 window.COVERS = {
   anime: {
+    "百变的七仓同学": "covers/anime/giji-harem-163623.jpg",
+    "超时空辉夜姬": "covers/anime/chou-kaguya-hime-201903.jpg",
     "HELLO WORLD": "covers/anime/hello-world-106240.jpg",
     "你的名字": "covers/anime/kimi-no-na-wa-21519.jpg",
     "天气之子": "covers/anime/tenki-no-ko-106286.jpg",
@@ -1877,18 +1901,20 @@ function renderNovels(){
     const f = novelFile(n);
     const cover = (window.COVERS && COVERS.books[n.title]) || "";
     return `
-    <article class="acard${cover ? " has-cover" : ""}" data-title="${n.title||""}" data-pet-line="「${escAttr(n.title)}」是主人读的小说哦～">
-      ${cover ? `<div class="acard-bg" style="background-image:url('${cover}')"></div><div class="acard-shade"></div>` : ""}
-      <div class="acard-top">
-        <span class="acard-kind">${f ? "可读" : "小说"}</span>
-        <div class="acard-links">
-          ${f ? `<a class="acard-read" href="${f.href}" target="_blank" rel="noopener" title="${f.tip}">${f.icon} ${f.label}</a>` : ""}
-          <a class="acard-wiki" href="${wikiUrl(n,"title","novel")}" target="_blank" rel="noopener" title="在维基百科查看">📖</a>
+    <article class="acard${cover ? " is-book" : ""}" data-title="${n.title||""}" data-pet-line="「${escAttr(n.title)}」是主人读的小说哦～">
+      ${cover ? `<div class="acard-bg" style="background-image:url('${cover}')"></div>` : ""}
+      <div class="acard-body">
+        <div class="acard-top">
+          <span class="acard-kind">${f ? "可读" : "小说"}</span>
+          <div class="acard-links">
+            ${f ? `<a class="acard-read" href="${f.href}" target="_blank" rel="noopener" title="${f.tip}">${f.icon} ${f.label}</a>` : ""}
+            <a class="acard-wiki" href="${wikiUrl(n,"title","novel")}" target="_blank" rel="noopener" title="在维基百科查看">📖</a>
+          </div>
         </div>
-      </div>
-      <div class="acard-main">
-        <h3>${n.title||""}</h3>
-        ${n.author ? `<div class="arow"><span class="ak">作者</span><span class="aval">${n.author}</span></div>` : ""}
+        <div class="acard-main">
+          <h3>${n.title||""}</h3>
+          ${n.author ? `<div class="arow"><span class="ak">作者</span><span class="aval">${n.author}</span></div>` : ""}
+        </div>
       </div>
     </article>
   `}).join("");
