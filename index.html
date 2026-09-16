@@ -1878,6 +1878,8 @@ toggle.addEventListener("click", () => {
     state = s;
     pet.classList.toggle("idle", s === "idle");
     pet.classList.toggle("walking", s === "walking");
+    // 非静止状态时把视线回正，避免走路停下时眼睛"唰"地转向鼠标（只在 idle 跟随）
+    if(s !== "idle"){ inner.style.setProperty("--ex","0px"); inner.style.setProperty("--ey","0px"); }
   }
 
   function enterIdle(now){
@@ -1999,6 +2001,7 @@ toggle.addEventListener("click", () => {
     inner.style.setProperty("--ey", (dy * 1.8 * k).toFixed(2) + "px");
   }
   window.addEventListener("pointermove", e => {
+    if(state !== "idle") return;          // 只在静止(idle)时跟随鼠标；走路/开心/拖动时不看鼠标方向
     if(eyeRaf) return;
     eyeRaf = requestAnimationFrame(() => { eyeRaf = 0; lookAt(e.clientX, e.clientY); eyeLastMove = performance.now(); });
   }, {passive:true});
