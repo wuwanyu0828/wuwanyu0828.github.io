@@ -410,7 +410,6 @@
     </div>
     <div class="acts">
       <button class="icon-btn" id="themeToggle" title="切换昼 / 夜">🌙</button>
-      <a class="btn-up" id="upBtn" href="#videos">看视频</a>
     </div>
   </div>
 </header>
@@ -421,11 +420,13 @@
     <div>
       <span class="kicker">PERSONAL PAGE</span>
       <h1>你好，我是 <span class="nm" id="heroName">ATRI</span></h1>
-      <p id="heroTagline">这里收着我做的小项目和我录的游戏实况。</p>
+      <p id="heroTagline">这里收着我做的小项目、录的游戏实况，还有我追的番剧和我读的小说。</p>
     </div>
     <div class="bstats">
       <div class="s"><b id="statProj">0</b><span>个项目</span></div>
       <div class="s"><b id="statVid">0</b><span>个视频</span></div>
+      <div class="s"><b id="statAnime">0</b><span>部剧</span></div>
+      <div class="s"><b id="statBook">0</b><span>本书</span></div>
     </div>
   </div>
 </section>
@@ -526,7 +527,7 @@
    ============================================================ */
 const profile = {
   name: "ATRI",
-  tagline: "这里收着我做的小项目和我录的游戏实况。",
+  tagline: "这里收着我做的小项目、录的游戏实况，还有我追的番剧和我读的小说。",
   socials: [
     { icon: "🐙", label: "GitHub",   url: "https://github.com/wuwanyu0828" },
     { icon: "▶",  label: "YouTube",  url: "https://www.youtube.com/" },
@@ -1445,6 +1446,8 @@ document.getElementById("heroTagline").textContent = profile.tagline;
 document.getElementById("year").textContent = new Date().getFullYear();
 document.getElementById("statProj").textContent = projects.length;
 document.getElementById("statVid").textContent = videos.length;
+document.getElementById("statAnime").textContent = anime.length;
+document.getElementById("statBook").textContent = novels.length;
 
 document.getElementById("projectGrid").innerHTML = projects.map(p => `
   <article class="pcard" data-title="${p.title}">
@@ -1490,10 +1493,13 @@ document.getElementById("socialList").innerHTML = profile.socials.map(s => `
 
 /* ---------- 追番追剧 / 小说 记录 ---------- */
 // 维基链接：填了完整网址就用它；否则按名称自动生成中文维基百科条目地址
-function wikiUrl(entry, key){
+function wikiUrl(entry, key, kind){
   if(entry.wiki && /^https?:\/\//i.test(entry.wiki)) return entry.wiki;
   const t = (entry[key] || "").trim();
-  return "https://zh.wikipedia.org/wiki/" + encodeURIComponent(t);
+  // 同名容易撞到无关词条（如 HELLO WORLD 指向编程术语），加类型限定词搜索可落回正确词条
+  if (!t) return "https://zh.wikipedia.org";
+  const q = t + (kind === "novel" ? " 小说" : " 动漫");
+  return "https://zh.wikipedia.org/w/index.php?search=" + encodeURIComponent(q) + "&title=Special:Search";
 }
 // 记录内容固定写在页面上方数据数组里，访客不能在页面上添加，保证内容不被改乱
 
@@ -1502,7 +1508,7 @@ function renderAnime(){
     <article class="acard" data-title="${a.title||""}">
       <div class="acard-top">
         <span class="acard-kind">番剧</span>
-        <a class="acard-wiki" href="${wikiUrl(a,"title")}" target="_blank" rel="noopener" title="在维基百科查看">📖</a>
+        <a class="acard-wiki" href="${wikiUrl(a,"title","anime")}" target="_blank" rel="noopener" title="在维基百科查看">📖</a>
       </div>
       <h3>${a.title||""}</h3>
       ${a.heroine ? `<div class="arow"><span class="ak">女主角</span><span class="aval">${a.heroine}</span></div>` : ""}
@@ -1536,7 +1542,7 @@ function renderNovels(){
         <span class="acard-kind">${f ? "可读" : "小说"}</span>
         <div class="acard-links">
           ${f ? `<a class="acard-read" href="${f.href}" target="_blank" rel="noopener" title="${f.tip}">${f.icon} ${f.label}</a>` : ""}
-          <a class="acard-wiki" href="${wikiUrl(n,"title")}" target="_blank" rel="noopener" title="在维基百科查看">📖</a>
+          <a class="acard-wiki" href="${wikiUrl(n,"title","novel")}" target="_blank" rel="noopener" title="在维基百科查看">📖</a>
         </div>
       </div>
       <h3>${n.title||""}</h3>
