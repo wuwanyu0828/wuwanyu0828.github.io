@@ -512,12 +512,16 @@
 <div id="sabProbe" aria-hidden="true"></div>
 
 <!-- ============ 桌宠 ============ -->
-<!-- 待办事项：右侧悬浮，可隐藏，数据只存在自己浏览器里 -->
+<!-- 待办事项：右侧悬浮，可隐藏，可直接增删改；数据只存在自己本机浏览器里（各设备互不影响） -->
 <button class="todo-fab" id="todoFab" type="button" title="待办事项">📝<span class="todo-badge" id="todoBadge" hidden></span></button>
 <div class="todo-panel" id="todoPanel" role="dialog" aria-label="待办事项">
   <div class="todo-head"><b>📝 待办事项</b><button class="tclose" id="todoClose" type="button" title="收起">✕</button></div>
+  <form class="todo-form" id="todoForm">
+    <input id="todoInput" type="text" maxlength="120" placeholder="写点待办，回车就加上～" autocomplete="off">
+    <button type="submit" title="添加">＋</button>
+  </form>
   <ul class="todo-list" id="todoList"></ul>
-  <div class="todo-foot"><span id="todoCount"></span><span class="todo-ro">本页只读</span></div>
+  <div class="todo-foot"><span id="todoCount"></span><button class="tclear" id="todoClear" type="button">清空已完成</button></div>
 </div>
 
 <div class="pet" id="pet" title="我是ATRI～点我摸摸，按住能拖动，我还会自己散步哦">
@@ -1691,15 +1695,21 @@ const todoPanel = document.getElementById("todoPanel");
 const todoList  = document.getElementById("todoList");
 const todoBadge = document.getElementById("todoBadge");
 const todoCount = document.getElementById("todoCount");
+const todoForm  = document.getElementById("todoForm");
+const todoInput = document.getElementById("todoInput");
 
-// 只读渲染：不提供勾选 / 删除 / 新增，避免任何人都能在页面上改动内容
+// 渲染列表（数据存本机 localStorage：别人在自己的浏览器里改不到你的清单，也改不动网站本身）
 function escTodo(s){ return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
 function renderTodo(){
   if(!todos.length){
-    todoList.innerHTML = `<div class="todo-empty">还没有待办～</div>`;
+    todoList.innerHTML = `<div class="todo-empty">还没有待办～写下第一条吧</div>`;
   }else{
-    todoList.innerHTML = todos.map(t => `
-      <li class="${t.done ? "done" : ""}"><span class="txt">${escTodo(t.text)}</span></li>
+    todoList.innerHTML = todos.map((t, i) => `
+      <li class="${t.done ? "done" : ""}" data-i="${i}">
+        <input type="checkbox" ${t.done ? "checked" : ""} data-act="toggle" title="标记完成/取消">
+        <span class="txt">${escTodo(t.text)}</span>
+        <button class="del" data-act="del" title="删除" type="button">✕</button>
+      </li>
     `).join("");
   }
   const left = todos.filter(t => !t.done).length;
@@ -1711,7 +1721,28 @@ function renderTodo(){
 function todoToggle(force){
   const on = force !== undefined ? force : !todoPanel.classList.contains("on");
   todoPanel.classList.toggle("on", on);
+  if(on) setTimeout(() => todoInput.focus(), 60);
 }
+/* ---- 增删改：只影响本浏览器的 localStorage，别人看不到也改不到你这份清单 ---- */
+todoForm.addEventListener("submit", e => {
+  e.preventDefault();
+  const v = todoInput.value.trim();
+  if(!v) return;
+  todos.push({ text: v, done: false });
+  todoSave(todos); todoInput.value = ""; renderTodo();
+});
+todoList.addEventListener("click", e => {
+  const btn = e.target.closest("[data-act]");
+  if(!btn) return;
+  const i = parseInt(btn.closest("li").dataset.i, 10);
+  if(btn.dataset.act === "toggle"){ todos[i].done = !todos[i].done; }
+  else { todos.splice(i, 1); }
+  todoSave(todos); renderTodo();
+});
+document.getElementById("todoClear").addEventListener("click", () => {
+  todos = todos.filter(t => !t.done);
+  todoSave(todos); renderTodo();
+});
 todoFab.addEventListener("click", () => todoToggle());
 document.getElementById("todoClose").addEventListener("click", () => todoToggle(false));
 document.addEventListener("keydown", e => {
