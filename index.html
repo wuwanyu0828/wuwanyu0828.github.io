@@ -198,7 +198,9 @@
     background-image:linear-gradient(rgba(255,255,255,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.16) 1px,transparent 1px);
     background-size:26px 26px;
   }
-  .pcover .big{font-size:52px;position:relative;filter:drop-shadow(0 4px 12px rgba(0,0,0,.28));transition:transform .3s}
+  .pcover-img{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;transition:transform .35s}
+  .pcard:hover .pcover-img{transform:scale(1.04)}
+  .pcover .big{font-size:52px;position:relative;z-index:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,.28));transition:transform .3s}
   .pcard:hover .pcover .big{transform:scale(1.08) rotate(-3deg)}
   .pcover .corner{
     position:absolute;top:9px;left:9px;z-index:2;font-size:11px;font-weight:500;color:#fff;
@@ -222,9 +224,31 @@
   .agrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:18px;padding-bottom:24px}
   .acard{
     background:var(--panel);border:1px solid var(--panel-brd);border-radius:var(--radius);
-    padding:15px 16px 16px;transition:transform .22s,box-shadow .22s;position:relative;
+    padding:13px 15px 15px;transition:transform .22s,box-shadow .22s;position:relative;
+    overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;min-height:264px;
+    isolation:isolate;
   }
   .acard:hover{transform:translateY(-3px);box-shadow:var(--shadow-hi)}
+  /* 封面海报层 */
+  .acard-bg{
+    position:absolute;inset:0;z-index:0;background-size:cover;background-position:center 32%;
+    transition:transform .4s ease;
+  }
+  .acard:hover .acard-bg{transform:scale(1.055)}
+  .acard-shade{
+    position:absolute;inset:0;z-index:0;
+    background:linear-gradient(180deg,rgba(8,10,18,.20) 0%,rgba(8,10,18,.26) 42%,rgba(8,10,18,.88) 100%);
+  }
+  .acard .acard-top,.acard .acard-main{position:relative;z-index:1}
+  /* 有封面时文字反白，保证海报上清晰可读 */
+  .acard.has-cover h3{color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.6)}
+  .acard.has-cover .arow .ak{color:rgba(255,255,255,.66)}
+  .acard.has-cover .arow .aval{color:rgba(255,255,255,.94)}
+  .acard.has-cover .acard-kind{background:rgba(0,0,0,.45);color:#fff;backdrop-filter:blur(4px)}
+  .acard.has-cover .acard-wiki{background:rgba(0,0,0,.38);border-color:rgba(255,255,255,.4);color:#fff}
+  .acard.has-cover .acard-wiki:hover{border-color:#fff;color:#fff}
+  .acard.has-cover .acard-read{background:rgba(0,0,0,.38);border-color:rgba(255,255,255,.75);color:#fff}
+  .acard.has-cover .acard-read:hover{background:#fff;border-color:#fff;color:#16181d}
   .acard-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
   .acard-kind{font-size:11px;font-weight:500;color:var(--brand);background:var(--brand-soft);padding:3px 9px;border-radius:4px}
   .acard-links{display:flex;align-items:center;gap:6px}
@@ -548,6 +572,7 @@ const profile = {
 const projects = [
   {
     emoji: "🔍",
+    cover: "covers/proj-and-then-there-were-none.jpg",
     corner: "互动视觉小说",
     title: "无人生还 · 游戏化改编",
     desc: "把阿加莎·克里斯蒂的经典悬疑《无人生还》改编成可互动的视觉小说，让没读过原著的人也能沉浸走进这场孤岛谜案。",
@@ -557,6 +582,7 @@ const projects = [
   },
   {
     emoji: "🐢",
+    cover: "covers/proj-turtle-soup.jpg",
     corner: "推理问答",
     title: "海龟汤题库 · 情景推理",
     desc: "一个海龟汤（情境推理）在线题库，用一个个短谜题考验你的联想力与推理能力，看看你能猜中几个。",
@@ -1462,6 +1488,7 @@ const escAttr = s => String(s==null?"":s).replace(/"/g,"&quot;");
 document.getElementById("projectGrid").innerHTML = projects.map(p => `
   <article class="pcard" data-title="${p.title}" data-pet-line="这是主人做的「${escAttr(p.title)}」哦～高性能的我在偷偷学习♪">
     <a class="pcover" href="${p.link||"#"}" target="_blank" rel="noopener" title="${p.title}">
+      ${p.cover ? `<img class="pcover-img" src="${p.cover}" alt="" loading="lazy">` : ""}
       ${p.corner ? `<span class="corner">${p.corner}</span>` : ""}
       <span class="big">${p.emoji||"✨"}</span>
     </a>
@@ -1633,20 +1660,200 @@ function wikiUrl(entry, key, kind){
   const q = t + (kind === "novel" ? " 小说" : " 动漫");
   return "https://zh.wikipedia.org/w/index.php?search=" + encodeURIComponent(q) + "&title=Special:Search";
 }
+// 封面映射：番剧为官方海报(经 AniList API 下载存本地)，小说为按主题程序化生成的设计封面
+window.COVERS = {
+  anime: {
+    "HELLO WORLD": "covers/anime/hello-world-106240.jpg",
+    "你的名字": "covers/anime/kimi-no-na-wa-21519.jpg",
+    "天气之子": "covers/anime/tenki-no-ko-106286.jpg",
+    "青春猪头少年不会梦到兔女郎学姐": "covers/anime/seishun-buta-yarou-wa-bunny-girl-senpai-no-y-101291.jpg",
+    "某科学的超电磁炮": "covers/anime/toaru-kagaku-no-railgun-t-104462.jpg",
+    "我的青春恋爱物语果然有问题": "covers/anime/yahari-ore-no-seishun-love-come-wa-machigatt-20698.jpg",
+    "四月是你的谎言": "covers/anime/shigatsu-wa-kimi-no-uso-20665.jpg",
+    "烟花": "covers/anime/uchiage-hanabi-shita-kara-miru-ka-yoko-kara--97908.jpg",
+    "萤火之森": "covers/anime/hotarubi-no-mori-e-10408.jpg",
+    "我想吃掉你的胰脏": "covers/anime/kimi-no-suizou-wo-tabetai-99750.jpg",
+    "月色真美": "covers/anime/tsuki-ga-kirei-98202.jpg",
+    "我们仍未知道那天所看见的花的名字": "covers/anime/ano-hi-mita-hana-no-namae-wo-bokutachi-wa-ma-9989.jpg",
+    "秒速五厘米": "covers/anime/byousoku-5-centimeter-1689.jpg",
+    "言叶之庭": "covers/anime/kotonoha-no-niwa-16782.jpg",
+    "欢迎来到实力至上的教室": "covers/anime/youkoso-jitsuryoku-shijou-shugi-no-kyoushits-146066.jpg",
+    "想哭的我带上了猫面具": "covers/anime/nakitai-watashi-wa-neko-wo-kaburu-114963.jpg",
+    "声之形": "covers/anime/koe-no-katachi-20954.jpg",
+    "夏目友人帐": "covers/anime/natsume-yuujinchou-shi-11665.jpg",
+    "辉夜大小姐想让我告白": "covers/anime/kaguya-sama-wa-kokurasetai-ultra-romantic-125367.jpg",
+    "魔法禁书目录": "covers/anime/toaru-majutsu-no-index-ii-8937.jpg",
+    "总之就是非常可爱": "covers/anime/tonikaku-kawaii-116267.jpg",
+    "间谍过家家": "covers/anime/spy-family-140960.jpg",
+    "中二病也想谈恋爱": "covers/anime/chuunibyou-demo-koi-ga-shitai-take-on-me-98762.jpg",
+    "Charlotte": "covers/anime/charlotte-20997.jpg",
+    "路人女主的养成方法": "covers/anime/saenai-heroine-no-sodatekata-20657.jpg",
+    "堀与宫村": "covers/anime/horimiya-124080.jpg",
+    "小林家的龙女仆": "covers/anime/kobayashi-san-chi-no-maidragon-s-107717.jpg",
+    "动物狂想曲": "covers/anime/beastars-2nd-season-114194.jpg",
+    "五等分的新娘": "covers/anime/go-toubun-no-hanayome-109261.jpg",
+    "ReLIFE": "covers/anime/relife-21049.jpg",
+    "Clannad": "covers/anime/clannad-after-story-4181.jpg",
+    "莉可丽丝": "covers/anime/lycoris-recoil-143270.jpg",
+    "三坪房间的侵略者": "covers/anime/rokujouma-no-shinryakusha-20638.jpg",
+    "孤独摇滚": "covers/anime/bocchi-the-rock-130003.jpg",
+    "知晓天空之蓝的人啊": "covers/anime/sora-no-aosa-wo-shiru-hito-yo-108577.jpg",
+    "心灵想要大声呼喊": "covers/anime/kokoro-ga-sakebitagatterun-da-20968.jpg",
+    "重启咲良田": "covers/anime/sagrada-reset-97660.jpg",
+    "弹丸论破": "covers/anime/danganronpa-3-the-end-of-kibougamine-gakuen--21825.jpg",
+    "Angel Beats!": "covers/anime/angel-beats-6547.jpg",
+    "樱花庄的宠物女孩": "covers/anime/sakurasou-no-pet-na-kanojo-13759.jpg",
+    "游戏人生": "covers/anime/no-game-no-life-zero-21875.jpg",
+    "铃芽之旅": "covers/anime/suzume-no-tojimari-142770.jpg",
+    "少女终末旅行": "covers/anime/shoujo-shuumatsu-ryokou-99420.jpg",
+    "虚构推理": "covers/anime/kyokou-suiri-107201.jpg",
+    "冰属性男子和酷酷女同事": "covers/anime/koori-zokusei-danshi-to-cool-na-douryou-josh-151252.jpg",
+    "可塑性记忆": "covers/anime/plastic-memories-20872.jpg",
+    "某科学的一方通行": "covers/anime/toaru-kagaku-no-accelerator-104463.jpg",
+    "我女友与青梅竹马的惨烈修罗场": "covers/anime/ore-no-kanojo-to-osananajimi-ga-shuraba-sugi-14749.jpg",
+    "杀戮的天使": "covers/anime/satsuriku-no-tenshi-99629.jpg",
+    "式守同学不只可爱而已": "covers/anime/kawaii-dake-ja-nai-shikimori-san-127911.jpg",
+    "玉子市场": "covers/anime/tamako-market-16417.jpg",
+    "未确认进行式": "covers/anime/mikakunin-de-shinkoukei-20483.jpg",
+    "跃动青春": "covers/anime/skip-to-loafer-141911.jpg",
+    "从零开始的异世界生活": "covers/anime/re-zero-kara-hajimeru-isekai-seikatsu-2nd-se-119661.jpg",
+    "夏日重现": "covers/anime/summer-time-render-129201.jpg",
+    "我推的孩子": "covers/anime/oshi-no-ko-2nd-season-166531.jpg",
+    "继母的拖油瓶是我的前女友": "covers/anime/mamahaha-no-tsurego-ga-motokano-datta-136934.jpg",
+    "缘之空": "covers/anime/yosuga-no-sora-8861.jpg",
+    "间谍教室": "covers/anime/spy-kyoushitsu-2nd-season-163542.jpg",
+    "未来日记": "covers/anime/mirai-nikki-10620.jpg",
+    "BanGDream!It’sMyGO!!!!!": "covers/anime/bang-dream-it-s-mygo-163571.jpg",
+    "赌博默示录": "covers/anime/gyakkyou-burai-kaiji-hakairoku-hen-10271.jpg",
+    "我内心的糟糕念头": "covers/anime/boku-no-kokoro-no-yabai-yatsu-2nd-season-166216.jpg",
+    "狂赌之渊": "covers/anime/kakegurui-100876.jpg",
+    "关于我在无意间被隔壁的天使变成废柴这件事": "covers/anime/otonari-no-tenshi-sama-ni-itsunomanika-dame--143338.jpg",
+    "东京喰种": "covers/anime/tokyo-ghoul-20605.jpg",
+    "家有女友": "covers/anime/domestic-na-kanojo-103139.jpg",
+    "链锯人": "covers/anime/chainsaw-man-127230.jpg",
+    "你想活出怎样的人生": "covers/anime/kimitachi-wa-dou-ikiru-ka-109979.jpg",
+    "我的鬼女孩": "covers/anime/suki-demo-kirai-na-amanojaku-148080.jpg",
+    "约会大作战": "covers/anime/date-a-live-v-151380.jpg",
+    "通往夏天的隧道，再见的出口": "covers/anime/natsu-e-no-tunnel-sayonara-no-deguchi-142769.jpg",
+    "不时用俄语小声说真心话的邻桌艾莉同学": "covers/anime/tokidoki-bosotto-rossiya-go-de-dereru-tonari-162804.jpg",
+    "亚托莉我挚爱的时光": "covers/anime/atri-my-dear-moments-154963.jpg",
+    "小市民系列": "covers/anime/shoushimin-series-173295.jpg",
+    "2.5次元的诱惑": "covers/anime/2-5-jigen-no-ririsa-158559.jpg",
+    "身为VTuber的我因为忘记关台而成了传说": "covers/anime/vtuber-nanda-ga-haishin-kiri-wasuretara-dens-160488.jpg",
+    "义妹生活": "covers/anime/gimai-seikatsu-152681.jpg",
+    "在下坂本，有何贵干": "covers/anime/sakamoto-desu-ga-21595.jpg",
+    "葬送的芙莉莲": "covers/anime/sousou-no-frieren-154587.jpg",
+    "死亡笔记": "covers/anime/death-note-1535.jpg",
+    "替身 (Another)": "covers/anime/another-11111.jpg",
+    "全员恶玉": "covers/anime/akudama-drive-116566.jpg",
+    "罪恶王冠": "covers/anime/guilty-crown-10793.jpg",
+    "契约之吻": "covers/anime/engage-kiss-146625.jpg",
+    "达尔文游戏": "covers/anime/darwin-s-game-105190.jpg",
+    "来自新世界": "covers/anime/shinsekai-yori-13125.jpg",
+    "86-不存在的战区": "covers/anime/86-eighty-six-116589.jpg",
+    "靠死亡游戏混饭吃": "covers/anime/shibou-yuugi-de-meshi-wo-kuu-180746.jpg",
+    "反叛的鲁鲁修": "covers/anime/code-geass-hangyaku-no-lelouch-r2-2904.jpg",
+    "约定的梦幻岛": "covers/anime/yakusoku-no-neverland-101759.jpg"
+  },
+  books: {
+    "了解人类行为的50个心理学实验": "covers/books/001-psycho.jpg",
+    "全员嫌疑人": "covers/books/002-mystery.jpg",
+    "西方心理学大师经典译丛（套装共11册）": "covers/books/003-psycho.jpg",
+    "福尔摩斯探案全集（插图新注新译本）": "covers/books/004-mystery.jpg",
+    "解忧杂货店": "covers/books/005-lit.jpg",
+    "高智商犯罪（全4册）": "covers/books/006-crime.jpg",
+    "白卷": "covers/books/007-crime.jpg",
+    "动物园": "covers/books/008-lit.jpg",
+    "无证之罪": "covers/books/009-crime.jpg",
+    "生吞": "covers/books/010-crime.jpg",
+    "杀人游戏": "covers/books/011-crime.jpg",
+    "天才在左，疯子在右": "covers/books/012-psycho.jpg",
+    "无人生还（精装纪念版）": "covers/books/013-mystery.jpg",
+    "东野圭吾年度套装（共56册）": "covers/books/014-mystery.jpg",
+    "FBI微情绪心理学（若水集）": "covers/books/015-psycho.jpg",
+    "86—不存在的战区": "covers/books/016-scifi.jpg",
+    "犯罪心理分析": "covers/books/017-crime.jpg",
+    "犯罪心理档案（共4册）": "covers/books/018-crime.jpg",
+    "阿加莎·克里斯蒂 88本大合集": "covers/books/019-mystery.jpg",
+    "阿加莎·克里斯蒂全集": "covers/books/020-mystery.jpg",
+    "阿加莎·克里斯蒂侦探小说大全全集（全85册）": "covers/books/021-mystery.jpg",
+    "X的悲剧": "covers/books/022-mystery.jpg",
+    "替身 (Another)": "covers/books/023-mystery.jpg",
+    "白夜行": "covers/books/024-social.jpg",
+    "恶意": "covers/books/025-social.jpg",
+    "九型人格：找到最真实的自己（心灵卡培第二辑）": "covers/books/026-psycho.jpg",
+    "人间失格：日本文学大师太宰治作品精选": "covers/books/027-lit.jpg",
+    "心理罪全集": "covers/books/028-crime.jpg",
+    "Y的悲剧": "covers/books/029-mystery.jpg",
+    "侦探AI": "covers/books/030-mystery.jpg",
+    "做自己人生的CEO：人人都需要的管理术": "covers/books/031-thought.jpg",
+    "低智商犯罪": "covers/books/032-crime.jpg",
+    "少年股神": "covers/books/033-social.jpg",
+    "心灵鸡汤": "covers/books/034-thought.jpg",
+    "所罗门的伪证": "covers/books/035-social.jpg",
+    "拉普拉斯的魔女": "covers/books/036-scifi.jpg",
+    "玩偶": "covers/books/037-crime.jpg",
+    "长夜难明": "covers/books/038-crime.jpg",
+    "上帝掷骰子吗": "covers/books/039-scifi.jpg",
+    "嫌疑犯X的獻身": "covers/books/040-social.jpg",
+    "思考，快与慢": "covers/books/041-psycho.jpg",
+    "动机与人格": "covers/books/042-psycho.jpg",
+    "倒错的死角": "covers/books/043-mystery.jpg",
+    "偷偷藏不住": "covers/books/044-romance.jpg",
+    "克莱因壶": "covers/books/045-scifi.jpg",
+    "六个说谎的大学生": "covers/books/046-mystery.jpg",
+    "冥王传说": "covers/books/047-scifi.jpg",
+    "自控力": "covers/books/048-psycho.jpg",
+    "占星术杀人魔法": "covers/books/049-mystery.jpg",
+    "变态心理学": "covers/books/050-psycho.jpg",
+    "天谴者（法医秦明系列7-出书版）_www.84sk": "covers/books/051-crime.jpg",
+    "审讯与反审讯文章汇集": "covers/books/052-crime.jpg",
+    "模仿犯": "covers/books/053-social.jpg",
+    "密室黄金时代的杀人": "covers/books/054-mystery.jpg",
+    "尼尔·布朗 & 斯图尔特·基利：学会提问——批判性思维指南 (第7版)": "covers/books/055-thought.jpg",
+    "必须犯规的游戏": "covers/books/056-mystery.jpg",
+    "悬疑刑侦小说天花板（共13册）": "covers/books/057-crime.jpg",
+    "明明不是我！": "covers/books/058-mystery.jpg",
+    "最后一个死去的孩": "covers/books/059-mystery.jpg",
+    "法医秦明系列全六册": "covers/books/060-crime.jpg",
+    "法医秦明系列第二卷众生卷2遗忘者": "covers/books/061-crime.jpg",
+    "游戏人生": "covers/books/062-scifi.jpg",
+    "火车": "covers/books/063-social.jpg",
+    "迷案1985—法医秦明": "covers/books/064-crime.jpg",
+    "爱的告别式": "covers/books/065-romance.jpg",
+    "爱的成人式": "covers/books/066-romance.jpg",
+    "生活中的心理学": "covers/books/067-psycho.jpg",
+    "生育制度": "covers/books/068-thought.jpg",
+    "明智行动的艺术——你最好让别人去犯的52种行为错误 (插图版)": "covers/books/069-thought.jpg",
+    "清醒思考的艺术——你最好让别人去犯的52个错误 (精校版 插图版)": "covers/books/070-thought.jpg",
+    "罗杰疑案": "covers/books/071-mystery.jpg",
+    "人的驯化、躲避与反叛": "covers/books/072-thought.jpg",
+    "逝者之书": "covers/books/073-crime.jpg",
+    "重赴（爱的轮回式）-全一册": "covers/books/074-romance.jpg",
+    "自卑与超越": "covers/books/075-psycho.jpg",
+    "难哄": "covers/books/076-romance.jpg"
+  }
+};
+
 // 记录内容固定写在页面上方数据数组里，访客不能在页面上添加，保证内容不被改乱
 
 function renderAnime(){
-  document.getElementById("animeGrid").innerHTML = anime.map(a => `
-    <article class="acard" data-title="${a.title||""}" data-pet-line="「${escAttr(a.title)}」也是主人喜欢的番剧呢～">
+  document.getElementById("animeGrid").innerHTML = anime.map(a => {
+    const cover = (window.COVERS && COVERS.anime[a.title]) || "";
+    return `
+    <article class="acard${cover ? " has-cover" : ""}" data-title="${a.title||""}" data-pet-line="「${escAttr(a.title)}」也是主人喜欢的番剧呢～">
+      ${cover ? `<div class="acard-bg" style="background-image:url('${cover}')"></div><div class="acard-shade"></div>` : ""}
       <div class="acard-top">
         <span class="acard-kind">番剧</span>
         <a class="acard-wiki" href="${wikiUrl(a,"title","anime")}" target="_blank" rel="noopener" title="在维基百科查看">📖</a>
       </div>
-      <h3>${a.title||""}</h3>
-      ${a.heroine ? `<div class="arow"><span class="ak">女主角</span><span class="aval">${a.heroine}</span></div>` : ""}
-      ${a.cv ? `<div class="arow"><span class="ak">声优/演员</span><span class="aval">${a.cv}</span></div>` : ""}
-    </article>
-  `).join("");
+      <div class="acard-main">
+        <h3>${a.title||""}</h3>
+        ${a.heroine ? `<div class="arow"><span class="ak">女主角</span><span class="aval">${a.heroine}</span></div>` : ""}
+        ${a.cv ? `<div class="arow"><span class="ak">声优/演员</span><span class="aval">${a.cv}</span></div>` : ""}
+      </div>
+    </article>`;
+  }).join("");
 }
 function novelFile(n){
   if (!n.file) return null;
@@ -1668,8 +1875,10 @@ function renderNovels(){
   });
   document.getElementById("novelGrid").innerHTML = byAuthor.map(n => {
     const f = novelFile(n);
+    const cover = (window.COVERS && COVERS.books[n.title]) || "";
     return `
-    <article class="acard" data-title="${n.title||""}" data-pet-line="「${escAttr(n.title)}」是主人读的小说哦～">
+    <article class="acard${cover ? " has-cover" : ""}" data-title="${n.title||""}" data-pet-line="「${escAttr(n.title)}」是主人读的小说哦～">
+      ${cover ? `<div class="acard-bg" style="background-image:url('${cover}')"></div><div class="acard-shade"></div>` : ""}
       <div class="acard-top">
         <span class="acard-kind">${f ? "可读" : "小说"}</span>
         <div class="acard-links">
@@ -1677,8 +1886,10 @@ function renderNovels(){
           <a class="acard-wiki" href="${wikiUrl(n,"title","novel")}" target="_blank" rel="noopener" title="在维基百科查看">📖</a>
         </div>
       </div>
-      <h3>${n.title||""}</h3>
-      ${n.author ? `<div class="arow"><span class="ak">作者</span><span class="aval">${n.author}</span></div>` : ""}
+      <div class="acard-main">
+        <h3>${n.title||""}</h3>
+        ${n.author ? `<div class="arow"><span class="ak">作者</span><span class="aval">${n.author}</span></div>` : ""}
+      </div>
     </article>
   `}).join("");
 }
