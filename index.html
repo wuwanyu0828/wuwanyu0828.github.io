@@ -297,7 +297,7 @@
     box-shadow:0 6px 18px rgba(0,0,0,.12);transition:.18s;display:grid;place-items:center;
   }
   .todo-fab:hover{border-color:var(--brand);transform:translateY(-2px)}
-  /* 音乐播放器：右下角悬浮 dock，展开网易云官方外链播放器 */
+  /* 音乐播放器：右下角悬浮 dock，自建本地播放器（曲目在 music/ 目录，清单 music/playlist.json） */
   .music-dock{
     position:fixed;right:18px;top:calc(36% - 60px);z-index:60;
     display:flex;flex-direction:row-reverse;align-items:flex-start;gap:10px;pointer-events:none;
@@ -325,9 +325,44 @@
     color:var(--muted);cursor:pointer;font-size:13px;display:grid;place-items:center;transition:.16s;
   }
   .music-close:hover{background:var(--brand-soft);color:var(--brand)}
-  .music-frame{display:block;width:100%;height:86px;border:0;background:transparent}
-  .music-tip{padding:7px 12px 8px;font-size:11.5px;color:var(--muted);line-height:1.5}
-  @media(max-width:560px){ .music-dock{right:14px;top:calc(36% - 58px)} }
+  .music-empty{padding:18px 16px;text-align:center;font-size:12px;color:var(--muted);line-height:1.8}
+  .music-empty a{color:var(--brand);text-decoration:none;font-weight:600}
+  .music-empty a:hover{text-decoration:underline}
+  .music-now{padding:12px 14px 4px;text-align:center}
+  .music-now .m-title{font-size:13.5px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .music-now .m-artist{font-size:11.5px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .music-seek{display:flex;align-items:center;gap:8px;padding:6px 14px 0;font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .music-seek input{flex:1;-webkit-appearance:none;appearance:none;height:4px;border-radius:2px;background:var(--panel-brd);cursor:pointer;min-width:0}
+  .music-seek input::-webkit-slider-thumb{-webkit-appearance:none;width:11px;height:11px;border-radius:50%;background:var(--brand);border:none}
+  .music-seek input::-moz-range-thumb{width:11px;height:11px;border-radius:50%;background:var(--brand);border:none}
+  .music-ctrl{display:flex;align-items:center;justify-content:center;gap:6px;padding:4px 0 2px}
+  .music-ctrl button{
+    border:none;background:transparent;color:var(--ink-2);cursor:pointer;font-size:15px;
+    width:34px;height:32px;border-radius:50%;display:grid;place-items:center;transition:.15s;
+  }
+  .music-ctrl button:hover{background:var(--brand-soft);color:var(--brand)}
+  .music-ctrl .m-play{font-size:17px;background:var(--brand);color:#fff;width:38px;height:38px}
+  .music-ctrl .m-play:hover{background:var(--brand);opacity:.88;color:#fff}
+  .music-extra{display:flex;align-items:center;gap:6px;padding:4px 14px 8px;font-size:11px;color:var(--muted)}
+  .music-extra .m-loop{
+    border:1px solid var(--panel-brd);background:transparent;color:var(--muted);cursor:pointer;
+    font-size:10.5px;padding:3px 8px;border-radius:20px;transition:.15s;white-space:nowrap;
+  }
+  .music-extra .m-loop:hover{border-color:var(--brand);color:var(--brand)}
+  .music-extra input{width:74px;-webkit-appearance:none;appearance:none;height:4px;border-radius:2px;background:var(--panel-brd);cursor:pointer}
+  .music-extra input::-webkit-slider-thumb{-webkit-appearance:none;width:10px;height:10px;border-radius:50%;background:var(--brand);border:none}
+  .music-extra input::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:var(--brand);border:none}
+  .music-list{list-style:none;margin:0;padding:4px 0 6px;max-height:190px;overflow:auto;border-top:1px solid var(--panel-brd)}
+  .music-list li{
+    display:flex;align-items:center;gap:8px;padding:6px 14px;font-size:12px;color:var(--ink-2);
+    cursor:pointer;transition:.13s;line-height:1.45;
+  }
+  .music-list li:hover{background:var(--brand-soft)}
+  .music-list li.on{color:var(--brand);font-weight:700;background:var(--brand-soft)}
+  .music-list .m-idx{flex:none;width:18px;text-align:right;font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .music-list .m-name{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .music-list .m-time{flex:none;font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+  @media(max-width:560px){ .music-dock{right:14px;top:calc(36% - 58px)} .music-list{max-height:150px} }
   .todo-badge{
     position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;border-radius:9px;
     background:var(--brand);color:#fff;font-size:11px;font-weight:700;line-height:18px;
@@ -601,13 +636,26 @@
   <div class="todo-foot"><span id="todoCount"></span><button class="tclear" id="todoClear" type="button">清空已完成</button></div>
 </div>
 
-<!-- 音乐播放器：网易云官方外链，播放收藏歌单（数据在网易云，不占本站仓库） -->
+<!-- 音乐播放器：自建本地播放器，曲目文件放 music/ 目录，清单由 music/playlist.json 描述 -->
 <div class="music-dock" id="musicDock">
-  <button class="music-fab" id="musicFab" type="button" title="我的歌单（网易云）" aria-expanded="false">🎵</button>
+  <button class="music-fab" id="musicFab" type="button" title="我的歌单" aria-expanded="false">🎵</button>
   <div class="music-panel" id="musicPanel" role="dialog" aria-label="音乐播放器">
     <div class="music-head"><b>🎵 我的歌单</b><button class="music-close" id="musicClose" type="button" title="收起">✕</button></div>
-    <iframe class="music-frame" id="musicFrame" title="网易云音乐歌单播放器" allow="autoplay; encrypted-media" src=""></iframe>
-    <div class="music-tip">部分版权/会员曲目需登录网易云才能播放；若播放器打不开，可<a id="musicLink" href="https://music.163.com/" target="_blank" rel="noopener">在网易云打开</a></div>
+    <div class="music-empty" id="musicEmpty">歌曲整理中，敬请期待～<br><a id="musicLink" href="https://music.163.com/playlist?id=26467411" target="_blank" rel="noopener">先去网易云听这批歌 →</a></div>
+    <div id="musicMain" style="display:none">
+      <div class="music-now"><div class="m-title" id="mTitle">—</div><div class="m-artist" id="mArtist"></div></div>
+      <div class="music-seek"><span id="mCur">0:00</span><input id="mSeek" type="range" min="0" max="1000" value="0" aria-label="播放进度"><span id="mDur">0:00</span></div>
+      <div class="music-ctrl">
+        <button id="mPrev" type="button" title="上一首">⏮</button>
+        <button id="mPlay" class="m-play" type="button" title="播放 / 暂停">▶</button>
+        <button id="mNext" type="button" title="下一首">⏭</button>
+      </div>
+      <div class="music-extra">
+        <button id="mLoop" class="m-loop" type="button" title="切换循环模式">🔁 列表循环</button>
+        <span style="margin-left:auto" title="音量">🔊</span><input id="mVol" type="range" min="0" max="100" value="80" aria-label="音量">
+      </div>
+    </div>
+    <ul class="music-list" id="mList"></ul>
   </div>
 </div>
 
@@ -1963,29 +2011,175 @@ function renderNovels(){
 renderAnime();
 renderNovels();
 
-/* ---------- 音乐播放器：网易云官方外链（歌单） ---------- */
+/* ---------- 音乐播放器：自建本地播放器 ----------
+   曲目文件放 music/ 目录，清单由 music/playlist.json 描述：
+   { "tracks": [ { "title": "歌名", "artist": "作者", "src": "music/xxx.mp3" }, ... ] }
+   没有清单或清单为空时显示"歌曲整理中" + 网易云跳转兜底。 */
 (function(){
-  // 歌单 ID：网易云歌单页地址 https://music.163.com/#/playlist?id=XXXXXX 里的那串数字
-  // 歌单：https://music.163.com/playlist?id=26467411
-  var PLAYLIST_ID = "26467411";
   var fab = document.getElementById("musicFab");
   var panel = document.getElementById("musicPanel");
-  var frame = document.getElementById("musicFrame");
   var closer = document.getElementById("musicClose");
-  if(!fab || !panel || !frame || !PLAYLIST_ID) return;
-  var SRC = "https://music.163.com/outchain/player?type=2&id=" + encodeURIComponent(PLAYLIST_ID) + "&auto=0&height=66";
+  var emptyBox = document.getElementById("musicEmpty");
+  var mainBox = document.getElementById("musicMain");
+  var listEl = document.getElementById("mList");
+  var titleEl = document.getElementById("mTitle");
+  var artistEl = document.getElementById("mArtist");
+  var seekEl = document.getElementById("mSeek");
+  var curEl = document.getElementById("mCur");
+  var durEl = document.getElementById("mDur");
+  var playBtn = document.getElementById("mPlay");
+  var prevBtn = document.getElementById("mPrev");
+  var nextBtn = document.getElementById("mNext");
+  var loopBtn = document.getElementById("mLoop");
+  var volEl = document.getElementById("mVol");
+  if(!fab || !panel || !mainBox) return;
+
+  var LS_KEY = "wuwanyu_music_v1";
+  var LS = (function(){ try{ return JSON.parse(localStorage.getItem(LS_KEY) || "{}"); }catch(_){ return {}; } })();
+  function saveLS(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(LS)); }catch(_){} }
+
+  var audio = new Audio();
+  audio.preload = "metadata";
+  audio.volume = (typeof LS.vol === "number") ? LS.vol : 0.8;
+  volEl.value = Math.round(audio.volume * 100);
+
+  var tracks = [];          // {title, artist, src, duration?}
+  var cur = LS.lastIndex || 0;
+  var loopMode = LS.loop || "list";   // list | one
+  var seeking = false;
+
+  var LOOP_TEXT = { list: "🔁 列表循环", one: "🔂 单曲循环" };
+
+  function fmt(t){
+    if(!isFinite(t) || t < 0) t = 0;
+    var m = Math.floor(t / 60), s = Math.floor(t % 60);
+    return m + ":" + (s < 10 ? "0" : "") + s;
+  }
+  function durOf(t, i){
+    if(t && isFinite(t)) return fmt(t);
+    return (LS.durs && LS.durs[i]) ? fmt(LS.durs[i]) : "--:--";
+  }
+
+  function showEmpty(){
+    emptyBox.style.display = "";
+    mainBox.style.display = "none";
+    listEl.style.display = "none";
+  }
+  function showPlayer(){
+    emptyBox.style.display = "none";
+    mainBox.style.display = "";
+    listEl.style.display = "";
+  }
+
+  function renderList(){
+    listEl.innerHTML = "";
+    tracks.forEach(function(t, i){
+      var li = document.createElement("li");
+      if(i === cur) li.className = "on";
+      li.innerHTML = '<span class="m-idx">' + (i + 1) + '</span>' +
+        '<span class="m-name"></span><span class="m-time">' + durOf(t.dur, i) + '</span>';
+      li.querySelector(".m-name").textContent = t.title + (t.artist ? " · " + t.artist : "");
+      li.addEventListener("click", function(){ play(i, true); });
+      listEl.appendChild(li);
+    });
+  }
+  function highlight(){
+    Array.prototype.forEach.call(listEl.children, function(li, i){
+      li.classList.toggle("on", i === cur);
+    });
+  }
+  function load(i, autoplay){
+    cur = ((i % tracks.length) + tracks.length) % tracks.length;
+    var t = tracks[cur];
+    audio.src = t.src;
+    titleEl.textContent = t.title || ("曲目 " + (cur + 1));
+    artistEl.textContent = t.artist || "";
+    curEl.textContent = "0:00";
+    durEl.textContent = durOf(t.dur, cur);
+    seekEl.value = 0;
+    highlight();
+    LS.lastIndex = cur; saveLS();
+    if(autoplay) audio.play().catch(function(){});
+  }
+  function play(i, autoplay){
+    if(i === cur && audio.src && !autoplay){ /* 同一首 */ }
+    load(i, autoplay !== false);
+  }
+  function togglePlay(){
+    if(!tracks.length) return;
+    if(audio.paused){ audio.play().catch(function(){}); } else { audio.pause(); }
+  }
+  function step(d){
+    if(!tracks.length) return;
+    if(loopMode === "one" && d !== 0){ load(cur, true); return; }
+    load(cur + d, true);
+  }
+
+  playBtn.addEventListener("click", togglePlay);
+  prevBtn.addEventListener("click", function(){ step(-1); });
+  nextBtn.addEventListener("click", function(){ step(1); });
+  loopBtn.addEventListener("click", function(){
+    loopMode = (loopMode === "list") ? "one" : "list";
+    loopBtn.textContent = LOOP_TEXT[loopMode];
+    LS.loop = loopMode; saveLS();
+  });
+  loopBtn.textContent = LOOP_TEXT[loopMode];
+
+  volEl.addEventListener("input", function(){
+    audio.volume = volEl.value / 100;
+    LS.vol = audio.volume; saveLS();
+  });
+
+  audio.addEventListener("play",  function(){ playBtn.textContent = "⏸"; });
+  audio.addEventListener("pause", function(){ playBtn.textContent = "▶"; });
+  audio.addEventListener("loadedmetadata", function(){
+    durEl.textContent = fmt(audio.duration);
+    if(tracks[cur] && !tracks[cur].dur){
+      tracks[cur].dur = audio.duration;
+      (LS.durs = LS.durs || {})[cur] = audio.duration; saveLS();
+      renderList();
+    }
+  });
+  audio.addEventListener("timeupdate", function(){
+    if(seeking || !isFinite(audio.duration) || audio.duration <= 0) return;
+    curEl.textContent = fmt(audio.currentTime);
+    seekEl.value = Math.round(audio.currentTime / audio.duration * 1000);
+  });
+  audio.addEventListener("ended", function(){
+    if(loopMode === "one"){ load(cur, true); }
+    else { load(cur + 1, true); }   // 列表循环（末首自动回第一首）
+  });
+
+  seekEl.addEventListener("input", function(){ seeking = true; });
+  seekEl.addEventListener("change", function(){
+    if(isFinite(audio.duration) && audio.duration > 0){
+      audio.currentTime = seekEl.value / 1000 * audio.duration;
+    }
+    seeking = false;
+  });
+
   function toggle(on){
     var show = (typeof on === "boolean") ? on : !panel.classList.contains("on");
     panel.classList.toggle("on", show);
     fab.classList.toggle("on", show);
     fab.setAttribute("aria-expanded", show ? "true" : "false");
-    if(show && !frame.getAttribute("src")) frame.setAttribute("src", SRC);   // 首次展开才加载，不拖慢首屏
-  var link = document.getElementById("musicLink");
-  if(link) link.href = "https://music.163.com/playlist?id=" + encodeURIComponent(PLAYLIST_ID);
   }
   fab.addEventListener("click", function(){ toggle(); });
   if(closer) closer.addEventListener("click", function(){ toggle(false); });
   document.addEventListener("keydown", function(e){ if(e.key === "Escape") toggle(false); });
+
+  // 拉取曲目清单
+  fetch("music/playlist.json", { cache: "no-store" })
+    .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(data){
+      var list = (data && data.tracks) || [];
+      if(!list.length){ showEmpty(); return; }
+      tracks = list;
+      showPlayer();
+      renderList();
+      load(Math.min(cur, tracks.length - 1), false);   // 不自动播放
+    })
+    .catch(function(){ showEmpty(); });
 })();
 
 /* ---------- 待办事项（存浏览器本地，仅本机可见；页面只读，访客不能在页面上修改） ---------- */
