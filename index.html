@@ -1493,11 +1493,37 @@ document.getElementById("socialList").innerHTML = profile.socials.map(s => `
 
 /* ---------- 追番追剧 / 小说 记录 ---------- */
 // 维基链接：填了完整网址就用它；否则按名称自动生成中文维基百科条目地址
+// 维基链接：填了完整网址就用它；否则默认走「带类型限定词的搜索页」（避免同名撞无关词条）
+// 少数同名撞车 / 无独立条目的，用 WIKI_OVERRIDE 硬编码精确条目或更精准的搜索词
+function w(s){ return "https://zh.wikipedia.org/wiki/" + encodeURIComponent(s); }
+function ws(q){ return "https://zh.wikipedia.org/w/index.php?search=" + encodeURIComponent(q) + "&title=Special:Search"; }
+const WIKI_OVERRIDE = {
+  // —— 同名撞车，硬编码到正确条目 ——
+  "HELLO WORLD": w("你好世界 (电影)"),                 // 2019 动画电影，避免撞编程术语
+  "烟花": w("煙花 (2017年電影)"),                       // 避免撞「烟火」通用词
+  "Charlotte": w("Charlotte (動畫)"),                  // 避免撞「夏洛特」地名
+  "你想活出怎样的人生": w("蒼鷺與少年"),               // 宫崎骏 2023 电影（大陆译名）
+  "替身 (Another)": w("Another"),                      // 维基条目名即 Another
+  "无人生还（精装纪念版）": w("一個都不留"),            // 阿加莎该书维基用台湾译名
+  "恶意": w("惡意 (小說)"),                            // 东野圭吾小说，避免撞「恶意软件」
+  "模仿犯": w("模仿犯 (小說)"),                        // 小说，避免撞影视改编剧
+  "偷偷藏不住": w("偷偷藏不住 (小说)"),                // 小说，避免撞影视改编剧
+  "百变的七仓同学": w("百变的七仓同学"),                // 漫画条目
+  "九型人格：找到最真实的自己（心灵卡培第二辑）": w("九型人格"),
+  "人间失格：日本文学大师太宰治作品精选": w("人間失格"),
+  // —— 无可靠独立条目，用更精准的搜索词兜底 ——
+  "火车": ws("火車 宮部美幸 小說"),
+  "想哭的我带上了猫面具": ws("想哭的我帶上了貓的面具 動畫"),
+  "X的悲剧": ws("X的悲劇 推理 小說"),
+  "Y的悲剧": ws("Y的悲劇 推理 小說"),
+  "侦探AI": ws("偵探AI 推理 小說"),
+  "少年股神": ws("少年股神 小說")
+};
 function wikiUrl(entry, key, kind){
   if(entry.wiki && /^https?:\/\//i.test(entry.wiki)) return entry.wiki;
   const t = (entry[key] || "").trim();
-  // 同名容易撞到无关词条（如 HELLO WORLD 指向编程术语），加类型限定词搜索可落回正确词条
   if (!t) return "https://zh.wikipedia.org";
+  if (WIKI_OVERRIDE[t]) return WIKI_OVERRIDE[t];
   const q = t + (kind === "novel" ? " 小说" : " 动漫");
   return "https://zh.wikipedia.org/w/index.php?search=" + encodeURIComponent(q) + "&title=Special:Search";
 }
