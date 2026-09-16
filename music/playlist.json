@@ -1,3 +1,139 @@
 {
-  "tracks": []
+  "tracks": [
+    {
+      "title": "恋染色 S.Piano Ver",
+      "artist": "花乃",
+      "src": "music/花乃 - 恋染色 S.Piano Ver.mp3"
+    },
+    {
+      "title": "03. Candyfloss（E.piano.ver）",
+      "artist": "vlaic",
+      "src": "music/vlaic - 03. Candyfloss（E.piano.ver）.mp3"
+    },
+    {
+      "title": "探故知",
+      "artist": "浅影阿,汐音社",
+      "src": "music/浅影阿,汐音社 - 探故知.mp3"
+    },
+    {
+      "title": "The truth that you leave",
+      "artist": "Pianoboy高至豪",
+      "src": "music/Pianoboy高至豪 - The truth that you leave.mp3"
+    },
+    {
+      "title": "千秋此意",
+      "artist": "司夏,汐音社",
+      "src": "music/司夏,汐音社 - 千秋此意.mp3"
+    },
+    {
+      "title": "Whistle (Glee Cast Version)",
+      "artist": "Glee Cast",
+      "src": "music/Glee Cast - Whistle (Glee Cast Version).mp3"
+    },
+    {
+      "title": "遇萤（剧情版）",
+      "artist": "CRITTY",
+      "src": "music/CRITTY - 遇萤（剧情版） (1).mp3"
+    },
+    {
+      "title": "霜雪千年（Cover 洛天依  乐正绫）",
+      "artist": "双笙（陈元汐）,封茗囧菌",
+      "src": "music/双笙（陈元汐）,封茗囧菌 - 霜雪千年（Cover 洛天依  乐正绫）.mp3"
+    },
+    {
+      "title": "渡月橋 ~君 想ふ~",
+      "artist": "倉木麻衣",
+      "src": "music/倉木麻衣 - 渡月橋 ~君 想ふ~.mp3"
+    },
+    {
+      "title": "Time after time〜花舞う街で〜",
+      "artist": "倉木麻衣",
+      "src": "music/倉木麻衣 - Time after time〜花舞う街で〜.mp3"
+    },
+    {
+      "title": "心底的颜色 Ver. Orange",
+      "artist": "project lights",
+      "src": "music/project lights - 心底的颜色 Ver. Orange.flac"
+    },
+    {
+      "title": "心底的颜色 Ver. Orange",
+      "artist": "未知歌手",
+      "src": "music/未知歌手 - 心底的颜色 Ver. Orange.flac"
+    },
+    {
+      "title": "故梦（Cover 橙翼）",
+      "artist": "双笙（陈元汐）",
+      "src": "music/双笙（陈元汐） - 故梦（Cover 橙翼）.mp3"
+    },
+    {
+      "title": "世界が終るまでは…~TV Version~",
+      "artist": "WANDS",
+      "src": "music/WANDS - 世界が終るまでは…~TV Version~.mp3"
+    },
+    {
+      "title": "さくら ~あなたに出会えてよかった~（樱花樱花想见你）（Cover RSP）",
+      "artist": "君と一緒にいればいい,佐天Tamako",
+      "src": "music/君と一緒にいればいい,佐天Tamako - さくら ~あなたに出会えてよかった~（樱花樱花想见你）（Cover RSP）.mp3"
+    },
+    {
+      "title": "願い~あの頃のキミへ~",
+      "artist": "當山みれい",
+      "src": "music/當山みれい - 願い~あの頃のキミへ~.mp3"
+    },
+    {
+      "title": "卡农（经典钢琴版）",
+      "artist": "dylanf",
+      "src": "music/dylanf - 卡农（经典钢琴版） (1).mp3"
+    },
+    {
+      "title": "「名探偵コナン」~メインテーマ",
+      "artist": "大野克夫",
+      "src": "music/大野克夫 - 「名探偵コナン」~メインテーマ (1).mp3"
+    },
+    {
+      "title": "冬眠",
+      "artist": "司南",
+      "src": "music/司南 - 冬眠.mp3"
+    },
+    {
+      "title": "萤火之森",
+      "artist": "CMJ",
+      "src": "music/CMJ - 萤火之森 (1).mp3"
+    },
+    {
+      "title": "轮回之境",
+      "artist": "CRITTY",
+      "src": "music/CRITTY - 轮回之境 (1).mp3"
+    },
+    {
+      "title": "马步谣",
+      "artist": "双笙（陈元汐）",
+      "src": "music/双笙（陈元汐） - 马步谣.mp3"
+    },
+    {
+      "title": "春日影(MyGO!!!!! ver.)",
+      "artist": "MyGO!!!!!",
+      "src": "music/MyGO!!!!! - 春日影(MyGO!!!!! ver.).mp3"
+    },
+    {
+      "title": "My Soul,Your Beats! (Instrumental)",
+      "artist": "麻枝准",
+      "src": "music/麻枝准 - My Soul,Your Beats! (Instrumental).mp3"
+    },
+    {
+      "title": "春日影 (MyGO!!!!! ver.)",
+      "artist": "MyGO!!!!!",
+      "src": "music/MyGO!!!!! - 春日影 (MyGO!!!!! ver.).mp3"
+    },
+    {
+      "title": "所念皆星河",
+      "artist": "CMJ",
+      "src": "music/CMJ - 所念皆星河.mp3"
+    },
+    {
+      "title": "secret base ~君がくれたもの~ (10 years after Ver.)",
+      "artist": "茅野愛衣,戸松遥,早見沙織",
+      "src": "music/茅野愛衣,戸松遥,早見沙織 - secret base ~君がくれたもの~ (10 years after Ver.).mp3"
+    }
+  ]
 }
