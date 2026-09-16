@@ -297,6 +297,37 @@
     box-shadow:0 6px 18px rgba(0,0,0,.12);transition:.18s;display:grid;place-items:center;
   }
   .todo-fab:hover{border-color:var(--brand);transform:translateY(-2px)}
+  /* 音乐播放器：右下角悬浮 dock，展开网易云官方外链播放器 */
+  .music-dock{
+    position:fixed;right:18px;top:calc(36% - 60px);z-index:60;
+    display:flex;flex-direction:row-reverse;align-items:flex-start;gap:10px;pointer-events:none;
+  }
+  .music-dock > *{pointer-events:auto}
+  .music-fab{
+    flex:none;width:46px;height:46px;border-radius:50%;border:1px solid var(--panel-brd);
+    background:var(--panel);font-size:19px;cursor:pointer;display:grid;place-items:center;
+    box-shadow:0 6px 18px rgba(0,0,0,.12);transition:.18s;
+  }
+  .music-fab:hover{border-color:var(--brand);transform:translateY(-2px)}
+  .music-fab.on{border-color:var(--brand);background:var(--brand-soft)}
+  .music-panel{
+    display:none;width:min(330px,calc(100vw - 96px));background:var(--panel);
+    border:1px solid var(--panel-brd);border-radius:var(--radius);
+    box-shadow:0 14px 40px rgba(0,0,0,.18);overflow:hidden;
+  }
+  .music-panel.on{display:block}
+  .music-head{
+    display:flex;align-items:center;justify-content:space-between;padding:7px 8px 7px 12px;
+    font-size:12px;font-weight:600;color:var(--ink-2);border-bottom:1px solid var(--panel-brd);
+  }
+  .music-close{
+    width:22px;height:22px;border:none;border-radius:50%;background:transparent;
+    color:var(--muted);cursor:pointer;font-size:13px;display:grid;place-items:center;transition:.16s;
+  }
+  .music-close:hover{background:var(--brand-soft);color:var(--brand)}
+  .music-frame{display:block;width:100%;height:86px;border:0;background:transparent}
+  .music-tip{padding:7px 12px 8px;font-size:11.5px;color:var(--muted);line-height:1.5}
+  @media(max-width:560px){ .music-dock{right:14px;top:calc(36% - 58px)} }
   .todo-badge{
     position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;border-radius:9px;
     background:var(--brand);color:#fff;font-size:11px;font-weight:700;line-height:18px;
@@ -568,6 +599,16 @@
   </form>
   <ul class="todo-list" id="todoList"></ul>
   <div class="todo-foot"><span id="todoCount"></span><button class="tclear" id="todoClear" type="button">清空已完成</button></div>
+</div>
+
+<!-- 音乐播放器：网易云官方外链，播放收藏歌单（数据在网易云，不占本站仓库） -->
+<div class="music-dock" id="musicDock">
+  <button class="music-fab" id="musicFab" type="button" title="我的歌单（网易云）" aria-expanded="false">🎵</button>
+  <div class="music-panel" id="musicPanel" role="dialog" aria-label="音乐播放器">
+    <div class="music-head"><b>🎵 我的歌单</b><button class="music-close" id="musicClose" type="button" title="收起">✕</button></div>
+    <iframe class="music-frame" id="musicFrame" title="网易云音乐歌单播放器" allow="autoplay; encrypted-media" src=""></iframe>
+    <div class="music-tip">部分版权/会员曲目需登录网易云才能播放；若播放器打不开，可<a id="musicLink" href="https://music.163.com/" target="_blank" rel="noopener">在网易云打开</a></div>
+  </div>
 </div>
 
 <div class="pet" id="pet" title="我是ATRI～点我摸摸，按住能拖动，我还会自己散步哦">
@@ -1921,6 +1962,31 @@ function renderNovels(){
 }
 renderAnime();
 renderNovels();
+
+/* ---------- 音乐播放器：网易云官方外链（歌单） ---------- */
+(function(){
+  // 歌单 ID：网易云歌单页地址 https://music.163.com/#/playlist?id=XXXXXX 里的那串数字
+  // 歌单：https://music.163.com/playlist?id=26467411
+  var PLAYLIST_ID = "26467411";
+  var fab = document.getElementById("musicFab");
+  var panel = document.getElementById("musicPanel");
+  var frame = document.getElementById("musicFrame");
+  var closer = document.getElementById("musicClose");
+  if(!fab || !panel || !frame || !PLAYLIST_ID) return;
+  var SRC = "https://music.163.com/outchain/player?type=2&id=" + encodeURIComponent(PLAYLIST_ID) + "&auto=0&height=66";
+  function toggle(on){
+    var show = (typeof on === "boolean") ? on : !panel.classList.contains("on");
+    panel.classList.toggle("on", show);
+    fab.classList.toggle("on", show);
+    fab.setAttribute("aria-expanded", show ? "true" : "false");
+    if(show && !frame.getAttribute("src")) frame.setAttribute("src", SRC);   // 首次展开才加载，不拖慢首屏
+  var link = document.getElementById("musicLink");
+  if(link) link.href = "https://music.163.com/playlist?id=" + encodeURIComponent(PLAYLIST_ID);
+  }
+  fab.addEventListener("click", function(){ toggle(); });
+  if(closer) closer.addEventListener("click", function(){ toggle(false); });
+  document.addEventListener("keydown", function(e){ if(e.key === "Escape") toggle(false); });
+})();
 
 /* ---------- 待办事项（存浏览器本地，仅本机可见；页面只读，访客不能在页面上修改） ---------- */
 const TODO_KEY = "wuwanyu_todo_v1";
