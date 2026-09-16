@@ -527,8 +527,8 @@
 
 <div class="pet" id="pet" title="我是ATRI～点我摸摸，按住能拖动，我还会自己散步哦">
   <div class="bubble" id="petBubble">你好呀～</div>
-  <div class="pet-inner"><img id="petImg" src="pet-idle.png" alt="ATRI 桌宠" draggable="false"><img class="pet-eye" src="pet-eye-l.png" style="left:41.2%;top:28.67%;width:7.87%" alt="" draggable="false"><img class="pet-eye" src="pet-eye-r.png" style="left:59.21%;top:28%;width:7.04%" alt="" draggable="false"></div>
-  <div class="pet-ctl"><button type="button" id="petSmall" title="缩小一号" aria-label="缩小">−</button><button type="button" id="petBig" title="放大一号" aria-label="放大">＋</button></div>
+  <div class="pet-inner"><img id="petImg" src="pet-idle.png" alt="ATRI 桌宠" draggable="false"><img class="pet-eye" src="pet-eye-l.png" alt="" draggable="false"><img class="pet-eye" src="pet-eye-r.png" alt="" draggable="false"></div>
+  <div class="pet-ctl"><button type="button" id="petSmall" title="缩小一号" aria-label="缩小">−</button><button type="button" id="petBig" title="放大一号" aria-label="放大">＋</button><button type="button" id="petSkin" title="换装：水手服 / 便服 / 戏水" aria-label="换装">衣</button></div>
 </div>
 
 <script>
@@ -1759,9 +1759,46 @@ toggle.addEventListener("click", () => {
   const inner = pet.querySelector(".pet-inner");
 
   // 素材：全身 Q 版 ATRI —— 由图像生成 + 抠图 + 归一化得到（角色高/脚底基线已对齐）
-  const IDLE = "pet-idle.png", HAPPY = "pet-happy.png";
-  const WALK = ["pet-walk-1.png","pet-walk-2.png","pet-walk-3.png","pet-walk-2.png"];   // 跨步→并拢→换边跨步→并拢（标准走路循环,双臂随步伐摆动）
+  // 三套皮肤：水手服 / 便服 / 戏水。eyes 为瞳孔贴片（src + 相对 idle 画布的定位百分比，由裁眼脚本算出）。
+  const SKINS = [
+    { id:"sailor", label:"水手服", line:"换回水手服啦，标准配置！",
+      idle:"pet-idle.png", happy:"pet-happy.png",
+      walk:["pet-walk-1.png","pet-walk-2.png","pet-walk-3.png","pet-walk-2.png"],   // 跨步→并拢→换边跨步→并拢
+      eyes:[{src:"pet-eye-l.png",left:41.2,top:28.67,width:7.87},
+            {src:"pet-eye-r.png",left:59.21,top:28,width:7.04}] },
+    { id:"casual", label:"便服", line:"换上便服啦～连帽衫最舒服了♪",
+      idle:"pet-casual-idle.png", happy:"pet-casual-happy.png",
+      walk:["pet-casual-walk-1.png","pet-casual-walk-2.png","pet-casual-walk-3.png","pet-casual-walk-2.png"],
+      eyes:[{src:"pet-casual-eye-l.png",left:40.17,top:27.67,width:9.52},
+            {src:"pet-casual-eye-r.png",left:57.97,top:27.17,width:8.9}] },
+    { id:"beach", label:"戏水", line:"去戏水咯！海边我最喜欢了♥",
+      idle:"pet-beach-idle.png", happy:"pet-beach-happy.png",
+      walk:["pet-beach-walk-1.png","pet-beach-walk-2.png","pet-beach-walk-3.png","pet-beach-walk-2.png"],
+      eyes:[{src:"pet-beach-eye-l.png",left:40.58,top:28.33,width:8.9},
+            {src:"pet-beach-eye-r.png",left:57.97,top:27.33,width:8.9}] }
+  ];
   const FRAME_MS = 130;   // 每帧停留时长，越小迈步越快
+  let IDLE = "", HAPPY = "", WALK = [];
+  let skinIdx = 0;
+  try{ const v = parseInt(localStorage.getItem("petSkin"), 10); if(v >= 0 && v < SKINS.length) skinIdx = v; }catch(_){}
+  const eyeImgs = inner.querySelectorAll(".pet-eye");
+  function applySkin(){
+    const sk = SKINS[skinIdx];
+    IDLE = sk.idle; HAPPY = sk.happy; WALK = sk.walk;
+    sk.eyes.forEach(function(e, i){
+      const el = eyeImgs[i];
+      el.setAttribute("src", e.src);
+      el.style.left = e.left + "%"; el.style.top = e.top + "%"; el.style.width = e.width + "%";
+    });
+    try{ localStorage.setItem("petSkin", String(skinIdx)); }catch(_){}
+    return sk;
+  }
+  function cycleSkin(){
+    skinIdx = (skinIdx + 1) % SKINS.length;
+    const sk = applySkin();
+    if(state === "idle") setImg(IDLE);
+    say(sk.line);
+  }
 
   // ATRI 性格：高性能仿生机器人少女，感情丰富 / 好奇心旺盛 / 乐观天真 / 有点笨拙 / 常走神回忆丢失的记忆
   const LINES = {
@@ -1785,8 +1822,11 @@ toggle.addEventListener("click", () => {
   };
   const pick = a => a[Math.floor(Math.random()*a.length)];
 
-  // 预加载所有帧，切换时不闪白
-  [IDLE, HAPPY, "pet-eye-l.png", "pet-eye-r.png"].concat(WALK).forEach(s => { const i = new Image(); i.src = s; });
+  // 预加载三套皮肤全部帧，切换不闪白
+  SKINS.forEach(function(sk){
+    [sk.idle, sk.happy].concat(sk.walk, sk.eyes.map(function(e){ return e.src; }))
+      .forEach(function(src){ const i = new Image(); i.src = src; });
+  });
 
   let state = "idle", dir = 0, targetX = null, dragging = false;
   let x = null, start = null, hideTimer = null, nextWander = 0;
@@ -1861,7 +1901,7 @@ toggle.addEventListener("click", () => {
       if(Math.abs(targetX - x) <= step){
         x = targetX; place(); enterIdle(now);
       } else {
-        setDir(targetX > x ? 1 : -1); x += dir * step; place();
+        x += (targetX > x ? 1 : -1) * step; place();
         if(now - frameClock >= FRAME_MS){            // 循环切换走路分解帧
           frameClock = now; frameIdx = (frameIdx + 1) % WALK.length; setImg(WALK[frameIdx]);
         }
@@ -1970,10 +2010,6 @@ toggle.addEventListener("click", () => {
     const c = e.target.closest ? e.target.closest("[data-pet-line]") : null;
     if(!c || c === lastCard) return;
     lastCard = c;
-    if(state === "idle"){
-      const r = c.getBoundingClientRect(), pr = pet.getBoundingClientRect();
-      setDir(r.left + r.width / 2 >= pr.left + pr.width / 2 ? 1 : -1);
-    }
     say(c.getAttribute("data-pet-line"));
   });
   document.addEventListener("mouseout", e => {
@@ -2000,17 +2036,21 @@ toggle.addEventListener("click", () => {
   btnB.addEventListener("click", e => { e.stopPropagation(); stepSize(1); });
   pet.addEventListener("wheel", e => { e.preventDefault(); stepSize(e.deltaY < 0 ? 1 : -1); }, {passive:false});
   applySize();
+  const btnSkin = document.getElementById("petSkin");
+  btnSkin.addEventListener("pointerdown", e => e.stopPropagation());
+  btnSkin.addEventListener("click", e => { e.stopPropagation(); cycleSkin(); });
 
   // 初始位置：优先用上次保存的横向位置
   let savedX = null;
   try{ const v = localStorage.getItem("petX"); if(v) savedX = clampX(parseFloat(v)); }catch(_){}
   x = savedX != null ? savedX : clampX(window.innerWidth - petW() - 16);
   liftPx = computeLift();
-  setDir(-1); setState("idle"); setImg(IDLE); place();
+  setDir(1); applySkin(); setState("idle"); setImg(IDLE); place();
   nextWander = performance.now() + 4000 + Math.random()*4000;
 
   requestAnimationFrame(tick);
-  setTimeout(() => say("你好呀，我是高性能机器人 ATRI～主人把这小站交给我看着啦！"), 1100);
+  // 开场白：若用户在 1.1s 内已互动（换装/摸摸/悬停台词），不打断
+  setTimeout(() => { if(!bubble.classList.contains("on")) say("你好呀，我是高性能机器人 ATRI～主人把这小站交给我看着啦！"); }, 1100);
 })();
 </script>
 </body>
