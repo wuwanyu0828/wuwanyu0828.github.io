@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ATRI 的小站 ✦ 个人主页</title>
+<link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -516,6 +517,59 @@
   @media(prefers-reduced-motion:reduce){
     .pet img{animation:none}
   }
+
+  /* 桌宠聊天面板：底部居中浮层，桌面/移动端自适应 */
+  .chat-dock{
+    position:fixed;left:50%;transform:translateX(-50%);bottom:16px;z-index:70;
+    width:min(384px,calc(100vw - 28px));display:none;pointer-events:none;
+  }
+  .chat-dock.on{display:block}
+  .chat-dock.on .chat-panel{pointer-events:auto}
+  .chat-panel{
+    display:flex;flex-direction:column;overflow:hidden;
+    height:min(70vh,520px);
+    background:var(--panel);border:1px solid var(--panel-brd);border-radius:var(--radius);
+    box-shadow:0 18px 50px rgba(0,0,0,.20);
+  }
+  [data-theme="dark"] .chat-panel{box-shadow:0 18px 50px rgba(0,0,0,.55)}
+  .chat-head{display:flex;align-items:center;justify-content:space-between;gap:8px;
+    padding:9px 10px 9px 13px;border-bottom:1px solid var(--panel-brd);
+    font-size:13px;font-weight:600;color:var(--ink-2)}
+  .chat-head-r{display:flex;gap:6px}
+  .chat-close,.chat-ai-btn{width:24px;height:24px;border:none;border-radius:50%;background:transparent;
+    color:var(--muted);cursor:pointer;font-size:12px;font-weight:700;display:grid;place-items:center;transition:.16s}
+  .chat-close:hover,.chat-ai-btn:hover{background:var(--brand-soft);color:var(--brand)}
+  .chat-ai-btn.on{background:var(--brand);color:#fff}
+  .chat-log{flex:1;min-height:0;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px}
+  .msg{display:flex;gap:7px;align-items:flex-end;max-width:100%}
+  .msg.me{justify-content:flex-end}
+  .msg .ava{width:22px;height:22px;border-radius:50%;background:var(--brand);color:#fff;
+    display:grid;place-items:center;font-size:11px;flex:none}
+  .bubble-msg{padding:8px 11px;border-radius:14px;font-size:13px;line-height:1.55;
+    max-width:82%;word-break:break-word;white-space:pre-wrap}
+  .msg.me .bubble-msg{background:var(--brand);color:#fff;border-bottom-right-radius:5px}
+  .msg.atri .bubble-msg{background:var(--brand-soft);color:var(--ink);border-bottom-left-radius:5px}
+  .msg .who{font-size:10px;color:var(--muted);margin:0 0 3px 2px}
+  .msg.typing .bubble-msg{opacity:.7}
+  .msg.typing .bubble-msg::after{content:"";display:inline-block;width:18px}
+  .chat-suggest{display:flex;flex-wrap:wrap;gap:6px;padding:0 12px 9px}
+  .chat-suggest button{border:1px solid var(--panel-brd);background:transparent;color:var(--ink-2);
+    font-size:11.5px;padding:4px 9px;border-radius:999px;cursor:pointer;transition:.16s}
+  .chat-suggest button:hover{border-color:var(--brand);color:var(--brand);background:var(--brand-soft)}
+  .chat-form{display:flex;gap:8px;padding:9px 10px;border-top:1px solid var(--panel-brd)}
+  .chat-form input{flex:1;border:1px solid var(--panel-brd);background:var(--page);color:var(--ink);
+    border-radius:10px;padding:9px 11px;font-size:13px;outline:none}
+  .chat-form input:focus{border-color:var(--brand)}
+  .chat-form button{border:none;background:var(--brand);color:#fff;border-radius:10px;
+    padding:0 14px;font-size:13px;cursor:pointer;transition:.16s}
+  .chat-form button:hover{opacity:.9}
+  .chat-ai{border-top:1px solid var(--panel-brd);padding:10px 11px;display:flex;flex-direction:column;gap:7px;background:var(--brand-soft)}
+  .chat-ai[hidden]{display:none}
+  .chat-ai label{font-size:11.5px;color:var(--ink-2);display:flex;flex-direction:column;gap:3px}
+  .chat-ai input{border:1px solid var(--panel-brd);background:var(--page);color:var(--ink);
+    border-radius:8px;padding:7px 9px;font-size:12px;outline:none}
+  .chat-ai-on{flex-direction:row !important;align-items:center;gap:6px !important;color:var(--ink) !important}
+  .chat-ai-tip{font-size:10.5px;color:var(--muted);line-height:1.5}
 </style>
 </head>
 <body>
@@ -662,9 +716,36 @@
 <div class="pet" id="pet" title="我是ATRI～点我摸摸，按住能拖动，我还会自己散步哦">
   <div class="bubble" id="petBubble">你好呀～</div>
   <div class="pet-inner"><img id="petImg" src="pet-idle.png" alt="ATRI 桌宠" draggable="false"><img class="pet-eye" src="pet-eye-l.png" alt="" draggable="false"><img class="pet-eye" src="pet-eye-r.png" alt="" draggable="false"></div>
-  <div class="pet-ctl"><button type="button" id="petSmall" title="缩小一号" aria-label="缩小">−</button><button type="button" id="petBig" title="放大一号" aria-label="放大">＋</button><button type="button" id="petSkin" title="换装：水手服 / 便服 / 戏水" aria-label="换装">衣</button></div>
+  <div class="pet-ctl"><button type="button" id="petChat" title="和 ATRI 聊天" aria-label="聊天">💬</button><button type="button" id="petSmall" title="缩小一号" aria-label="缩小">−</button><button type="button" id="petBig" title="放大一号" aria-label="放大">＋</button><button type="button" id="petSkin" title="换装：水手服 / 便服 / 戏水" aria-label="换装">衣</button></div>
 </div>
 
+<!-- 桌宠聊天面板：本地知识库（动漫+推理），可选接入大模型 -->
+<div class="chat-dock" id="chatDock">
+  <div class="chat-panel" id="chatPanel" role="dialog" aria-label="和 ATRI 聊天">
+    <div class="chat-head">
+      <b>💬 和 ATRI 聊聊</b>
+      <div class="chat-head-r">
+        <button type="button" class="chat-ai-btn" id="chatAiBtn" title="设置 AI 大模型（可选）">AI</button>
+        <button type="button" class="chat-close" id="chatClose" title="收起">✕</button>
+      </div>
+    </div>
+    <div class="chat-log" id="chatLog" aria-live="polite"></div>
+    <div class="chat-suggest" id="chatSuggest"></div>
+    <form class="chat-form" id="chatForm" autocomplete="off">
+      <input type="text" id="chatInput" placeholder="问 ATRI 点动漫或推理的事…" maxlength="200" aria-label="输入消息">
+      <button type="submit" id="chatSend" title="发送">发送</button>
+    </form>
+    <div class="chat-ai" id="chatAi" hidden>
+      <label>接口地址<input type="text" id="aiEndpoint" placeholder="https://api.openai.com/v1/chat/completions"></label>
+      <label>API Key<input type="password" id="aiKey" placeholder="sk-...（仅存本机浏览器）"></label>
+      <label>模型<input type="text" id="aiModel" placeholder="gpt-4o-mini"></label>
+      <label class="chat-ai-on"><input type="checkbox" id="aiEnabled"> 启用大模型回答（关闭则用本地知识库）</label>
+      <div class="chat-ai-tip">填入 Key 后，ATRI 就能真正自由聊天（Key 只存在你本机，不会上传）。留空则一直用本地知识库。</div>
+    </div>
+  </div>
+</div>
+
+<script src="pet-kb.js"></script>
 <script>
 /* ============================================================
    只改下面这一块就能维护整个网站
@@ -2578,6 +2659,178 @@ toggle.addEventListener("click", () => {
   requestAnimationFrame(tick);
   // 开场白：若用户在 1.1s 内已互动（换装/摸摸/悬停台词），不打断
   setTimeout(() => { if(!bubble.classList.contains("on")) say("你好呀，我是高性能机器人 ATRI～主人把这小站交给我看着啦！"); }, 1100);
+})();
+
+/* ---------- 桌宠聊天：本地知识库（动漫+推理），可选接大模型 ---------- */
+(function(){
+  const dock = document.getElementById("chatDock");
+  const panel = document.getElementById("chatPanel");
+  const log = document.getElementById("chatLog");
+  const suggestBox = document.getElementById("chatSuggest");
+  const form = document.getElementById("chatForm");
+  const input = document.getElementById("chatInput");
+  const sendBtn = document.getElementById("chatSend");
+  const chatBtn = document.getElementById("petChat");
+  const closeBtn = document.getElementById("chatClose");
+  const aiBtn = document.getElementById("chatAiBtn");
+  const aiBox = document.getElementById("chatAi");
+  const aiEndpoint = document.getElementById("aiEndpoint");
+  const aiKey = document.getElementById("aiKey");
+  const aiModel = document.getElementById("aiModel");
+  const aiEnabled = document.getElementById("aiEnabled");
+  if(!dock || !panel) return;
+
+  const KB = window.PET_KB;
+  const STORE = "pet_chat_v1";
+  const CFG = "pet_llm_cfg";
+  let history = [];
+  try { history = JSON.parse(localStorage.getItem(STORE) || "[]"); } catch(_){ history = []; }
+  let llm = null;
+  try { llm = JSON.parse(localStorage.getItem(CFG) || "null"); } catch(_){}
+
+  // 复用桌宠头顶气泡，让 ATRI 回话时也在宠物头上闪一下
+  const petBubble = document.getElementById("petBubble");
+  let petTimer = null;
+  function petSay(text){
+    if(!petBubble) return;
+    petBubble.textContent = text; petBubble.classList.add("on");
+    clearTimeout(petTimer); petTimer = setTimeout(() => petBubble.classList.remove("on"), 3000);
+  }
+
+  function scrollBottom(){ log.scrollTop = log.scrollHeight; }
+
+  function addMsg(role, text, opts){
+    opts = opts || {};
+    const el = document.createElement("div");
+    el.className = "msg " + (role === "me" ? "me" : "atri") + (opts.typing ? " typing" : "");
+    if(role === "atri"){
+      const ava = document.createElement("div"); ava.className = "ava"; ava.textContent = "A"; el.appendChild(ava);
+    }
+    const col = document.createElement("div");
+    const b = document.createElement("div"); b.className = "bubble-msg"; b.textContent = text;
+    col.appendChild(b); el.appendChild(col);
+    log.appendChild(el); scrollBottom();
+    return el;
+  }
+
+  function persist(){ try { localStorage.setItem(STORE, JSON.stringify(history.slice(-60))); } catch(_){} }
+  function pushHistory(role, text){ history.push({ role: role, text: text }); persist(); }
+
+  function renderHistory(){
+    log.innerHTML = "";
+    if(history.length === 0){
+      addMsg("atri", "嗨～我是 ATRI！想聊动漫还是推理？点下面的小提示，或者直接问我都行♪");
+    } else {
+      history.forEach(h => addMsg(h.role, h.text));
+    }
+    renderSuggest(history.length === 0);
+  }
+
+  function renderSuggest(show){
+    suggestBox.innerHTML = "";
+    if(!show) return;
+    const qs = (KB && KB.suggest) ? KB.suggest : ["你是谁", "名侦探柯南讲什么", "什么是本格推理"];
+    qs.forEach(q => {
+      const b = document.createElement("button"); b.type = "button"; b.textContent = q;
+      b.addEventListener("click", () => send(q));
+      suggestBox.appendChild(b);
+    });
+  }
+
+  // 大模型调用（预留）：仅用户启用且有 Key 时；失败自动回退本地知识库
+  async function callLLM(text){
+    if(!llm || !llm.enabled || !llm.apiKey) return null;
+    const endpoint = llm.endpoint || "https://api.openai.com/v1/chat/completions";
+    const model = llm.model || "gpt-4o-mini";
+    const sys = "你是 ATRI，一个高性能仿生机器人少女，住在一个个人主页小站上。你性格乐观天真、感情丰富、有点笨拙，偶尔走神想起沉睡海底丢失的记忆。你特别擅长聊『动漫』和『推理/侦探』两类话题。请用中文、口语化、简短（1-3 句）回答，保持可爱的语气但不过度，不要输出 Markdown 标题。";
+    const msgs = [{ role: "system", content: sys }];
+    history.slice(-12).forEach(h => msgs.push({ role: h.role === "me" ? "user" : "assistant", content: h.text }));
+    msgs.push({ role: "user", content: text });
+    try{
+      const r = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + llm.apiKey },
+        body: JSON.stringify({ model: model, messages: msgs, temperature: 0.8 })
+      });
+      if(!r.ok) return null;
+      const j = await r.json();
+      const c = j && j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content;
+      return (c ? String(c).trim() : null);
+    }catch(_){ return null; }
+  }
+
+  async function reply(text){
+    let ans = await callLLM(text);
+    if(ans == null){
+      const hit = KB && KB.answer ? KB.answer(text) : null;
+      ans = hit ? hit.text : (KB && KB.fallback ? KB.fallback(text) : "这个我还没学到呢～");
+    }
+    return ans;
+  }
+
+  let busy = false;
+  async function send(text){
+    text = (text || "").trim();
+    if(!text || busy) return;
+    input.value = "";
+    addMsg("me", text); pushHistory("me", text);
+    renderSuggest(false);
+    busy = true; sendBtn.disabled = true;
+    const typing = addMsg("atri", "ATRI 正在输入…", { typing: true });
+    try{
+      const ans = await reply(text);
+      typing.remove();
+      addMsg("atri", ans); pushHistory("atri", ans);
+      petSay(ans.length > 40 ? ans.slice(0, 40) + "…" : ans);
+    }catch(e){
+      typing.remove();
+      addMsg("atri", "呀…我刚刚走神了一下，再发一次好不好？");
+    }finally{
+      busy = false; sendBtn.disabled = false; input.focus();
+    }
+  }
+
+  function open(){
+    dock.classList.add("on"); chatBtn.classList.add("on");
+    chatBtn.setAttribute("aria-expanded", "true");
+    renderHistory(); input.focus();
+  }
+  function close(){
+    dock.classList.remove("on"); chatBtn.classList.remove("on");
+    chatBtn.setAttribute("aria-expanded", "false");
+  }
+  function toggle(){ dock.classList.contains("on") ? close() : open(); }
+
+  chatBtn.addEventListener("pointerdown", e => e.stopPropagation());
+  chatBtn.addEventListener("click", e => { e.stopPropagation(); toggle(); });
+  closeBtn.addEventListener("click", close);
+  form.addEventListener("submit", e => { e.preventDefault(); send(input.value); });
+  document.addEventListener("keydown", e => { if(e.key === "Escape" && dock.classList.contains("on")) close(); });
+
+  // AI 设置（可选，默认关闭）
+  function loadCfg(){
+    aiEndpoint.value = (llm && llm.endpoint) || "";
+    aiKey.value = (llm && llm.apiKey) || "";
+    aiModel.value = (llm && llm.model) || "";
+    aiEnabled.checked = !!(llm && llm.enabled);
+    aiBtn.classList.toggle("on", !!(llm && llm.enabled));
+  }
+  aiBtn.addEventListener("click", () => {
+    if(aiBox.hasAttribute("hidden")){ aiBox.removeAttribute("hidden"); loadCfg(); }
+    else { aiBox.setAttribute("hidden", ""); }
+  });
+  [aiEndpoint, aiKey, aiModel, aiEnabled].forEach(el => el.addEventListener("change", saveCfg));
+  function saveCfg(){
+    llm = {
+      endpoint: aiEndpoint.value.trim(),
+      apiKey: aiKey.value.trim(),
+      model: aiModel.value.trim(),
+      enabled: aiEnabled.checked
+    };
+    try { localStorage.setItem(CFG, JSON.stringify(llm)); } catch(_){}
+    aiBtn.classList.toggle("on", llm.enabled);
+  }
+  loadCfg();
 })();
 </script>
 </body>
