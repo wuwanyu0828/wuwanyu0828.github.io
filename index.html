@@ -518,24 +518,27 @@
     .pet img{animation:none}
   }
 
-  /* 桌宠聊天面板：底部居中浮层，桌面/移动端自适应 */
+  /* 桌宠聊天面板：默认停靠右侧，标题栏可拖拽移动（位置记忆），双击标题栏复位 */
   .chat-dock{
-    position:fixed;left:50%;transform:translateX(-50%);bottom:16px;z-index:70;
+    position:fixed;right:18px;top:11vh;z-index:70;
     width:min(384px,calc(100vw - 28px));display:none;pointer-events:none;
   }
   .chat-dock.on{display:block}
   .chat-dock.on .chat-panel{pointer-events:auto}
   .chat-panel{
     display:flex;flex-direction:column;overflow:hidden;
-    height:min(70vh,520px);
+    height:min(74vh,540px);
     background:var(--panel);border:1px solid var(--panel-brd);border-radius:var(--radius);
     box-shadow:0 18px 50px rgba(0,0,0,.20);
   }
   [data-theme="dark"] .chat-panel{box-shadow:0 18px 50px rgba(0,0,0,.55)}
   .chat-head{display:flex;align-items:center;justify-content:space-between;gap:8px;
     padding:9px 10px 9px 13px;border-bottom:1px solid var(--panel-brd);
-    font-size:13px;font-weight:600;color:var(--ink-2)}
+    font-size:13px;font-weight:600;color:var(--ink-2);
+    cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+  .chat-head:active{cursor:grabbing}
   .chat-head-r{display:flex;gap:6px}
+  .chat-head-r button{cursor:pointer}
   .chat-close,.chat-ai-btn{width:24px;height:24px;border:none;border-radius:50%;background:transparent;
     color:var(--muted);cursor:pointer;font-size:12px;font-weight:700;display:grid;place-items:center;transition:.16s}
   .chat-close:hover,.chat-ai-btn:hover{background:var(--brand-soft);color:var(--brand)}
@@ -722,7 +725,7 @@
 <!-- 桌宠聊天面板：本地知识库（动漫+推理），可选接入大模型 -->
 <div class="chat-dock" id="chatDock">
   <div class="chat-panel" id="chatPanel" role="dialog" aria-label="和 ATRI 聊天">
-    <div class="chat-head">
+    <div class="chat-head" id="chatHead" title="按住这里可拖动面板 · 双击复位位置">
       <b>💬 和 ATRI 聊聊</b>
       <div class="chat-head-r">
         <button type="button" class="chat-ai-btn" id="chatAiBtn" title="设置 AI 大模型（可选）">AI</button>
@@ -2806,6 +2809,59 @@ toggle.addEventListener("click", () => {
   closeBtn.addEventListener("click", close);
   form.addEventListener("submit", e => { e.preventDefault(); send(input.value); });
   document.addEventListener("keydown", e => { if(e.key === "Escape" && dock.classList.contains("on")) close(); });
+
+  // ---- 面板位置：默认停靠右侧，按住标题栏可拖到任意位置（记忆），双击标题栏复位 ----
+  const head = document.getElementById("chatHead");
+  const POS = "pet_chat_pos";
+  let pos = null;
+  try { pos = JSON.parse(localStorage.getItem(POS) || "null"); } catch(_){ pos = null; }
+  if(!pos || typeof pos.l !== "number" || typeof pos.t !== "number") pos = null;
+
+  function clampPos(l, t){
+    const w = dock.offsetWidth || 384;
+    const h = dock.offsetHeight || 540;
+    const maxL = Math.max(8, window.innerWidth  - w - 8);
+    const maxT = Math.max(8, window.innerHeight - Math.min(h, window.innerHeight - 16) - 8);
+    return { l: Math.min(Math.max(8, l), maxL), t: Math.min(Math.max(8, t), maxT) };
+  }
+  function applyPos(){
+    if(!pos){ dock.style.left = ""; dock.style.top = ""; dock.style.right = ""; return; }
+    dock.style.right = "auto";
+    dock.style.left = pos.l + "px";
+    dock.style.top  = pos.t + "px";
+  }
+  applyPos();
+
+  let drag = null;
+  if(head){
+    head.addEventListener("pointerdown", e => {
+      if(e.target.closest("button")) return;            // 标题栏按钮不触发拖动
+      if(!dock.classList.contains("on")) return;
+      const rect = dock.getBoundingClientRect();
+      drag = { dx: e.clientX - rect.left, dy: e.clientY - rect.top };
+      try { head.setPointerCapture(e.pointerId); } catch(_){}
+      document.body.style.userSelect = "none";
+    });
+    head.addEventListener("pointermove", e => {
+      if(!drag) return;
+      pos = clampPos(e.clientX - drag.dx, e.clientY - drag.dy);
+      applyPos();
+    });
+    function endDrag(){
+      if(!drag) return;
+      drag = null;
+      document.body.style.userSelect = "";
+      try { localStorage.setItem(POS, JSON.stringify(pos)); } catch(_){}
+    }
+    head.addEventListener("pointerup", endDrag);
+    head.addEventListener("pointercancel", endDrag);
+    head.addEventListener("dblclick", e => {
+      if(e.target.closest("button")) return;
+      pos = null; applyPos();
+      try { localStorage.removeItem(POS); } catch(_){}
+    });
+  }
+  window.addEventListener("resize", () => { if(pos){ pos = clampPos(pos.l, pos.t); applyPos(); } });
 
   // AI 设置（可选，默认关闭）
   function loadCfg(){
