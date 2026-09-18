@@ -12,6 +12,18 @@
  * ========================================================================== */
 window.HUB_DATA = {
   updated: "2026-09-18",
+
+  // 热点速递：精选当前热门内容，点开即看（bvid 用于站内直接播放 B 站）
+  // 数据由站长手工精选维护，非实时抓取；链接均为正版平台。
+  hotspots: [
+    { title:"葬送的芙莉莲 第二季", emoji:"🧙", desc:"2026 冬季榜首，治愈系神作续作；一级魔法使测验篇，全 28 话。", platform:"B 站", tags:["奇幻","治愈","续作"], bvid:"BV1dq421A7aT", url:"https://www.bilibili.com/bangumi/media/md21087073", hot:true },
+    { title:"穹庐下的魔女", emoji:"⚔️", desc:"7 月新番口碑第一，山田尚子执导的蒙古宫廷历史正剧（PV）。", platform:"B 站", tags:["历史","正剧","新番"], bvid:"BV1SvGy6gEdD", url:"https://www.bilibili.com/video/BV1SvGy6gEdD", hot:true },
+    { title:"我推的孩子 第三季", emoji:"⭐", desc:"2026 年 1 月新番，谎言化作武器的娱乐圈群像（PV）。", platform:"B 站", tags:["偶像","悬疑","续作"], bvid:"BV1remBB8Eff", url:"https://www.bilibili.com/video/BV1remBB8Eff" },
+    { title:"BanG Dream! MyGO!!!!!", emoji:"🎸", desc:"迷途之子！乐队成长神作，全 13 话，1 亿播放。", platform:"B 站", tags:["音乐","乐队","励志"], bvid:"BV19ZzqYKEDP", url:"https://b23.tv/ep1182847", hot:true },
+    { title:"无职转生 第三季", emoji:"🔥", desc:"7 月人气顶流，异世界标杆续作（B 站主平台）。", platform:"B 站", tags:["异世界","续作"], url:"https://b23.tv/c8nUm2Z" },
+    { title:"鬼灭之刃 柱训练篇", emoji:"🗡️", desc:"B 站最稳基本盘，九柱集训燃向必看，全 8 话。", platform:"B 站", tags:["热血","Jump"], url:"https://www.bilibili.com/bangumi/media/md21226899" }
+  ],
+
   categories: [
     {
       id: "anime",
@@ -106,6 +118,24 @@ window.HUB_DATA = {
         { title: "萌娘百科 · 声优", url: "https://zh.moegirl.org.cn/", platform: "萌娘百科", tags: ["声优", "考据"], desc: "声优百科与作品年表。" },
         { title: "B 站 音乐区", url: "https://www.bilibili.com/v/music/", platform: "B 站", tags: ["翻唱", "同人"], desc: "同人翻唱与 VOCALOID 作品。" },
         { title: "萌娘百科 · 音乐", url: "https://zh.moegirl.org.cn/Category:%E9%9F%B3%E4%B9%90", platform: "萌娘百科", tags: ["术语"], desc: "动画音乐术语科普。" }
+      ]
+    },
+    {
+      id: "rank",
+      name: "萌战 / 榜单",
+      icon: "🏆",
+      desc: "角色人气大赏与各站排行",
+      items: [
+        { title: "世萌 ISML 国际最萌大会", url: "https://www.internationalsaimoe.moe", platform: "世萌", tags: ["萌战", "国际"], desc: "2026 官方赛站，投票决出动画角色最萌之星。", hot: true },
+        { title: "日萌（动画最萌大会）", url: "https://zh.moegirl.org.cn/日萌", platform: "萌娘百科", tags: ["萌战", "历史"], desc: "2ch 动画最萌大赛词条；2015 年起停办，此处为历史与规则考据。" },
+        { title: "B 萌 2026 动画角色人气大赏", url: "https://zh.moegirl.org/Bilibili_Moe_2026_%E5%8A%A8%E7%94%BB%E8%A7%92%E8%89%B2%E4%BA%BA%E6%B0%94%E5%A4%A7%E8%B5%8F", platform: "B 站", tags: ["萌战", "B站"], desc: "bilibili moe 2026 百科：萌王千早爱音、燃王菜月昴。" },
+        { title: "B 站番剧热播榜", url: "https://bangumi.bilibili.com/anime/2730", platform: "B 站", tags: ["番剧", "热播"], desc: "B 站番剧实时热播榜与新番时间表。", hot: true },
+        { title: "Bangumi 番剧排行", url: "https://bangumi.tv/anime/browser?sort=rank", platform: "Bangumi", tags: ["评分", "排名"], desc: "中文 ACG 数据库按评分排行的番剧榜。" },
+        { title: "MyAnimeList Top", url: "https://myanimelist.net/topanime.php", platform: "MAL", tags: ["全球", "排名"], desc: "全球最大番剧数据库热门排行。" },
+        { title: "AniList Trending", url: "https://anilist.co/search/anime?sort=TRENDING_DESC", platform: "AniList", tags: ["全球", "趋势"], desc: "国际站当季 trending 番剧。" },
+        { title: "Anime Trending（每周 TOP10）", url: "https://www.anitrendz.com/", platform: "AniTrendz", tags: ["周榜", "社区"], desc: "社区每周投票的当季人气 TOP10 与角色榜。" },
+        { title: "豆瓣动画榜", url: "https://www.douban.com/chart?sid=10024", platform: "豆瓣", tags: ["评分", "华语"], desc: "豆瓣动画分类评分排行榜。" },
+        { title: "AniDB", url: "https://anidb.net/", platform: "AniDB", tags: ["档案", "数据库"], desc: "硬核向番剧档案库与标签筛选。" }
       ]
     }
   ]
