@@ -15,9 +15,10 @@ window.HUB_DATA = {
 
   // 全网热榜：参考 https://top.open2hub.com 的聚合形式，按平台分组展示热门标题
   // 快照日期见 updated；非实时数据，标题均为各平台真实热门；点击跳对应平台搜索页
-  // base 决定跳转平台：bili / tieba / weibo / zhihu
+  // region: domestic(国内) / overseas(国外)；base 决定跳转平台：bili/tieba/weibo/zhihu/mal/anilist
   trends: [
-    { platform:"哔哩哔哩", emoji:"📺", base:"bili", items:[
+    // —— 国内热榜 ——
+    { platform:"哔哩哔哩", emoji:"📺", base:"bili", region:"domestic", items:[
       "《原神》薇斯纳角色PV「风行迷踪」",
       "《鸣潮》动画短片 | 寻心",
       "天津漫展手机事件",
@@ -27,7 +28,7 @@ window.HUB_DATA = {
       "立志成为恶兽 第四集",
       "《异环》1.4版本PV「祷歌为谁而诵」"
     ]},
-    { platform:"百度贴吧", emoji:"🎮", base:"tieba", items:[
+    { platform:"百度贴吧", emoji:"🎮", base:"tieba", region:"domestic", items:[
       "TES进世界赛 IG准备卖票",
       "买手机换签售 兔娘怒退漫展",
       "碧蓝金鹿皮肤被曝用AI",
@@ -35,7 +36,7 @@ window.HUB_DATA = {
       "勇哥跑路 B站切片全停",
       "管泽元离开LPL资源反增"
     ]},
-    { platform:"微博", emoji:"💬", base:"weibo", items:[
+    { platform:"微博", emoji:"💬", base:"weibo", region:"domestic", items:[
       "兰香如故能否成为下一个知否",
       "黄婷婷真的上再见朋友了",
       "何瑞贤的化妆技术比钟楚曦还厉害",
@@ -43,13 +44,34 @@ window.HUB_DATA = {
       "WE对战JDG",
       "杜翠雀被赶出林府"
     ]},
-    { platform:"知乎", emoji:"📚", base:"zhihu", items:[
+    { platform:"知乎", emoji:"📚", base:"zhihu", region:"domestic", items:[
       "孙悟空为什么被压前叫泼猴，出来后都喊大圣",
       "如何看待华为突破冯诺依曼单机架构",
       "媒体称美国大模型已被日本错误历史观污染",
       "名古屋亚运会用邮轮集装箱房替代亚运村",
       "人民币兑美元再破6.7 为何不跌反涨",
       "新一任007詹姆斯邦德6人候选名单"
+    ]},
+    // —— 国外热榜 ——（item 为 { t:"英文搜索词", cn:"中文译名" }，搜索用英文、显示含中文）
+    { platform:"MyAnimeList", emoji:"🌐", base:"mal", region:"overseas", items:[
+      { t:"Sousou no Frieren", cn:"葬送的芙莉莲" },
+      { t:"Fullmetal Alchemist: Brotherhood", cn:"钢之炼金术师 FA" },
+      { t:"Re:Zero kara Hajimeru Isekai Seikatsu 4th Season", cn:"Re0 第四季" },
+      { t:"Steel Ball Run: JoJo no Kimyou na Bouken", cn:"JOJO 飙马野郎" },
+      { t:"Bleach: Sennen Kessen-hen - Kashin-tan", cn:"死神 千年血战篇" },
+      { t:"Steins;Gate", cn:"命运石之门" },
+      { t:"Chainsaw Man Movie: Reze-hen", cn:"电锯人 蕾塞篇" },
+      { t:"Gintama: The Final", cn:"银魂 最终篇" }
+    ]},
+    { platform:"AniList", emoji:"📊", base:"anilist", region:"overseas", items:[
+      { t:"Super no Ura de Yani Suu Futari", cn:"吸烟的双人" },
+      { t:"Tsuihou Sareta Tensei Juukishi wa Game Chishiki de Musou Suru", cn:"被放逐的转生枪士" },
+      { t:"ONE PIECE", cn:"海贼王" },
+      { t:"Re:Zero kara Hajimeru Isekai Seikatsu 4th Season", cn:"Re0 第四季" },
+      { t:"Yani Neko", cn:"烟猫" },
+      { t:"BLEACH", cn:"死神" },
+      { t:"Otome Kaijuu Caraméliser", cn:"乙女怪兽焦糖化" },
+      { t:"Tensei Shitara Slime Datta Ken 4th Season", cn:"转生史莱姆 第四季" }
     ]}
   ],
 

@@ -194,10 +194,18 @@
 
     <section class="hotsec">
       <div class="sec-head">
-        <span class="ico">🔥</span><h2>全网热榜 · 快照</h2><span class="desc">参考 open2hub 聚合形式</span>
+        <span class="ico">🔥</span><h2>国内热榜 · 快照</h2><span class="desc">参考 open2hub 聚合形式</span>
       </div>
-      <p class="trend-note" id="trendNote"></p>
-      <div class="trend-grid" id="hotGrid"></div>
+      <p class="trend-note" id="trendNoteDomestic"></p>
+      <div class="trend-grid" id="hotGridDomestic"></div>
+    </section>
+
+    <section class="hotsec">
+      <div class="sec-head">
+        <span class="ico">🌏</span><h2>国外热榜 · 快照</h2><span class="desc">MAL / AniList 实时榜单</span>
+      </div>
+      <p class="trend-note" id="trendNoteOverseas"></p>
+      <div class="trend-grid" id="hotGridOverseas"></div>
     </section>
 
     <div class="controls">
@@ -379,28 +387,35 @@
     toTop.addEventListener("click", function(){ window.scrollTo({ top:0, behavior:"smooth" }); });
 
     // ---- 全网热榜（纯文字标题，参考 open2hub，点击跳对应平台） ----
-    var hotGrid = document.getElementById("hotGrid");
     function trendUrl(base, q){
       var u = encodeURIComponent(q);
-      if(base === "bili")  return "https://search.bilibili.com/all?keyword=" + u;
-      if(base === "tieba") return "https://tieba.baidu.com/f/search/res?qw=" + u;
-      if(base === "weibo") return "https://s.weibo.com/weibo?q=" + u;
-      if(base === "zhihu") return "https://www.zhihu.com/search?type=content&q=" + u;
+      if(base === "bili")    return "https://search.bilibili.com/all?keyword=" + u;
+      if(base === "tieba")   return "https://tieba.baidu.com/f/search/res?qw=" + u;
+      if(base === "weibo")   return "https://s.weibo.com/weibo?q=" + u;
+      if(base === "zhihu")   return "https://www.baidu.com/s?wd=" + encodeURIComponent(q + " 知乎");
+      if(base === "mal")     return "https://myanimelist.net/anime.php?q=" + u;
+      if(base === "anilist") return "https://anilist.co/search/anime?query=" + u;
       return "https://www.baidu.com/s?wd=" + u;
     }
-    function renderTrends(){
-      var list = (DATA.trends || []);
-      var note = document.getElementById("trendNote");
+    // item 可为字符串，或 { t:"搜索词(英文)", cn:"中文译名" }
+    function renderTrends(region, gridId, noteId){
+      var list = (DATA.trends || []).filter(function(g){ return g.region === region; });
+      var grid = document.getElementById(gridId);
+      var note = document.getElementById(noteId);
       if(note) note.textContent = "数据快照于 " + (DATA.updated || "—") + "，非实时更新；标题来自各平台真实热门，点击可跳去对应平台查看。";
-      hotGrid.innerHTML = list.map(function(g){
-        var rows = (g.items || []).map(function(t, i){
-          var url = trendUrl(g.base, t);
-          return '<li class="trend-item"><span class="trend-no">' + (i+1) + '</span><a href="' + url + '" target="_blank" rel="noopener" title="在' + esc(g.platform) + '查看">'+esc(t)+'</a></li>';
+      grid.innerHTML = list.map(function(g){
+        var rows = (g.items || []).map(function(it, i){
+          var title, q;
+          if(typeof it === "string"){ title = it; q = it; }
+          else { title = it.cn ? (it.t + "（" + it.cn + "）") : it.t; q = it.t; }
+          var url = trendUrl(g.base, q);
+          return '<li class="trend-item"><span class="trend-no">' + (i+1) + '</span><a href="' + url + '" target="_blank" rel="noopener" title="在' + esc(g.platform) + '查看">'+esc(title)+'</a></li>';
         }).join("");
         return '<div class="trend-col"><h3><span>' + esc(g.emoji || "🔥") + '</span>' + esc(g.platform) + '<span class="ph">' + (g.items||[]).length + ' 条</span></h3><ul class="trend-list">' + rows + '</ul></div>';
       }).join("");
     }
-    renderTrends();
+    renderTrends("domestic", "hotGridDomestic", "trendNoteDomestic");
+    renderTrends("overseas", "hotGridOverseas", "trendNoteOverseas");
 
     // 初始化
     buildTags();
