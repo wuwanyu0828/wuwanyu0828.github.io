@@ -97,11 +97,10 @@ window.HUB_DATA = {
       icon: "🎀",
       desc: "COS 作品、教程与约稿",
       items: [
-        { title: "半次元 COS", url: "https://bcy.net/cos", platform: "半次元", tags: ["COS", "社区"], desc: "国内最大的 COS 作品社区，妆娘与正片集中地。", hot: true },
+        { title: "Lofter COS 标签", url: "https://www.lofter.com/tag/cosplay", platform: "Lofter", tags: ["COS", "图文"], desc: "网易 Lofter 的 cosplay 图文标签，国内妆娘与正片集散地。", hot: true },
         { title: "微博 COSPLAY 超话", url: "https://s.weibo.com/weibo?q=%23COSPLAY%23", platform: "微博", tags: ["COS", "话题"], desc: "微博 COSPLAY 话题广场，最新正片与活动。", hot: true },
         { title: "小红书 COSPLAY", url: "https://www.xiaohongshu.com/search_result?keyword=cosplay", platform: "小红书", tags: ["COS", "妆娘", "教程"], desc: "妆娘教程、道具与 Cos 日常分享。" },
         { title: "WorldCosplay", url: "https://worldcosplay.net/", platform: "WorldCosplay", tags: ["COS", "国际"], desc: "全球 Coser 作品平台，各国大大云集。" },
-        { title: "DeviantArt · Cosplay", url: "https://www.deviantart.com/tag/cosplay", platform: "DeviantArt", tags: ["COS", "图库"], desc: "海外同人 / Cos 图库，画质很高。" },
         { title: "B 站 Cosplay 区", url: "https://search.bilibili.com/all?keyword=cosplay", platform: "B 站", tags: ["COS", "视频"], desc: "B 站 Cosplay 视频与教程合集。" }
       ]
     },
