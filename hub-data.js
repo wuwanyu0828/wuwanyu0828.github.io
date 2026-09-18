@@ -13,15 +13,44 @@
 window.HUB_DATA = {
   updated: "2026-09-18",
 
-  // 热点速递：精选当前热门内容，点开即看（bvid 用于站内直接播放 B 站）
-  // 数据由站长手工精选维护，非实时抓取；链接均为正版平台。
-  hotspots: [
-    { title:"葬送的芙莉莲 第二季", emoji:"🧙", desc:"2026 冬季榜首，治愈系神作续作；一级魔法使测验篇，全 28 话。", platform:"B 站", tags:["奇幻","治愈","续作"], bvid:"BV1dq421A7aT", url:"https://www.bilibili.com/bangumi/media/md21087073", hot:true },
-    { title:"穹庐下的魔女", emoji:"⚔️", desc:"7 月新番口碑第一，山田尚子执导的蒙古宫廷历史正剧（PV）。", platform:"B 站", tags:["历史","正剧","新番"], bvid:"BV1SvGy6gEdD", url:"https://www.bilibili.com/video/BV1SvGy6gEdD", hot:true },
-    { title:"我推的孩子 第三季", emoji:"⭐", desc:"2026 年 1 月新番，谎言化作武器的娱乐圈群像（PV）。", platform:"B 站", tags:["偶像","悬疑","续作"], bvid:"BV1remBB8Eff", url:"https://www.bilibili.com/video/BV1remBB8Eff" },
-    { title:"BanG Dream! MyGO!!!!!", emoji:"🎸", desc:"迷途之子！乐队成长神作，全 13 话，1 亿播放。", platform:"B 站", tags:["音乐","乐队","励志"], bvid:"BV19ZzqYKEDP", url:"https://b23.tv/ep1182847", hot:true },
-    { title:"无职转生 第三季", emoji:"🔥", desc:"7 月人气顶流，异世界标杆续作（B 站主平台）。", platform:"B 站", tags:["异世界","续作"], url:"https://b23.tv/c8nUm2Z" },
-    { title:"鬼灭之刃 柱训练篇", emoji:"🗡️", desc:"B 站最稳基本盘，九柱集训燃向必看，全 8 话。", platform:"B 站", tags:["热血","Jump"], url:"https://www.bilibili.com/bangumi/media/md21226899" }
+  // 全网热榜：参考 https://top.open2hub.com 的聚合形式，按平台分组展示热门标题
+  // 快照日期见 updated；非实时数据，标题均为各平台真实热门；点击跳对应平台搜索页
+  // base 决定跳转平台：bili / tieba / weibo / zhihu
+  trends: [
+    { platform:"哔哩哔哩", emoji:"📺", base:"bili", items:[
+      "《原神》薇斯纳角色PV「风行迷踪」",
+      "《鸣潮》动画短片 | 寻心",
+      "天津漫展手机事件",
+      "S1赛季「逐风启程」《伊莫》PC端上线",
+      "炽日将烬 2026无畏契约全球冠军赛主题曲",
+      "⚡️请被欧拉吧DIO大人（JOJO同人）",
+      "立志成为恶兽 第四集",
+      "《异环》1.4版本PV「祷歌为谁而诵」"
+    ]},
+    { platform:"百度贴吧", emoji:"🎮", base:"tieba", items:[
+      "TES进世界赛 IG准备卖票",
+      "买手机换签售 兔娘怒退漫展",
+      "碧蓝金鹿皮肤被曝用AI",
+      "再16强就退役 左手Bin成共识",
+      "勇哥跑路 B站切片全停",
+      "管泽元离开LPL资源反增"
+    ]},
+    { platform:"微博", emoji:"💬", base:"weibo", items:[
+      "兰香如故能否成为下一个知否",
+      "黄婷婷真的上再见朋友了",
+      "何瑞贤的化妆技术比钟楚曦还厉害",
+      "池昌旭林珍娜吻戏",
+      "WE对战JDG",
+      "杜翠雀被赶出林府"
+    ]},
+    { platform:"知乎", emoji:"📚", base:"zhihu", items:[
+      "孙悟空为什么被压前叫泼猴，出来后都喊大圣",
+      "如何看待华为突破冯诺依曼单机架构",
+      "媒体称美国大模型已被日本错误历史观污染",
+      "名古屋亚运会用邮轮集装箱房替代亚运村",
+      "人民币兑美元再破6.7 为何不跌反涨",
+      "新一任007詹姆斯邦德6人候选名单"
+    ]}
   ],
 
   categories: [

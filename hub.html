@@ -135,30 +135,23 @@
   .totop.show{opacity:1;pointer-events:auto}
   .totop:hover{border-color:var(--brand);transform:translateY(-2px)}
 
-  /* 热点速递 */
+  /* 全网热榜（纯文字标题，参考 open2hub） */
   .hotsec{margin:18px 0 6px}
-  .hot-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(228px,1fr));gap:14px}
-  .hot-card{position:relative;background:var(--panel);border:1px solid var(--panel-brd);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;transition:.16s}
-  .hot-card:hover{box-shadow:var(--shadow-hi);transform:translateY(-2px)}
-  .hot-poster{position:relative;aspect-ratio:16/10;display:grid;place-items:center;cursor:pointer;color:#fff;overflow:hidden;
-    background:linear-gradient(135deg,var(--brand),var(--brand-2))}
-  .hot-poster .emoji{font-size:40px;filter:drop-shadow(0 4px 10px rgba(0,0,0,.25))}
-  .hot-poster .ply{position:absolute;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.28);opacity:0;transition:.16s}
-  .hot-poster:hover .ply{opacity:1}
-  .hot-poster .ply span{width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.94);color:var(--brand);display:grid;place-items:center;font-size:22px;box-shadow:var(--shadow-hi)}
-  .hot-body{padding:11px 13px 13px;display:flex;flex-direction:column;gap:6px;flex:1}
-  .hot-title{font-size:14.5px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-  .hot-desc{font-size:12px;color:var(--ink-2);line-height:1.5}
-  .hot-tags{display:flex;gap:6px;flex-wrap:wrap}
-  .hot-tags .itag{font-size:10.5px;color:var(--brand);background:var(--brand-soft);padding:2px 8px;border-radius:99px}
-  .hot-acts{margin-top:auto;display:flex;gap:8px;align-items:center}
-  .hot-play{flex:none;font-size:13px;font-weight:600;color:#fff;background:var(--brand);border:0;border-radius:99px;padding:7px 14px;cursor:pointer;transition:.16s;font-family:inherit}
-  .hot-play:hover{filter:brightness(1.06)}
-  .hot-go{font-size:12.5px;color:var(--brand);border:1px solid var(--panel-brd);border-radius:99px;padding:7px 12px;transition:.16s;white-space:nowrap}
-  .hot-go:hover{border-color:var(--brand);background:var(--brand-soft)}
-  .hot-embed{display:none;padding:0 13px 13px}
-  .hot-embed.on{display:block}
-  .hot-embed iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:var(--radius-sm);background:#000}
+  .trend-note{font-size:12px;color:var(--muted);margin:2px 0 13px;line-height:1.6}
+  .trend-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+  .trend-col{background:var(--panel);border:1px solid var(--panel-brd);border-radius:var(--radius);box-shadow:var(--shadow);padding:13px 14px 7px;backdrop-filter:blur(6px)}
+  .trend-col h3{font-size:14px;font-weight:700;display:flex;align-items:center;gap:7px;padding-bottom:9px;border-bottom:1px solid var(--panel-brd);margin-bottom:4px}
+  .trend-col h3 .ph{font-size:12px;color:var(--muted);margin-left:auto;font-weight:500}
+  .trend-list{list-style:none}
+  .trend-item{display:flex;align-items:flex-start;gap:9px;padding:8px 4px;border-bottom:1px dashed var(--panel-brd);transition:.14s}
+  .trend-item:last-child{border-bottom:0}
+  .trend-item:hover{background:var(--brand-soft)}
+  .trend-no{flex:none;width:18px;text-align:center;font-size:12.5px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:1px;line-height:1.45}
+  .trend-item:nth-child(1) .trend-no{color:#ff6a88}
+  .trend-item:nth-child(2) .trend-no{color:#ff9966}
+  .trend-item:nth-child(3) .trend-no{color:var(--brand)}
+  .trend-item a{flex:1;font-size:13.5px;color:var(--ink-2);line-height:1.45;transition:.14s}
+  .trend-item:hover a{color:var(--brand)}
 
   @media(max-width:640px){
     .wrap{padding:0 12px}
@@ -201,9 +194,10 @@
 
     <section class="hotsec">
       <div class="sec-head">
-        <span class="ico">🔥</span><h2>本周热点 · 直接看</h2><span class="desc">精选热门内容，点开即播</span>
+        <span class="ico">🔥</span><h2>全网热榜 · 快照</h2><span class="desc">参考 open2hub 聚合形式</span>
       </div>
-      <div class="hot-grid" id="hotGrid"></div>
+      <p class="trend-note" id="trendNote"></p>
+      <div class="trend-grid" id="hotGrid"></div>
     </section>
 
     <div class="controls">
@@ -384,43 +378,29 @@
     window.addEventListener("scroll", function(){ toTop.classList.toggle("show", window.scrollY > 360); }, { passive:true });
     toTop.addEventListener("click", function(){ window.scrollTo({ top:0, behavior:"smooth" }); });
 
-    // ---- 热点速递（站内直接播放 B 站） ----
+    // ---- 全网热榜（纯文字标题，参考 open2hub，点击跳对应平台） ----
     var hotGrid = document.getElementById("hotGrid");
-    function renderHotspots(){
-      var list = (DATA.hotspots || []);
-      hotGrid.innerHTML = list.map(function(h, i){
-        var tags = (h.tags || []).map(function(t){ return '<span class="itag">'+esc(t)+'</span>'; }).join("");
-        var playBtn = h.bvid ? '<button class="hot-play" data-i="'+i+'">▶ 播放</button>' : '';
-        return ''+
-          '<div class="hot-card">'+
-            '<div class="hot-poster" data-i="'+i+'" style="background:'+esc(h.bg || 'linear-gradient(135deg,var(--brand),var(--brand-2))')+'">'+
-              '<span class="emoji">'+(h.emoji || "🎬")+'</span>'+
-              (h.bvid ? '<span class="ply"><span>▶</span></span>' : '')+
-            '</div>'+
-            '<div class="hot-body">'+
-              '<div class="hot-title">'+esc(h.title)+(h.hot ? '<span class="hot">🔥 热门</span>' : '')+'</div>'+
-              '<div class="hot-desc">'+esc(h.desc || "")+'</div>'+
-              (tags ? '<div class="hot-tags">'+tags+'</div>' : '')+
-              '<div class="hot-acts">'+playBtn+'<a class="hot-go" href="'+esc(h.url)+'" target="_blank" rel="noopener">↗ 去源站看</a></div>'+
-            '</div>'+
-            (h.bvid ? '<div class="hot-embed" id="emb'+i+'"><iframe src="" allowfullscreen scrolling="no" frameborder="0"></iframe></div>' : '')+
-          '</div>';
-      }).join("");
-      [].forEach.call(hotGrid.querySelectorAll(".hot-poster, .hot-play"), function(el){
-        el.addEventListener("click", function(e){
-          e.preventDefault();
-          var i = +el.dataset.i; var h = list[i];
-          var box = document.getElementById("emb"+i);
-          if(!box) return;
-          var frame = box.querySelector("iframe");
-          if(box.classList.contains("on")){ box.classList.remove("on"); frame.src = ""; return; }
-          frame.src = "https://player.bilibili.com/player.html?bvid="+esc(h.bvid)+"&page=1&high_quality=1&danmaku=0&autoplay=1";
-          box.classList.add("on");
-          box.scrollIntoView({ behavior:"smooth", block:"nearest" });
-        });
-      });
+    function trendUrl(base, q){
+      var u = encodeURIComponent(q);
+      if(base === "bili")  return "https://search.bilibili.com/all?keyword=" + u;
+      if(base === "tieba") return "https://tieba.baidu.com/f/search/res?qw=" + u;
+      if(base === "weibo") return "https://s.weibo.com/weibo?q=" + u;
+      if(base === "zhihu") return "https://www.zhihu.com/search?type=content&q=" + u;
+      return "https://www.baidu.com/s?wd=" + u;
     }
-    renderHotspots();
+    function renderTrends(){
+      var list = (DATA.trends || []);
+      var note = document.getElementById("trendNote");
+      if(note) note.textContent = "数据快照于 " + (DATA.updated || "—") + "，非实时更新；标题来自各平台真实热门，点击可跳去对应平台查看。";
+      hotGrid.innerHTML = list.map(function(g){
+        var rows = (g.items || []).map(function(t, i){
+          var url = trendUrl(g.base, t);
+          return '<li class="trend-item"><span class="trend-no">' + (i+1) + '</span><a href="' + url + '" target="_blank" rel="noopener" title="在' + esc(g.platform) + '查看">'+esc(t)+'</a></li>';
+        }).join("");
+        return '<div class="trend-col"><h3><span>' + esc(g.emoji || "🔥") + '</span>' + esc(g.platform) + '<span class="ph">' + (g.items||[]).length + ' 条</span></h3><ul class="trend-list">' + rows + '</ul></div>';
+      }).join("");
+    }
+    renderTrends();
 
     // 初始化
     buildTags();
