@@ -621,10 +621,17 @@
   .iw-time{font-size:25px;font-weight:700;letter-spacing:1px;color:var(--brand);
     font-variant-numeric:tabular-nums}
   .iw-date{font-size:11.5px;color:var(--muted);margin-top:2px}
+  .iw-lunar{font-size:11px;color:var(--muted);margin-top:1px}
   .iw-weather{display:flex;align-items:center;justify-content:center;gap:6px;
     margin-top:9px;padding-top:9px;border-top:1px dashed var(--panel-brd)}
   .iw-wicon{font-size:22px;line-height:1}
-  .iw-wtemp{font-size:17px;font-weight:700}
+  .iw-wtemp{font-size:17px;font-weight:700;color:var(--brand);transition:color .3s}
+  .iw-wtemp.cold{color:#3aa0ff}
+  .iw-wtemp.cool{color:#3fd0c0}
+  .iw-wtemp.hot{color:#ff5a5a}
+  :root[data-theme="dark"] .iw-wtemp.cold{color:#82c4ff}
+  :root[data-theme="dark"] .iw-wtemp.cool{color:#5fe0d0}
+  :root[data-theme="dark"] .iw-wtemp.hot{color:#ff9090}
   .iw-wdesc{font-size:11.5px;color:var(--ink-2)}
   .iw-city{font-size:10.5px;color:var(--muted);margin-top:5px;
     overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -763,6 +770,7 @@
   <div class="iw-body" id="iwBody">
     <div class="iw-time" id="iwTime">--:--:--</div>
     <div class="iw-date" id="iwDate">----年--月--日 星期-</div>
+    <div class="iw-lunar" id="iwLunar"></div>
     <div class="iw-weather">
       <span class="iw-wicon" id="iwWicon">🌤️</span>
       <span class="iw-wtemp" id="iwWtemp">--°</span>
@@ -2572,18 +2580,38 @@ q.addEventListener("input", () => {
 // ============ 时间 / 天气 小挂件 ============
 (function(){
   const $ = id => document.getElementById(id);
-  const WK = ['日','一','二','三','四','五','六'];
-  const p2 = n => String(n).padStart(2,'0');
 
-  // —— 实时时钟 ——
+  // 固定城市：中国·浙江金华义乌（用户所在城市）
+  const CITY = '义乌 · 浙江';
+  const LAT = 29.3068, LON = 120.0743;
+
+  // —— 实时时钟（固定为北京时间 Asia/Shanghai）——
+  const tfmt = new Intl.DateTimeFormat('zh-CN',{timeZone:'Asia/Shanghai',hour12:false,
+    year:'numeric',month:'2-digit',day:'2-digit',weekday:'short',hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  const getP = (now,type) => tfmt.formatToParts(now).find(p => p.type===type).value;
+  let lastYmd = '';
   function tick(){
-    const d = new Date();
-    const t = $('iwTime'), dt = $('iwDate');
-    if(t) t.textContent = p2(d.getHours())+':'+p2(d.getMinutes())+':'+p2(d.getSeconds());
-    if(dt) dt.textContent = d.getFullYear()+'年'+p2(d.getMonth()+1)+'月'+p2(d.getDate())+'日 星期'+WK[d.getDay()];
+    const now = new Date();
+    const t=$('iwTime'), dt=$('iwDate');
+    const hh=getP(now,'hour'), mm=getP(now,'minute'), ss=getP(now,'second');
+    const y=getP(now,'year'), mo=getP(now,'month'), d=getP(now,'day'), wd=getP(now,'weekday');
+    if(t) t.textContent = hh+':'+mm+':'+ss;
+    if(dt) dt.textContent = y+'年'+mo+'月'+d+'日 星期'+wd.replace('周','');
+    const ymd = y+'-'+mo+'-'+d;
+    if(ymd !== lastYmd){ lastYmd = ymd; loadLunar(y, mo, d); }
   }
   tick();
   setInterval(tick, 1000);
+
+  // —— 农历日期（vvhan 免 key 接口；失败则留空）——
+  function loadLunar(y,mo,d){
+    const el = $('iwLunar'); if(!el) return;
+    el.textContent = '农历获取中…';
+    fetch('https://api.vvhan.com/api/ldate?date='+y+'-'+mo+'-'+d).then(r => r.json()).then(j => {
+      if(j && j.code===200 && j.data && j.data.lunar) el.textContent = '农历 '+j.data.lunar;
+      else el.textContent = '';
+    }).catch(() => { if(el) el.textContent = ''; });
+  }
 
   // —— 收起 / 展开 ——
   const box = $('infoWidget'), tg = $('iwToggle'), head = $('iwHead');
@@ -2602,10 +2630,18 @@ q.addEventListener("input", () => {
     85:['🌨️','阵雪'],86:['🌨️','阵雪'],
     95:['⛈️','雷暴'],96:['⛈️','雷暴冰雹'],99:['⛈️','雷暴冰雹']
   };
+  function setTempClass(temp){
+    const wt=$('iwWtemp'); if(!wt) return;
+    wt.classList.remove('cold','cool','hot');
+    if(isNaN(temp)) return;
+    if(temp <= 5) wt.classList.add('cold');
+    else if(temp <= 15) wt.classList.add('cool');
+    else if(temp > 28) wt.classList.add('hot');
+  }
   function setWeather(temp, code, city){
     const w = WMO[code] || ['🌡️','未知'];
     const wt=$('iwWtemp'), wd=$('iwWdesc'), wi=$('iwWicon'), ct=$('iwCity');
-    if(wt) wt.textContent = (isNaN(temp) ? '--' : Math.round(temp)) + '°';
+    if(wt){ wt.textContent = (isNaN(temp) ? '--' : Math.round(temp)) + '°'; setTempClass(temp); }
     if(wd) wd.textContent = w[1];
     if(wi) wi.textContent = w[0];
     if(ct) ct.textContent = city || '未知位置';
@@ -2617,16 +2653,8 @@ q.addEventListener("input", () => {
       else setWeather(NaN, -1, city);
     }).catch(() => { const wd=$('iwWdesc'); if(wd) wd.textContent = '天气获取失败'; });
   }
-  // 定位：优先 ipapi（静默、免 key），失败回退到北京
-  function fallback(){ loadWeather(39.9042, 116.4074, '北京（默认）'); }
-  try {
-    fetch('https://ipapi.co/json/').then(r => r.json()).then(j => {
-      if(j && j.latitude && j.longitude){
-        const city = [j.city, j.country_name].filter(Boolean).join(' · ');
-        loadWeather(j.latitude, j.longitude, city || '当前位置');
-      } else { fallback(); }
-    }).catch(fallback);
-  } catch(_) { fallback(); }
+  // 直接按义乌坐标加载天气
+  loadWeather(LAT, LON, CITY);
 })();
 
 // 昼 / 夜切换
