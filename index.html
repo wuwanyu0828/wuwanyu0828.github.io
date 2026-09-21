@@ -603,6 +603,37 @@
   .sec-toggle:hover{border-color:var(--brand);color:var(--brand)}
   section.collapsed > :not(.sec-head){display:none}
   section.collapsed .sec-head{margin-bottom:0}
+
+  /* ============ 时间 / 天气 小挂件（左下角） ============ */
+  .info-widget{position:fixed;left:14px;bottom:14px;z-index:60;width:190px;
+    background:var(--panel);border:1px solid var(--panel-brd);border-radius:14px;
+    box-shadow:var(--shadow);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    overflow:hidden;color:var(--ink);user-select:none;font-family:inherit}
+  .iw-head{display:flex;align-items:center;gap:7px;padding:8px 11px;cursor:pointer;
+    border-bottom:1px solid var(--panel-brd)}
+  .iw-dot{width:7px;height:7px;border-radius:50%;background:var(--brand);
+    box-shadow:0 0 6px var(--brand);flex:none}
+  .iw-title{font-size:12px;font-weight:600;color:var(--ink-2);flex:1;white-space:nowrap}
+  .iw-toggle{border:none;background:transparent;color:var(--ink-2);cursor:pointer;
+    font-size:12px;line-height:1;padding:2px 4px;border-radius:6px}
+  .iw-toggle:hover{color:var(--brand)}
+  .iw-body{padding:10px 12px 12px;text-align:center}
+  .iw-time{font-size:25px;font-weight:700;letter-spacing:1px;color:var(--brand);
+    font-variant-numeric:tabular-nums}
+  .iw-date{font-size:11.5px;color:var(--muted);margin-top:2px}
+  .iw-weather{display:flex;align-items:center;justify-content:center;gap:6px;
+    margin-top:9px;padding-top:9px;border-top:1px dashed var(--panel-brd)}
+  .iw-wicon{font-size:22px;line-height:1}
+  .iw-wtemp{font-size:17px;font-weight:700}
+  .iw-wdesc{font-size:11.5px;color:var(--ink-2)}
+  .iw-city{font-size:10.5px;color:var(--muted);margin-top:5px;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .info-widget.collapsed .iw-body{display:none}
+  .info-widget.collapsed .iw-head{border-bottom:none}
+  @media(max-width:560px){
+    .info-widget{width:152px;left:8px;bottom:8px}
+    .iw-time{font-size:21px}
+  }
 </style>
 </head>
 <body>
@@ -722,6 +753,25 @@
 </div>
 
 <!-- 探针：让 JS 读到底部安全区高度（不显示） -->
+<!-- ============ 时间 / 天气 小挂件 ============ -->
+<div class="info-widget" id="infoWidget">
+  <div class="iw-head" id="iwHead">
+    <span class="iw-dot"></span>
+    <span class="iw-title">时间与天气</span>
+    <button class="iw-toggle" id="iwToggle" type="button" title="收起 / 展开" aria-label="收起或展开">▾</button>
+  </div>
+  <div class="iw-body" id="iwBody">
+    <div class="iw-time" id="iwTime">--:--:--</div>
+    <div class="iw-date" id="iwDate">----年--月--日 星期-</div>
+    <div class="iw-weather">
+      <span class="iw-wicon" id="iwWicon">🌤️</span>
+      <span class="iw-wtemp" id="iwWtemp">--°</span>
+      <span class="iw-wdesc" id="iwWdesc">获取中…</span>
+    </div>
+    <div class="iw-city" id="iwCity">定位中…</div>
+  </div>
+</div>
+
 <div id="sabProbe" aria-hidden="true"></div>
 
 <!-- ============ 桌宠 ============ -->
@@ -2517,6 +2567,66 @@ q.addEventListener("input", () => {
     });
     head.appendChild(btn);
   });
+})();
+
+// ============ 时间 / 天气 小挂件 ============
+(function(){
+  const $ = id => document.getElementById(id);
+  const WK = ['日','一','二','三','四','五','六'];
+  const p2 = n => String(n).padStart(2,'0');
+
+  // —— 实时时钟 ——
+  function tick(){
+    const d = new Date();
+    const t = $('iwTime'), dt = $('iwDate');
+    if(t) t.textContent = p2(d.getHours())+':'+p2(d.getMinutes())+':'+p2(d.getSeconds());
+    if(dt) dt.textContent = d.getFullYear()+'年'+p2(d.getMonth()+1)+'月'+p2(d.getDate())+'日 星期'+WK[d.getDay()];
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  // —— 收起 / 展开 ——
+  const box = $('infoWidget'), tg = $('iwToggle'), head = $('iwHead');
+  function toggleBox(){ box.classList.toggle('collapsed'); tg.textContent = box.classList.contains('collapsed') ? '▸' : '▾'; }
+  if(tg) tg.addEventListener('click', e => { e.stopPropagation(); toggleBox(); });
+  if(head) head.addEventListener('click', e => { if(e.target === tg) return; toggleBox(); });
+
+  // —— 天气（Open-Meteo，免 key、支持跨域）——
+  const WMO = {
+    0:['☀️','晴'],1:['🌤️','晴间多云'],2:['⛅','局部多云'],3:['☁️','阴'],
+    45:['🌫️','雾'],48:['🌫️','雾凇'],
+    51:['🌦️','毛毛雨'],53:['🌦️','毛毛雨'],55:['🌦️','毛毛雨'],56:['🌧️','冻毛毛雨'],57:['🌧️','冻毛毛雨'],
+    61:['🌧️','小雨'],63:['🌧️','中雨'],65:['🌧️','大雨'],66:['🌧️','冻雨'],67:['🌧️','冻雨'],
+    71:['🌨️','小雪'],73:['🌨️','中雪'],75:['❄️','大雪'],77:['🌨️','雪粒'],
+    80:['🌦️','阵雨'],81:['🌦️','阵雨'],82:['🌦️','强阵雨'],
+    85:['🌨️','阵雪'],86:['🌨️','阵雪'],
+    95:['⛈️','雷暴'],96:['⛈️','雷暴冰雹'],99:['⛈️','雷暴冰雹']
+  };
+  function setWeather(temp, code, city){
+    const w = WMO[code] || ['🌡️','未知'];
+    const wt=$('iwWtemp'), wd=$('iwWdesc'), wi=$('iwWicon'), ct=$('iwCity');
+    if(wt) wt.textContent = (isNaN(temp) ? '--' : Math.round(temp)) + '°';
+    if(wd) wd.textContent = w[1];
+    if(wi) wi.textContent = w[0];
+    if(ct) ct.textContent = city || '未知位置';
+  }
+  function loadWeather(lat, lon, city){
+    const url = 'https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&current_weather=true';
+    fetch(url).then(r => r.json()).then(j => {
+      if(j && j.current_weather) setWeather(j.current_weather.temperature, j.current_weather.weathercode, city);
+      else setWeather(NaN, -1, city);
+    }).catch(() => { const wd=$('iwWdesc'); if(wd) wd.textContent = '天气获取失败'; });
+  }
+  // 定位：优先 ipapi（静默、免 key），失败回退到北京
+  function fallback(){ loadWeather(39.9042, 116.4074, '北京（默认）'); }
+  try {
+    fetch('https://ipapi.co/json/').then(r => r.json()).then(j => {
+      if(j && j.latitude && j.longitude){
+        const city = [j.city, j.country_name].filter(Boolean).join(' · ');
+        loadWeather(j.latitude, j.longitude, city || '当前位置');
+      } else { fallback(); }
+    }).catch(fallback);
+  } catch(_) { fallback(); }
 })();
 
 // 昼 / 夜切换
