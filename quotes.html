@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>语录 · 摘抄 · ATRI 的小站</title>
+<meta name="description" content="温柔治愈的语录与摘抄整理——名家语录、动漫影视台词、日本月份雅称与网络随笔。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>📖</text></svg>">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brand:#1e90e8; --brand-2:#35c6e0; --brand-soft:rgba(30,144,232,.10);
+    --ink:#18191c; --ink-2:#4a4d55; --muted:#8b9099;
+    --page:rgba(255,255,255,.90);
+    --panel:rgba(255,255,255,.72);
+    --panel-brd:rgba(24,25,28,.07);
+    --shadow:0 1px 2px rgba(24,25,28,.04), 0 8px 24px rgba(24,25,28,.07);
+    --shadow-hi:0 2px 6px rgba(24,25,28,.06), 0 16px 36px rgba(24,25,28,.13);
+    --radius:10px; --radius-sm:8px;
+    --veil:linear-gradient(180deg,rgba(247,249,252,.62),rgba(238,245,251,.86) 42%,rgba(240,246,252,.94));
+  }
+  [data-theme="dark"]{
+    --brand:#4bb4ff; --brand-2:#4fd8e8; --brand-soft:rgba(75,180,255,.14);
+    --ink:#e9ecf1; --ink-2:#c3c8d1; --muted:#8d939e;
+    --page:rgba(22,24,29,.92);
+    --panel:rgba(35,38,45,.72);
+    --panel-brd:rgba(255,255,255,.09);
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.34);
+    --shadow-hi:0 2px 8px rgba(0,0,0,.4), 0 16px 36px rgba(0,0,0,.45);
+    --veil:linear-gradient(180deg,rgba(12,16,24,.82),rgba(9,12,19,.93));
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    font-size:14px;color:var(--ink);line-height:1.6;min-height:100vh;overflow-x:hidden;
+    background-color:#cfe6f8;
+    background-image:var(--veil),url('c922469b42fc459a26f6d155a0ef1cb96498967a45143cb9e0230a23c3e7d101.png');
+    background-size:cover,auto 160%;
+    background-position:center center,75% 100%;
+    background-repeat:no-repeat,no-repeat;
+    background-attachment:fixed,fixed;
+    -webkit-font-smoothing:antialiased;
+    transition:color .25s;
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 18px}
+
+  /* 顶栏 */
+  .topbar{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    background:var(--panel);border-bottom:1px solid var(--panel-brd);box-shadow:var(--shadow)}
+  .topbar .row{display:flex;align-items:center;gap:12px;height:58px}
+  .brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:15px;white-space:nowrap}
+  .brand .mark{color:var(--brand);font-size:18px}
+  .brand .sub{font-size:11px;color:var(--muted);font-weight:500}
+  .home-link{margin-left:auto;font-size:13px;color:var(--ink-2);border:1px solid var(--panel-brd);padding:0 13px;height:38px;border-radius:var(--radius-sm);
+    display:inline-flex;align-items:center;gap:6px;transition:.16s}
+  .home-link:hover{border-color:var(--brand);color:var(--brand)}
+  .icon-btn{width:38px;height:38px;border-radius:var(--radius-sm);cursor:pointer;font-size:16px;flex:none;
+    border:1px solid var(--panel-brd);background:var(--panel);color:var(--ink);transition:.16s;display:grid;place-items:center}
+  .icon-btn:hover{border-color:var(--brand);color:var(--brand)}
+
+  /* Hero */
+  .hero{text-align:center;padding:46px 0 18px}
+  .hero h1{font-size:27px;font-weight:700;letter-spacing:.5px}
+  .hero h1 .em{background:linear-gradient(120deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{margin-top:9px;color:var(--ink-2);font-size:14px}
+  .stats{display:flex;justify-content:center;gap:26px;margin-top:18px;flex-wrap:wrap}
+  .stats .s b{font-size:20px;font-weight:700;color:var(--brand);font-variant-numeric:tabular-nums}
+  .stats .s span{font-size:12px;color:var(--muted);margin-left:5px}
+
+  /* 控制条 */
+  .controls{position:sticky;top:58px;z-index:40;padding:10px 0;background:transparent}
+  .cats{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px 0}
+  .cats::-webkit-scrollbar{display:none}
+  .cat{flex:none;padding:7px 15px;border-radius:var(--radius-sm);font-size:13px;color:var(--ink-2);
+    background:var(--panel);border:1px solid transparent;transition:.16s;cursor:pointer;white-space:nowrap;box-shadow:var(--shadow)}
+  .cat:hover{color:var(--brand);background:var(--brand-soft)}
+  .cat.on{background:var(--brand);color:#fff;font-weight:500;box-shadow:var(--shadow-hi)}
+
+  /* 板块 */
+  .board{margin:14px 0 8px}
+  .sec{background:var(--panel);border:1px solid var(--panel-brd);border-radius:var(--radius);box-shadow:var(--shadow);
+    padding:16px 16px 10px;margin-bottom:16px;backdrop-filter:blur(6px);overflow:hidden}
+  .sec.hidden{display:none}
+  .sec-head{display:flex;align-items:center;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--panel-brd);margin-bottom:14px;flex-wrap:wrap}
+  .sec-head .ico{font-size:20px}
+  .sec-head h2{font-size:16px;font-weight:700}
+  .sec-head .desc{font-size:12px;color:var(--muted);margin-left:2px}
+  .sec-head .cnt{margin-left:auto;font-size:12px;color:var(--muted)}
+  .sec-note{font-size:12px;color:var(--muted);line-height:1.7;margin:-4px 0 12px;padding:8px 12px;border-left:3px solid var(--brand-soft);background:var(--brand-soft);border-radius:0 6px 6px 0}
+
+  /* 语录卡片（引用式） */
+  .qgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
+  .qcard{background:var(--page);border:1px solid var(--panel-brd);border-radius:var(--radius-sm);
+    padding:16px 18px 15px;position:relative;box-shadow:var(--shadow);transition:transform .22s,box-shadow .22s}
+  .qcard::before{content:"“";position:absolute;left:9px;top:0;font-size:46px;line-height:1;
+    color:var(--brand);opacity:.16;font-family:Georgia,"Times New Roman",serif}
+  .qcard:hover{transform:translateY(-3px);box-shadow:var(--shadow-hi)}
+  .qtext{font-size:15px;line-height:1.92;color:var(--ink);white-space:pre-wrap;
+    padding-left:24px;word-break:break-word}
+  .qmeta{display:flex;align-items:center;gap:8px;margin-top:13px;padding-left:24px;flex-wrap:wrap}
+  .qsrc{font-size:12.5px;color:var(--ink-2);font-weight:600}
+  .qnote{font-size:11.5px;color:var(--muted);font-style:italic}
+  .chip{font-size:11px;padding:3px 9px;border-radius:4px;color:var(--brand);background:var(--brand-soft);font-weight:500;white-space:nowrap}
+  .chip.warn{color:#c0392b;background:rgba(192,57,43,.10)}
+  [data-theme="dark"] .chip.warn{color:#ff8a7a;background:rgba(255,138,122,.14)}
+
+  /* 月份雅称网格 */
+  .mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+  .mcard{background:var(--page);border:1px solid var(--panel-brd);border-radius:var(--radius-sm);
+    padding:14px 10px;text-align:center;box-shadow:var(--shadow);transition:transform .22s,box-shadow .22s}
+  .mcard:hover{transform:translateY(-3px);box-shadow:var(--shadow-hi)}
+  .mcard .m-num{font-size:12px;color:var(--muted)}
+  .mcard .m-name{font-size:21px;font-weight:700;color:var(--brand);margin-top:5px;letter-spacing:2px}
+
+  footer{text-align:center;color:var(--muted);font-size:12px;padding:26px 0 60px;line-height:1.8}
+  footer a{color:var(--brand)}
+
+  .totop{position:fixed;right:20px;bottom:22px;width:42px;height:42px;border-radius:50%;border:1px solid var(--panel-brd);
+    background:var(--panel);color:var(--brand);font-size:18px;cursor:pointer;box-shadow:var(--shadow-hi);opacity:0;
+    pointer-events:none;transition:.2s;z-index:55;display:grid;place-items:center}
+  .totop.show{opacity:1;pointer-events:auto}
+  .totop:hover{border-color:var(--brand);transform:translateY(-2px)}
+
+  @media(max-width:640px){
+    .wrap{padding:0 12px}
+    .hero{padding:30px 0 14px}
+    .hero h1{font-size:22px}
+    .brand .sub{display:none}
+    .home-link span{display:none}
+    .topbar .row{height:54px;gap:8px}
+    .qgrid,.mgrid{grid-template-columns:1fr}
+    .sec-head .desc{display:none}
+  }
+</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap row">
+      <a class="brand" href="index.html"><span class="mark">◈</span><span>ATRI 的小站<span class="sub"> / 语录摘抄</span></span></a>
+      <a class="home-link" href="index.html">🏠<span>回主页</span></a>
+      <button class="icon-btn" id="themeToggle" title="切换昼 / 夜" aria-label="切换主题">🌙</button>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <section class="hero">
+      <h1>语录 · <span class="em">摘抄</span></h1>
+      <p>名家语录 · 动漫影视台词 · 日本月份雅称 · 网络随笔</p>
+      <div class="stats">
+        <div class="s"><b id="statQuotes">0</b><span>条语录</span></div>
+        <div class="s"><b id="statMonths">0</b><span>个月雅称</span></div>
+        <div class="s"><b id="statCats">0</b><span>个分类</span></div>
+        <div class="s"><b id="statUpdated">—</b><span>整理于</span></div>
+      </div>
+    </section>
+
+    <div class="controls">
+      <div class="cats" id="cats"></div>
+    </div>
+
+    <main id="boards"></main>
+
+    <footer>
+      带「网络流传 / 同人语」标注者无单一作者或并非原作官方台词，用于公开发布前建议再核对一次原始来源。<br>
+      © ATRI 的小站 · <a href="index.html">返回主页</a> · <a href="hub.html">二次元导航</a>
+    </footer>
+  </div>
+
+  <button class="totop" id="toTop" title="返回顶部" aria-label="返回顶部">↑</button>
+
+  <script>
+  (function(){
+    /* ---------- 主题切换（与主站一致：localStorage "theme"） ---------- */
+    var toggle = document.getElementById("themeToggle");
+    if(localStorage.getItem("theme") === "dark"){
+      document.documentElement.setAttribute("data-theme","dark");
+      toggle.textContent = "☀️";
+    }
+    toggle.addEventListener("click", function(){
+      var dark = document.documentElement.getAttribute("data-theme") === "dark";
+      if(dark){ document.documentElement.removeAttribute("data-theme"); toggle.textContent = "🌙"; localStorage.setItem("theme","light"); }
+      else { document.documentElement.setAttribute("data-theme","dark"); toggle.textContent = "☀️"; localStorage.setItem("theme","dark"); }
+    });
+
+    /* ---------- 数据（纯静态，手工维护） ---------- */
+    var UPDATED = "2026-09-22";
+
+    // 分类定义
+    var CATS = [
+      { id:"all",      name:"全部",     icon:"✦" },
+      { id:"months",   name:"月份雅称", icon:"🗓" },
+      { id:"masters",  name:"名家语录", icon:"🖋" },
+      { id:"anime",    name:"动漫影视", icon:"📺" },
+      { id:"net",      name:"网络随笔", icon:"🌿" }
+    ];
+
+    // 日本月份雅称
+    var MONTHS = [
+      { num:"一月", name:"初空" }, { num:"二月", name:"梅见" },
+      { num:"三月", name:"夜樱" }, { num:"四月", name:"清和" },
+      { num:"五月", name:"浴兰" }, { num:"六月", name:"蝉羽" },
+      { num:"七月", name:"凉月" }, { num:"八月", name:"月见" },
+      { num:"九月", name:"竹醉" }, { num:"十月", name:"时雨" },
+      { num:"十一月", name:"神乐" }, { num:"十二月", name:"胧月" }
+    ];
+
+    // 语录条目：cat=分类, text=正文, src=出处/作者, note=存疑标注(可选), tags=标签(可选)
+    var QUOTES = [
+      /* —— 名家语录 —— */
+      { cat:"masters", text:"人和人交往还是少说话，克制表达欲，平静温和就行，不自卑也别炫耀。别为了获得共鸣，讲起过往没完没了。无意间表现的品质，被对方发现才更招人喜欢，胜过千言万语。仔细想想，你哪次滔滔不绝后，带来的不是悔恨。",
+        src:"余华", note:"网络流传语录，常被冠以「余华」，真伪存疑（余华本人未公开说过此句）" },
+      { cat:"masters", text:"人间不值得。很多人对这句话可能有一个误解，他们会觉得人间不值得我来这一趟，而这句话本身的意思是积极的：人间本就是这样，它不值得你难过，活得洒脱一点。",
+        src:"李诞", note:"常见其脱口秀与访谈中的观点" },
+      { cat:"masters", text:"我喜爱一切不彻底的事物。琥珀里的时间，微暗的火，一生都在半途而废，一生都怀抱热望。",
+        src:"张定浩《我喜爱一切不彻底的事物》" },
+      { cat:"masters", text:"你应该是一场梦，我应该是一阵风。",
+        src:"顾城《你和我》" },
+      { cat:"masters", text:"世间珍贵的事物几种：善良的手艺，慷慨的批评，微醺的唱腔，狂浪的经文。不说的过去。",
+        src:"吕彦妮" },
+      { cat:"masters", text:"一流的情人永远不必殉陨，永远不会失恋，因为「我爱你，与你何涉。」",
+        src:"木心" },
+      { cat:"masters", text:"刚刚好，看见你幸福的样子，于是幸福着你的幸福。",
+        src:"村上春树《国境以南 太阳以西》" },
+      { cat:"masters", text:"若逢新雪初霁，满月当空，下面空铺着皓影，上面流转着亮银，而你带笑的向我步来，月色与雪色之间你是第三种绝色。",
+        src:"余光中《绝色》" },
+      { cat:"masters", text:"十五岁的时候我跟你一样追赶流行，但五十岁我开始热爱俗气的一切。你觉得是我老了吗？不，我只是一如既往的热爱十五岁时喜欢上的东西。",
+        src:"作家 姬霄", note:"网络流传语录，原载于其社交媒体" },
+
+      /* —— 动漫 · 影视 —— */
+      { cat:"anime", text:"我想成为一个温柔的人，因为曾被温柔的人那样对待，深深了解那种被温柔相待的感觉。",
+        src:"《夏目友人帐》", note:"同人 / 网络流传语，非原作官方台词" },
+      { cat:"anime", text:"如果结局不如你所愿，就在尘埃落定前奋力一搏。",
+        src:"《夏目友人帐》", note:"同人 / 网络流传语，非原作官方台词" },
+      { cat:"anime", text:"此生不悔入夏目，来世愿做账中妖。",
+        src:"《夏目友人帐》", note:"同人 / 网络流传语，非原作官方台词" },
+      { cat:"anime", text:"我喜欢的人也能喜欢上自己，我认为这就是奇迹。",
+        src:"《月色真美》" },
+      { cat:"anime", text:"你指尖跃动的电光，是我此生不变的信仰。你闪跃跳动的身影，是我见过最美的光景。",
+        src:"《某科学的超电磁炮》", note:"御坂美琴（炮姐）粉丝应援语，非原作台词" },
+      { cat:"anime", text:"以声之色，塑花之形，将你之名，刻于我心。",
+        src:"《声之形》" },
+      { cat:"anime", text:"未闻花名，但识花香，再见花时，泪已千行。",
+        src:"《我们仍未知道那天所看见的花的名字》" },
+      { cat:"anime", text:"隐隐雷鸣，阴霾天空，但盼风雨来，能留你在此。\n隐隐雷鸣，阴霾天空，即使天无雨，我亦留此地。",
+        src:"《言叶之庭》", note:"原出《万叶集》和歌，新海诚引用于本作" },
+      { cat:"anime", text:"音无结弦之时，天使跃动之心，立于浮华之世，奏响天籁之音。",
+        src:"《Angel Beats!》", note:"同人语，化用主角名「音无」" },
+      { cat:"anime", text:"我喜欢了你十年，但却用整个四月编织了一个不爱你的谎言。\n入梦落樱花满香，梦醒犹记四月谎。此生无悔入四月，来世愿做友人A。",
+        src:"《四月是你的谎言》" },
+      { cat:"anime", text:"春天 马上就要来了 让我与你相遇的春天 就要来了 再也没有你的春天 就要来了。",
+        src:"《四月是你的谎言》" },
+      { cat:"anime", text:"山内有樱名为良，树本无名只待春。",
+        src:"《我想吃掉你的胰脏》" },
+      { cat:"anime", text:"我深知，这之后我们无法抑制守在一起，挡在我们面前的是巨大庞然的人生，阻隔在我们中间的是广阔无际的时间，令我们无能为力。",
+        src:"《秒速五厘米》" },
+      { cat:"anime", text:"我们只是一时幸运，活在了这个世界上。碰巧活着的我们，是不应该忌讳死亡的。",
+        src:"日剧《非自然死亡》" },
+      { cat:"anime", text:"我们以为所谓告别一定是要一场盛大的仪式，所以我们一直在等，等着一个温暖的拥抱，等着一次畅快的大醉，等着一声由衷的再见。等到最后我们才发现，人生中大部分的告别都是悄无声息的。原来那一次的相聚，就已经是最后一面。所以啊，所以来日不一定方长，山水也未必重逢。",
+        src:"国剧《如此可爱的我们》" },
+      { cat:"anime", text:"曾经存在于彼此日记本中的人，会在未来交换更多的秘密。踏着时光走到现在的我们啊，也会一起走向更远的岁月。世界从来不会辜负可爱的人，而我们如此可爱。",
+        src:"国剧《如此可爱的我们》" },
+
+      /* —— 网络随笔 · 摘抄 —— */
+      { cat:"net", text:"生命如同戏剧，你永远预料不到转折出现在哪一篇章。",
+        src:"网络流传", note:"化用「人生如戏」及莎士比亚「世界是个舞台」意象，无明确作者" },
+      { cat:"net", text:"总有一天，愿你和所爱之人终能重逢。",
+        src:"网络流传", note:"祝福语 / 游戏文案常见，出处不详" },
+      { cat:"net", text:"少年就是少年，他们看春风不喜，看夏蝉不烦，看秋风不悲，看冬雪不叹，看满身富贵懒察觉，看不公不许敢面对，只因他们是少年。",
+        src:"网络流传", note:"常被误归陀思妥耶夫斯基《少年》；实出自猫腻小说《择天记》" },
+      { cat:"net", text:"日剧里常常有句台词是「真是个温柔的人啊」。怎么说呢我太喜欢温柔的人了。是雨天行车路过水坑会故意放慢速度的人，是关门时轻手轻脚的人，是会将用过的纸巾好好折起再扔掉的人，是能照顾他人情绪的人，是能化解他人尴尬的人，是像粥温热一样的人，希望能和温柔的人交朋友，带着音乐和美食。",
+        src:"网络随笔", note:"原创感悟 / 网络流传" },
+      { cat:"net", text:"日语里「夏天结束了」其实和「今晚月色真美」一样，是有隐晦暗示的。代表着某天突然感知到河岸的风带来凉意，爱慕的心绪不了了之，没牵到的手，未送出的信，青春潦草收场后关上了门。就像睡了漫长的午觉醒来，穿衣洗漱准备去学校，找了半天却找不到课本和双肩包，才恍惚想起自己在多年前明明没有做好准备，就被推搡着长大成人。来不及跟夏天挥手告别的仓促人生，年轻时也对世间万物充满期待，眨眼间就落入了平庸之海。",
+        src:"网络流传", note:"源自日文梗「夏が終わった（夏天结束了）」的解释文案" },
+      { cat:"net", text:"世人慌慌张张，不过是图碎银几两，可区区几两银子却能压断世人，世间熙熙攘攘，皆为利来利往，我也一样，无一例外。",
+        src:"网络流传", note:"常见网络流行句（歌曲《世人慌慌张张》/网络文案），常被误传为古诗或余华" },
+      { cat:"net", text:"小时候不理解老人晒太阳，一坐就是半天。长大了才明白，目之所及皆是回忆，心之所想皆是过往，眼之所看皆是遗憾。",
+        src:"网络流传", note:"常冠以「罗翔说」，真实性存疑" },
+      { cat:"net", text:"久雨生青石，青石覆古巷。古巷照人烟，人烟散微雨。",
+        src:"网络流传", note:"网络散文 / 小说句，化用江南水乡意象，出处不详" },
+      { cat:"net", text:"曼珠沙华又名彼岸花，黄泉接引之花，见花不见叶，见叶不见花。",
+        src:"民间传说", note:"植物文化常识（石蒜科红花石蒜），非特定文献" }
+    ];
+
+    /* ---------- 统计 ---------- */
+    var quoteCount = QUOTES.length;
+    document.getElementById("statQuotes").textContent = quoteCount;
+    document.getElementById("statMonths").textContent = MONTHS.length;
+    document.getElementById("statCats").textContent = CATS.length - 1; // 不含"全部"
+    document.getElementById("statUpdated").textContent = UPDATED;
+
+    /* ---------- 转义 ---------- */
+    function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g, function(m){ return ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"})[m]; }); }
+
+    /* ---------- 分类胶囊 ---------- */
+    var catsEl = document.getElementById("cats");
+    var state = { cat:"all" };
+    CATS.forEach(function(c){
+      var b = document.createElement("button");
+      b.className = "cat" + (c.id === state.cat ? " on" : "");
+      b.textContent = c.icon + " " + c.name;
+      b.dataset.cat = c.id;
+      b.addEventListener("click", function(){
+        state.cat = c.id;
+        [].forEach.call(catsEl.children, function(x){ x.classList.toggle("on", x.dataset.cat === state.cat); });
+        render();
+      });
+      catsEl.appendChild(b);
+    });
+
+    /* ---------- 渲染 ---------- */
+    var boardsEl = document.getElementById("boards");
+
+    function section(catId, icon, title, desc, note){
+      var sec = document.createElement("section");
+      sec.className = "sec" + (state.cat !== "all" && state.cat !== catId ? " hidden" : "");
+      sec.dataset.cat = catId;
+      var head = '<div class="sec-head"><span class="ico">'+icon+'</span><h2>'+esc(title)+'</h2>'
+               + (desc ? '<span class="desc">'+esc(desc)+'</span>' : '')
+               + '<span class="cnt"></span></div>';
+      sec.innerHTML = head + (note ? '<div class="sec-note">'+esc(note)+'</div>' : '<div style="height:2px"></div>');
+      return sec;
+    }
+
+    function qCard(q){
+      var noteHtml = q.note ? '<span class="qnote">· '+esc(q.note)+'</span>' : "";
+      var li = document.createElement("div");
+      li.className = "qcard";
+      li.innerHTML =
+        '<div class="qtext">'+esc(q.text)+'</div>' +
+        '<div class="qmeta"><span class="qsrc">'+esc(q.src)+'</span>'+noteHtml+'</div>';
+      return li;
+    }
+
+    function mCard(m){
+      var li = document.createElement("div");
+      li.className = "mcard";
+      li.innerHTML = '<div class="m-num">'+esc(m.num)+'</div><div class="m-name">'+esc(m.name)+'</div>';
+      return li;
+    }
+
+    // 月份雅称
+    var monthsSec = section("months","🗓","日本月份雅称","和风月名 / 雅称","日本传统「和风月名」，民间流传，非某一文献专有。");
+    var mgrid = document.createElement("div"); mgrid.className = "mgrid";
+    MONTHS.forEach(function(m){ mgrid.appendChild(mCard(m)); });
+    monthsSec.appendChild(mgrid);
+    monthsSec.querySelector(".cnt").textContent = MONTHS.length + " 个";
+    boardsEl.appendChild(monthsSec);
+
+    // 名家语录
+    var mastersSec = section("masters","🖋","名家语录","作家 · 诗人 · 学者","标注「真伪存疑 / 网络流传」者，归名来自网络，建议公开发布前再核对。");
+    var mg = document.createElement("div"); mg.className = "qgrid";
+    var mastersList = QUOTES.filter(function(q){ return q.cat === "masters"; });
+    mastersList.forEach(function(q){ mg.appendChild(qCard(q)); });
+    mastersSec.appendChild(mg);
+    mastersSec.querySelector(".cnt").textContent = mastersList.length + " 条";
+    boardsEl.appendChild(mastersSec);
+
+    // 动漫影视
+    var animeSec = section("anime","📺","动漫 · 影视台词","按作品归类","带「同人 / 网络流传语」标注者多为粉丝二创或应援语，并非原作官方台词。");
+    var ag = document.createElement("div"); ag.className = "qgrid";
+    var animeList = QUOTES.filter(function(q){ return q.cat === "anime"; });
+    animeList.forEach(function(q){ ag.appendChild(qCard(q)); });
+    animeSec.appendChild(ag);
+    animeSec.querySelector(".cnt").textContent = animeList.length + " 条";
+    boardsEl.appendChild(animeSec);
+
+    // 网络随笔
+    var netSec = section("net","🌿","网络随笔 · 摘抄","无明确单一出处","以下均无单一作者，属网络抄录或同人创作，标注来源以备溯源。");
+    var ng = document.createElement("div"); ng.className = "qgrid";
+    var netList = QUOTES.filter(function(q){ return q.cat === "net"; });
+    netList.forEach(function(q){ ng.appendChild(qCard(q)); });
+    netSec.appendChild(ng);
+    netSec.querySelector(".cnt").textContent = netList.length + " 条";
+    boardsEl.appendChild(netSec);
+
+    function render(){
+      [].forEach.call(boardsEl.children, function(sec){
+        var show = (state.cat === "all") || (sec.dataset.cat === state.cat);
+        sec.classList.toggle("hidden", !show);
+      });
+    }
+
+    /* ---------- 返回顶部 ---------- */
+    var toTop = document.getElementById("toTop");
+    window.addEventListener("scroll", function(){ toTop.classList.toggle("show", window.scrollY > 360); }, { passive:true });
+    toTop.addEventListener("click", function(){ window.scrollTo({ top:0, behavior:"smooth" }); });
+  })();
+  </script>
+</body>
+</html>
