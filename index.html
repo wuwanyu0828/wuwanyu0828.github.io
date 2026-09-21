@@ -573,6 +573,36 @@
     border-radius:8px;padding:7px 9px;font-size:12px;outline:none}
   .chat-ai-on{flex-direction:row !important;align-items:center;gap:6px !important;color:var(--ink) !important}
   .chat-ai-tip{font-size:10.5px;color:var(--muted);line-height:1.5}
+
+  /* ============ 语录摘抄（内嵌主页） ============ */
+  .qcats{display:flex;gap:8px;overflow-x:auto;padding:0 22px 4px;scrollbar-width:none}
+  .qcats::-webkit-scrollbar{display:none}
+  .qgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px;margin:12px 0 8px}
+  .qcard{background:var(--panel);border:1px solid var(--panel-brd);border-radius:var(--radius);
+    padding:16px 18px 15px;position:relative;box-shadow:var(--shadow);transition:transform .22s,box-shadow .22s}
+  .qcard::before{content:"“";position:absolute;left:9px;top:-2px;font-size:46px;line-height:1;
+    color:var(--brand);opacity:.16;font-family:Georgia,"Times New Roman",serif}
+  .qcard:hover{transform:translateY(-3px);box-shadow:var(--shadow-hi)}
+  .qtext{font-size:15px;line-height:1.92;color:var(--ink);white-space:pre-wrap;padding-left:24px;word-break:break-word}
+  .qmeta{display:flex;align-items:center;gap:8px;margin-top:13px;padding-left:24px;flex-wrap:wrap}
+  .qsrc{font-size:12.5px;color:var(--ink-2);font-weight:600}
+  .qnote{font-size:11.5px;color:var(--muted);font-style:italic}
+  .qsec-note{font-size:12px;color:var(--muted);line-height:1.7;margin:2px 22px 12px;padding:8px 12px;
+    border-left:3px solid var(--brand-soft);background:var(--brand-soft);border-radius:0 6px 6px 0}
+  .mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:12px 0 8px}
+  .mcard{background:var(--panel);border:1px solid var(--panel-brd);border-radius:var(--radius);
+    padding:14px 10px;text-align:center;box-shadow:var(--shadow);transition:transform .22s,box-shadow .22s}
+  .mcard:hover{transform:translateY(-3px);box-shadow:var(--shadow-hi)}
+  .mcard .m-num{font-size:12px;color:var(--muted)}
+  .mcard .m-name{font-size:21px;font-weight:700;color:var(--brand);margin-top:5px;letter-spacing:2px}
+
+  /* ============ 模块折叠（点一下隐藏 / 再点显示） ============ */
+  .sec-toggle{margin-left:14px;align-self:center;width:30px;height:30px;border-radius:8px;
+    border:1px solid var(--panel-brd);background:var(--panel);color:var(--ink-2);cursor:pointer;
+    font-size:14px;line-height:1;transition:.16s;flex:none}
+  .sec-toggle:hover{border-color:var(--brand);color:var(--brand)}
+  section.collapsed > :not(.sec-head){display:none}
+  section.collapsed .sec-head{margin-bottom:0}
 </style>
 </head>
 <body>
@@ -619,6 +649,7 @@
       <a class="cat" href="#videos">📺 视频</a>
       <a class="cat" href="#anime">📚 番剧</a>
       <a class="cat" href="#novels">📖 小说</a>
+      <a class="cat" href="#quotes">📖 语录</a>
       <a class="cat" href="#links">🔗 链接</a>
       <a class="cat" href="hub.html" target="_blank" rel="noopener">🌐 导航</a>
     </nav>
@@ -663,6 +694,15 @@
       <div class="socials" id="socialList"></div>
     </section>
 
+    <section id="quotes">
+      <div class="sec-head">
+        <h2>语录 · 摘抄</h2>
+        <span class="sub">名家语录 · 动漫影视台词 · 月份雅称 · 网络随笔</span>
+      </div>
+      <div class="qcats" id="qcats"></div>
+      <div id="quotesBoards"></div>
+    </section>
+
     <div class="empty" id="empty">没有匹配的内容，换个关键词试试～</div>
 
     <footer>
@@ -672,6 +712,7 @@
         <a href="#videos">视频</a>
         <a href="#anime">番剧</a>
         <a href="#novels">小说</a>
+        <a href="#quotes">语录</a>
         <a href="hub.html" target="_blank" rel="noopener">二次元导航</a>
         <a href="#top">回到顶部 ↑</a>
       </span>
@@ -761,7 +802,7 @@ const profile = {
   tagline: "这里收着我做的小项目、录的游戏实况，还有我追的番剧和我读的小说。",
   socials: [
     { icon: "🐙", label: "GitHub",   url: "https://github.com/wuwanyu0828" },
-    { icon: "▶",  label: "YouTube",  url: "https://www.youtube.com/" },
+    { icon: "▶",  label: "YouTube",  url: "https://www.youtube.com/@吴绮Kyu" },
     { icon: "📺", label: "Bilibili", url: "https://space.bilibili.com/" }
   ]
 };
@@ -2347,6 +2388,136 @@ q.addEventListener("input", () => {
   });
   empty.classList.toggle("on", hit === 0);
 });
+
+/* ---------- 语录摘抄（内嵌主页，纯静态维护，与主站风格一致） ---------- */
+(function(){
+  const Q_MONTHS = [
+    { num:'一月', name:'初空' }, { num:'二月', name:'梅见' },
+    { num:'三月', name:'夜樱' }, { num:'四月', name:'清和' },
+    { num:'五月', name:'浴兰' }, { num:'六月', name:'蝉羽' },
+    { num:'七月', name:'凉月' }, { num:'八月', name:'月见' },
+    { num:'九月', name:'竹醉' }, { num:'十月', name:'时雨' },
+    { num:'十一月', name:'神乐' }, { num:'十二月', name:'胧月' }
+  ];
+  const Q_QUOTES = [
+    { cat:'masters', text:'人和人交往还是少说话，克制表达欲，平静温和就行，不自卑也别炫耀。别为了获得共鸣，讲起过往没完没了。无意间表现的品质，被对方发现才更招人喜欢，胜过千言万语。仔细想想，你哪次滔滔不绝后，带来的不是悔恨。', src:'余华', note:'网络流传语录，常被冠以「余华」，真伪存疑（余华本人未公开说过此句）' },
+    { cat:'masters', text:'人间不值得。很多人对这句话可能有一个误解，他们会觉得人间不值得我来这一趟，而这句话本身的意思是积极的：人间本就是这样，它不值得你难过，活得洒脱一点。', src:'李诞', note:'常见其脱口秀与访谈中的观点' },
+    { cat:'masters', text:'我喜爱一切不彻底的事物。琥珀里的时间，微暗的火，一生都在半途而废，一生都怀抱热望。', src:'张定浩《我喜爱一切不彻底的事物》' },
+    { cat:'masters', text:'你应该是一场梦，我应该是一阵风。', src:'顾城《你和我》' },
+    { cat:'masters', text:'世间珍贵的事物几种：善良的手艺，慷慨的批评，微醺的唱腔，狂浪的经文。不说的过去。', src:'吕彦妮' },
+    { cat:'masters', text:'一流的情人永远不必殉陨，永远不会失恋，因为「我爱你，与你何涉。」', src:'木心' },
+    { cat:'masters', text:'刚刚好，看见你幸福的样子，于是幸福着你的幸福。', src:'村上春树《国境以南 太阳以西》' },
+    { cat:'masters', text:'若逢新雪初霁，满月当空，下面空铺着皓影，上面流转着亮银，而你带笑的向我步来，月色与雪色之间你是第三种绝色。', src:'余光中《绝色》' },
+    { cat:'masters', text:'十五岁的时候我跟你一样追赶流行，但五十岁我开始热爱俗气的一切。你觉得是我老了吗？不，我只是一如既往的热爱十五岁时喜欢上的东西。', src:'作家 姬霄', note:'网络流传语录，原载于其社交媒体' },
+    { cat:'anime', text:'我想成为一个温柔的人，因为曾被温柔的人那样对待，深深了解那种被温柔相待的感觉。', src:'《夏目友人帐》', note:'同人 / 网络流传语，非原作官方台词' },
+    { cat:'anime', text:'如果结局不如你所愿，就在尘埃落定前奋力一搏。', src:'《夏目友人帐》', note:'同人 / 网络流传语，非原作官方台词' },
+    { cat:'anime', text:'此生不悔入夏目，来世愿做账中妖。', src:'《夏目友人帐》', note:'同人 / 网络流传语，非原作官方台词' },
+    { cat:'anime', text:'我喜欢的人也能喜欢上自己，我认为这就是奇迹。', src:'《月色真美》' },
+    { cat:'anime', text:'你指尖跃动的电光，是我此生不变的信仰。你闪跃跳动的身影，是我见过最美的光景。', src:'《某科学的超电磁炮》', note:'御坂美琴（炮姐）粉丝应援语，非原作台词' },
+    { cat:'anime', text:'以声之色，塑花之形，将你之名，刻于我心。', src:'《声之形》' },
+    { cat:'anime', text:'未闻花名，但识花香，再见花时，泪已千行。', src:'《我们仍未知道那天所看见的花的名字》' },
+    { cat:'anime', text:'隐隐雷鸣，阴霾天空，但盼风雨来，能留你在此。\n隐隐雷鸣，阴霾天空，即使天无雨，我亦留此地。', src:'《言叶之庭》', note:'原出《万叶集》和歌，新海诚引用于本作' },
+    { cat:'anime', text:'音无结弦之时，天使跃动之心，立于浮华之世，奏响天籁之音。', src:'《Angel Beats!》', note:'同人语，化用主角名「音无」' },
+    { cat:'anime', text:'我喜欢了你十年，但却用整个四月编织了一个不爱你的谎言。\n入梦落樱花满香，梦醒犹记四月谎。此生无悔入四月，来世愿做友人A。', src:'《四月是你的谎言》' },
+    { cat:'anime', text:'春天 马上就要来了 让我与你相遇的春天 就要来了 再也没有你的春天 就要来了。', src:'《四月是你的谎言》' },
+    { cat:'anime', text:'山内有樱名为良，树本无名只待春。', src:'《我想吃掉你的胰脏》' },
+    { cat:'anime', text:'我深知，这之后我们无法抑制守在一起，挡在我们面前的是巨大庞然的人生，阻隔在我们中间的是广阔无际的时间，令我们无能为力。', src:'《秒速五厘米》' },
+    { cat:'anime', text:'我们只是一时幸运，活在了这个世界上。碰巧活着的我们，是不应该忌讳死亡的。', src:'日剧《非自然死亡》' },
+    { cat:'anime', text:'我们以为所谓告别一定是要一场盛大的仪式，所以我们一直在等，等着一个温暖的拥抱，等着一次畅快的大醉，等着一声由衷的再见。等到最后我们才发现，人生中大部分的告别都是悄无声息的。原来那一次的相聚，就已经是最后一面。所以啊，所以来日不一定方长，山水也未必重逢。', src:'国剧《如此可爱的我们》' },
+    { cat:'anime', text:'曾经存在于彼此日记本中的人，会在未来交换更多的秘密。踏着时光走到现在的我们啊，也会一起走向更远的岁月。世界从来不会辜负可爱的人，而我们如此可爱。', src:'国剧《如此可爱的我们》' },
+    { cat:'net', text:'生命如同戏剧，你永远预料不到转折出现在哪一篇章。', src:'网络流传', note:'化用「人生如戏」及莎士比亚「世界是个舞台」意象，无明确作者' },
+    { cat:'net', text:'总有一天，愿你和所爱之人终能重逢。', src:'网络流传', note:'祝福语 / 游戏文案常见，出处不详' },
+    { cat:'net', text:'少年就是少年，他们看春风不喜，看夏蝉不烦，看秋风不悲，看冬雪不叹，看满身富贵懒察觉，看不公不许敢面对，只因他们是少年。', src:'网络流传', note:'常被误归陀思妥耶夫斯基《少年》；实出自猫腻小说《择天记》' },
+    { cat:'net', text:'日剧里常常有句台词是「真是个温柔的人啊」。怎么说呢我太喜欢温柔的人了。是雨天行车路过水坑会故意放慢速度的人，是关门时轻手轻脚的人，是会将用过的纸巾好好折起再扔掉的人，是能照顾他人情绪的人，是能化解他人尴尬的人，是像粥温热一样的人，希望能和温柔的人交朋友，带着音乐和美食。', src:'网络随笔', note:'原创感悟 / 网络流传' },
+    { cat:'net', text:'日语里「夏天结束了」其实和「今晚月色真美」一样，是有隐晦暗示的。代表着某天突然感知到河岸的风带来凉意，爱慕的心绪不了了之，没牵到的手，未送出的信，青春潦草收场后关上了门。就像睡了漫长的午觉醒来，穿衣洗漱准备去学校，找了半天却找不到课本和双肩包，才恍惚想起自己在多年前明明没有做好准备，就被推搡着长大成人。来不及跟夏天挥手告别的仓促人生，年轻时也对世间万物充满期待，眨眼间就落入了平庸之海。', src:'网络流传', note:'源自日文梗「夏が終わった（夏天结束了）」的解释文案' },
+    { cat:'net', text:'世人慌慌张张，不过是图碎银几两，可区区几两银子却能压断世人，世间熙熙攘攘，皆为利来利往，我也一样，无一例外。', src:'网络流传', note:'常见网络流行句（歌曲《世人慌慌张张》/网络文案），常被误传为古诗或余华' },
+    { cat:'net', text:'小时候不理解老人晒太阳，一坐就是半天。长大了才明白，目之所及皆是回忆，心之所想皆是过往，眼之所看皆是遗憾。', src:'网络流传', note:'常冠以「罗翔说」，真实性存疑' },
+    { cat:'net', text:'久雨生青石，青石覆古巷。古巷照人烟，人烟散微雨。', src:'网络流传', note:'网络散文 / 小说句，化用江南水乡意象，出处不详' },
+    { cat:'net', text:'曼珠沙华又名彼岸花，黄泉接引之花，见花不见叶，见叶不见花。', src:'民间传说', note:'植物文化常识（石蒜科红花石蒜），非特定文献' }
+  ];
+  const Q_CATS = [
+    { id:'all', name:'全部' },
+    { id:'months', name:'月份雅称' },
+    { id:'masters', name:'名家语录' },
+    { id:'anime', name:'动漫影视' },
+    { id:'net', name:'网络随笔' }
+  ];
+  const boards = document.getElementById('quotesBoards');
+  const qcats = document.getElementById('qcats');
+  if(!boards || !qcats) return;
+
+  function qCard(q){
+    const note = q.note ? '<span class="qnote">· '+escAttr(q.note)+'</span>' : '';
+    const dt = escAttr((q.src||'') + ' ' + (q.text||'').slice(0,40));
+    return '<div class="qcard" data-title="'+dt+'">'
+      + '<div class="qtext">'+escAttr(q.text)+'</div>'
+      + '<div class="qmeta"><span class="qsrc">'+escAttr(q.src||'')+'</span>'+note+'</div></div>';
+  }
+  function mCard(m){
+    const dt = escAttr(m.num + ' ' + m.name);
+    return '<div class="mcard" data-title="'+dt+'"><div class="m-num">'+escAttr(m.num)+'</div><div class="m-name">'+escAttr(m.name)+'</div></div>';
+  }
+  function head(title, sub, note){
+    return '<div class="sec-head" data-title=""><h2>'+title+'</h2><span class="sub">'+sub+'</span></div>'
+      + (note ? '<div class="qsec-note">'+escAttr(note)+'</div>' : '');
+  }
+  const monthsSec = document.createElement('div');
+  monthsSec.className = 'qboard'; monthsSec.dataset.qcat = 'months';
+  monthsSec.innerHTML = head('🗓 日本月份雅称', '和风月名 / 雅称', '日本传统「和风月名」，民间流传，非某一文献专有。')
+    + '<div class="mgrid">'+Q_MONTHS.map(mCard).join('')+'</div>';
+  boards.appendChild(monthsSec);
+
+  function quoteSec(id, title, sub, note){
+    const sec = document.createElement('div');
+    sec.className = 'qboard'; sec.dataset.qcat = id;
+    const list = Q_QUOTES.filter(q => q.cat === id);
+    sec.innerHTML = head(title, sub, note) + '<div class="qgrid">'+list.map(qCard).join('')+'</div>';
+    boards.appendChild(sec);
+  }
+  quoteSec('masters', '🖋 名家语录', '作家 · 诗人 · 学者', '标注「真伪存疑 / 网络流传」者，归名来自网络，建议公开发布前再核对。');
+  quoteSec('anime', '📺 动漫 · 影视台词', '按作品归类', '带「同人 / 网络流传语」标注者多为粉丝二创或应援语，并非原作官方台词。');
+  quoteSec('net', '🌿 网络随笔 · 摘抄', '无明确单一出处', '以下均无单一作者，属网络抄录或同人创作，标注来源以备溯源。');
+
+  let state = 'all';
+  Q_CATS.forEach(c => {
+    const b = document.createElement('button');
+    b.className = 'cat' + (c.id === state ? ' on' : '');
+    b.textContent = (c.id === 'all' ? '✦ ' : '') + c.name;
+    b.dataset.qcat = c.id;
+    b.addEventListener('click', () => {
+      state = c.id;
+      Array.prototype.forEach.call(qcats.children, x => x.classList.toggle('on', x.dataset.qcat === state));
+      Array.prototype.forEach.call(boards.children, s => { s.style.display = (state === 'all' || s.dataset.qcat === state) ? '' : 'none'; });
+    });
+    qcats.appendChild(b);
+  });
+})();
+
+// 模块折叠：点一下隐藏 / 再点显示（状态记忆在 localStorage）
+(function(){
+  const KEY = 'wuwanyu_collapsed_v1';
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(_) {}
+  function persist(){ try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch(_) {} }
+  document.querySelectorAll('section[id]').forEach(sec => {
+    const head = sec.querySelector('.sec-head');
+    if(!head) return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'sec-toggle';
+    btn.title = '隐藏 / 显示这个模块';
+    const setIcon = () => { btn.textContent = sec.classList.contains('collapsed') ? '🙈' : '👁'; };
+    if(saved[sec.id]) sec.classList.add('collapsed');
+    setIcon();
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      sec.classList.toggle('collapsed');
+      saved[sec.id] = sec.classList.contains('collapsed');
+      setIcon(); persist();
+    });
+    head.appendChild(btn);
+  });
+})();
 
 // 昼 / 夜切换
 const toggle = document.getElementById("themeToggle");

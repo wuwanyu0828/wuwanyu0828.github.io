@@ -195,14 +195,5 @@ window.HUB_DATA = {
       desc: "个人收藏夹，由站长手工维护",
       items: []
     },
-    {
-      id: "quotes",
-      name: "语录摘抄",
-      icon: "📖",
-      desc: "名家语录 · 动漫台词 · 月份雅称 · 网络随笔",
-      items: [
-        { title: "语录 · 摘抄", url: "quotes.html", platform: "本站", tags: ["语录", "摘抄", "治愈"], desc: "温柔治愈的语录与摘抄合集，按类型分组整理。" }
-      ]
-    }
   ]
 };
