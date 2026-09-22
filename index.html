@@ -601,8 +601,10 @@
     border:1px solid var(--panel-brd);background:var(--panel);color:var(--ink-2);cursor:pointer;
     font-size:14px;line-height:1;transition:.16s;flex:none}
   .sec-toggle:hover{border-color:var(--brand);color:var(--brand)}
-  section.collapsed > :not(.sec-head){display:none}
-  section.collapsed .sec-head{margin-bottom:0}
+  section.collapsed > :not(.sec-head),
+  .qboard.collapsed > :not(.sec-head){display:none}
+  section.collapsed .sec-head,
+  .qboard.collapsed .sec-head{margin-bottom:0}
 
   /* ============ 时间 / 天气 小挂件（左下角） ============ */
   .info-widget{position:fixed;left:14px;bottom:14px;z-index:60;width:190px;
@@ -2558,14 +2560,14 @@ q.addEventListener("input", () => {
       + (note ? '<div class="qsec-note">'+escAttr(note)+'</div>' : '');
   }
   const monthsSec = document.createElement('div');
-  monthsSec.className = 'qboard'; monthsSec.dataset.qcat = 'months';
+  monthsSec.className = 'qboard'; monthsSec.dataset.qcat = 'months'; monthsSec.id = 'quotes-months';
   monthsSec.innerHTML = head('🗓 日本月份雅称', '和风月名 / 雅称', '日本传统「和风月名」，民间流传，非某一文献专有。')
     + '<div class="mgrid">'+Q_MONTHS.map(mCard).join('')+'</div>';
   boards.appendChild(monthsSec);
 
   function quoteSec(id, title, sub, note){
     const sec = document.createElement('div');
-    sec.className = 'qboard'; sec.dataset.qcat = id;
+    sec.className = 'qboard'; sec.dataset.qcat = id; sec.id = 'quotes-' + id;
     const list = Q_QUOTES.filter(q => q.cat === id).sort((a,b) => b.text.length - a.text.length);
     sec.innerHTML = head(title, sub, note) + '<div class="qgrid">'+list.map(qCard).join('')+'</div>';
     boards.appendChild(sec);
@@ -2597,7 +2599,7 @@ q.addEventListener("input", () => {
   let saved = {};
   try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(_) {}
   function persist(){ try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch(_) {} }
-  document.querySelectorAll('section[id]').forEach(sec => {
+  document.querySelectorAll('section[id], .qboard[id]').forEach(sec => {
     const head = sec.querySelector('.sec-head');
     if(!head) return;
     const btn = document.createElement('button');
