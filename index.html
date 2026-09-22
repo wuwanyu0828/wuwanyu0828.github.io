@@ -2532,7 +2532,7 @@ q.addEventListener("input", () => {
   function quoteSec(id, title, sub, note){
     const sec = document.createElement('div');
     sec.className = 'qboard'; sec.dataset.qcat = id;
-    const list = Q_QUOTES.filter(q => q.cat === id);
+    const list = Q_QUOTES.filter(q => q.cat === id).sort((a,b) => b.text.length - a.text.length);
     sec.innerHTML = head(title, sub, note) + '<div class="qgrid">'+list.map(qCard).join('')+'</div>';
     boards.appendChild(sec);
   }
