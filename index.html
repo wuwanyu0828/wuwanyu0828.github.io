@@ -643,6 +643,28 @@
     .info-widget{width:152px;left:8px;bottom:8px}
     .iw-time{font-size:21px}
   }
+
+  /* ============ 名人逝世时间 ============ */
+  .dtab{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px;background:var(--panel);
+    border:1px solid var(--panel-brd);border-radius:var(--radius);overflow:hidden}
+  .dtab th,.dtab td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--panel-brd);vertical-align:top}
+  .dtab thead th{font-size:12px;color:var(--muted);font-weight:600;background:var(--brand-soft)}
+  .dtab tbody tr:last-child td{border-bottom:none}
+  .dtab tbody tr{transition:background .14s}
+  .dtab tbody tr:hover td{background:var(--brand-soft)}
+  .dtab td.name{font-weight:600;color:var(--ink);white-space:nowrap}
+  .dtab td.region{white-space:nowrap;font-weight:600}
+  .dtab td.region-dom{color:#e0533d}
+  .dtab td.region-for{color:#3a7bd5}
+  .dtab td.date{font-variant-numeric:tabular-nums;color:var(--brand);white-space:nowrap;font-weight:600}
+  .dtab td.age{font-variant-numeric:tabular-nums;color:var(--ink-2);white-space:nowrap;text-align:center}
+  .dtab td.field{color:var(--ink-2);white-space:nowrap}
+  .dtab td.note{color:var(--muted);font-size:12px;line-height:1.5}
+  .dtab-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0 14px}
+  @media(max-width:640px){
+    .dtab{font-size:12px;min-width:580px}
+    .dtab th,.dtab td{padding:7px 8px}
+  }
 </style>
 </head>
 <body>
@@ -690,6 +712,7 @@
       <a class="cat" href="#anime">📚 番剧</a>
       <a class="cat" href="#novels">📖 小说</a>
       <a class="cat" href="#quotes">📖 语录</a>
+      <a class="cat" href="#deaths">🕯 名人</a>
       <a class="cat" href="#links">🔗 链接</a>
       <a class="cat" href="hub.html" target="_blank" rel="noopener">🌐 导航</a>
     </nav>
@@ -735,6 +758,74 @@
       <div id="quotesBoards"></div>
     </section>
 
+    <section id="deaths">
+      <div class="sec-head">
+        <h2>🕯 名人逝世时间</h2>
+        <span class="sub">部分已故名人 · 按逝世时间排序 · 附出生与享年</span>
+      </div>
+      <div class="qsec-note">整理自公开资料，为<b>精选而非穷尽</b>（共 53 位）；如需增补某类人物（某领域 / 某国 / 某年代）或纠错，随时告诉我即可补充。地区列以 🇨🇳 国内 / 🌐 国外 标注。</div>
+      <div class="dtab-wrap">
+        <table class="dtab">
+          <thead><tr><th>姓名</th><th>地区</th><th>出生</th><th>逝世</th><th>享年</th><th>领域 / 身份</th><th>代表作 / 备注</th></tr></thead>
+          <tbody>
+            <tr><td class="name">科比·布莱恩特</td><td class="region region-for">🌐 国外</td><td class="byear">1978</td><td class="date">2020-01-26</td><td class="age">41</td><td class="field">体育 · 篮球</td><td class="note">NBA 洛杉矶湖人队</td></tr>
+            <tr><td class="name">贝聿铭</td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1917</td><td class="date">2019-05-16</td><td class="age">102</td><td class="field">建筑</td><td class="note">巴黎卢浮宫玻璃金字塔、苏州博物馆</td></tr>
+            <tr><td class="name">斯坦·李</td><td class="region region-for">🌐 国外</td><td class="byear">1922</td><td class="date">2018-11-12</td><td class="age">95</td><td class="field">漫画</td><td class="note">漫威（Marvel）奠基人</td></tr>
+            <tr><td class="name">金庸（查良镛）</td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1924</td><td class="date">2018-10-30</td><td class="age">94</td><td class="field">文学 · 武侠</td><td class="note">《射雕英雄传》《天龙八部》等</td></tr>
+            <tr><td class="name">樱桃子（三浦美纪）</td><td class="region region-for">🌐 国外</td><td class="byear">1965</td><td class="date">2018-08-15</td><td class="age">53</td><td class="field">漫画</td><td class="note">《樱桃小丸子》</td></tr>
+            <tr><td class="name">高畑勋</td><td class="region region-for">🌐 国外</td><td class="byear">1935</td><td class="date">2018-04-05</td><td class="age">83</td><td class="field">动画</td><td class="note">吉卜力《萤火虫之墓》《天空之城》</td></tr>
+            <tr><td class="name">史蒂芬·霍金</td><td class="region region-for">🌐 国外</td><td class="byear">1942</td><td class="date">2018-03-14</td><td class="age">76</td><td class="field">物理</td><td class="note">《时间简史》</td></tr>
+            <tr><td class="name">罗宾·威廉姆斯</td><td class="region region-for">🌐 国外</td><td class="byear">1951</td><td class="date">2014-08-11</td><td class="age">63</td><td class="field">影视</td><td class="note">喜剧演员 /《死亡诗社》</td></tr>
+            <tr><td class="name">纳尔逊·曼德拉</td><td class="region region-for">🌐 国外</td><td class="byear">1918</td><td class="date">2013-12-05</td><td class="age">95</td><td class="field">政治</td><td class="note">南非前总统</td></tr>
+            <tr><td class="name">木心</td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1927</td><td class="date">2011-12-21</td><td class="age">84</td><td class="field">文学 · 绘画</td><td class="note">《从前慢》《文学回忆录》</td></tr>
+            <tr><td class="name">今敏</td><td class="region region-for">🌐 国外</td><td class="byear">1963</td><td class="date">2010-08-24</td><td class="age">46</td><td class="field">动画</td><td class="note">《红辣椒》《千年女优》</td></tr>
+            <tr><td class="name">迈克尔·杰克逊</td><td class="region region-for">🌐 国外</td><td class="byear">1958</td><td class="date">2009-06-25</td><td class="age">50</td><td class="field">音乐</td><td class="note">"流行音乐之王"</td></tr>
+            <tr><td class="name">巴金</td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1904</td><td class="date">2005-10-17</td><td class="age">100</td><td class="field">文学</td><td class="note">《家》《春》《秋》《随想录》</td></tr>
+            <tr><td class="name">梅艳芳</td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1963</td><td class="date">2003-12-30</td><td class="age">40</td><td class="field">音乐 · 影视</td><td class="note">"百变天后"</td></tr>
+            <tr><td class="name">张国荣</td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1956</td><td class="date">2003-04-01</td><td class="age">46</td><td class="field">音乐 · 影视</td><td class="note">"哥哥"</td></tr>
+            <tr><td class="name">钱钟书</td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1910</td><td class="date">1998-12-19</td><td class="age">88</td><td class="field">文学</td><td class="note">《围城》</td></tr>
+            <tr><td class="name">黑泽明</td><td class="region region-for">🌐 国外</td><td class="byear">1910</td><td class="date">1998-09-06</td><td class="age">88</td><td class="field">电影</td><td class="note">《罗生门》《七武士》</td></tr>
+            <tr><td class="name">邓小平</td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1904</td><td class="date">1997-02-19</td><td class="age">92</td><td class="field">政治</td><td class="note">中国改革开放总设计师</td></tr>
+            <tr><td class="name">张爱玲</td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1920</td><td class="date">1995-09-08</td><td class="age">74</td><td class="field">文学</td><td class="note">《倾城之恋》《红玫瑰与白玫瑰》</td></tr>
+            <tr><td class="name">邓丽君</td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1953</td><td class="date">1995-05-08</td><td class="age">42</td><td class="field">音乐</td><td class="note">华语乐坛巨星</td></tr>
+            <tr><td class="name">顾城</td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1956</td><td class="date">1993-10-08</td><td class="age">37</td><td class="field">诗歌</td><td class="note">《一代人》"黑夜给了我黑色的眼睛"</td></tr>
+            <tr><td class="name">黄家驹</td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1962</td><td class="date">1993-06-30</td><td class="age">31</td><td class="field">音乐</td><td class="note">Beyond 主唱</td></tr>
+            <tr><td class="name">奥黛丽·赫本</td><td class="region region-for">🌐 国外</td><td class="byear">1929</td><td class="date">1993-01-20</td><td class="age">63</td><td class="field">影视</td><td class="note">《罗马假日》</td></tr>
+            <tr><td class="name">三毛（陈平）</td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1943</td><td class="date">1991-01-04</td><td class="age">47</td><td class="field">文学</td><td class="note">《撒哈拉的故事》</td></tr>
+            <tr><td class="name">海子</td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1964</td><td class="date">1989-03-26</td><td class="age">25</td><td class="field">诗歌</td><td class="note">《面朝大海，春暖花开》</td></tr>
+            <tr><td class="name">手冢治虫</td><td class="region region-for">🌐 国外</td><td class="byear">1928</td><td class="date">1989-02-09</td><td class="age">60</td><td class="field">漫画</td><td class="note">《铁臂阿童木》《森林大帝》</td></tr>
+            <tr><td class="name">沈从文</td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1902</td><td class="date">1988-05-10</td><td class="age">85</td><td class="field">文学</td><td class="note">《边城》</td></tr>
+            <tr><td class="name">约翰·列侬</td><td class="region region-for">🌐 国外</td><td class="byear">1940</td><td class="date">1980-12-08</td><td class="age">40</td><td class="field">音乐</td><td class="note">披头士（The Beatles）</td></tr>
+            <tr><td class="name">卓别林</td><td class="region region-for">🌐 国外</td><td class="byear">1889</td><td class="date">1977-12-25</td><td class="age">88</td><td class="field">电影</td><td class="note">喜剧大师《摩登时代》</td></tr>
+            <tr><td class="name">周恩来</td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1898</td><td class="date">1976-01-08</td><td class="age">77</td><td class="field">政治</td><td class="note">中华人民共和国国务院总理</td></tr>
+            <tr><td class="name">毕加索</td><td class="region region-for">🌐 国外</td><td class="byear">1881</td><td class="date">1973-04-08</td><td class="age">91</td><td class="field">绘画</td><td class="note">立体主义</td></tr>
+            <tr><td class="name">老舍</td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1899</td><td class="date">1966-08-24</td><td class="age">67</td><td class="field">文学</td><td class="note">《骆驼祥子》《茶馆》</td></tr>
+            <tr><td class="name">温斯顿·丘吉尔</td><td class="region region-for">🌐 国外</td><td class="byear">1874</td><td class="date">1965-01-24</td><td class="age">90</td><td class="field">政治</td><td class="note">英国前首相</td></tr>
+            <tr><td class="name">玛丽莲·梦露</td><td class="region region-for">🌐 国外</td><td class="byear">1926</td><td class="date">1962-08-05</td><td class="age">36</td><td class="field">影视</td><td class="note">《七年之痒》</td></tr>
+            <tr><td class="name">欧内斯特·海明威</td><td class="region region-for">🌐 国外</td><td class="byear">1899</td><td class="date">1961-07-02</td><td class="age">61</td><td class="field">文学</td><td class="note">《老人与海》</td></tr>
+            <tr><td class="name">阿尔伯特·爱因斯坦</td><td class="region region-for">🌐 国外</td><td class="byear">1879</td><td class="date">1955-04-18</td><td class="age">76</td><td class="field">物理</td><td class="note">相对论</td></tr>
+            <tr><td class="name">艾伦·图灵</td><td class="region region-for">🌐 国外</td><td class="byear">1912</td><td class="date">1954-06-07</td><td class="age">41</td><td class="field">计算机科学</td><td class="note">图灵机 / 人工智能先驱</td></tr>
+            <tr><td class="name">圣雄甘地</td><td class="region region-for">🌐 国外</td><td class="byear">1869</td><td class="date">1948-01-30</td><td class="age">78</td><td class="field">政治</td><td class="note">印度独立运动领袖</td></tr>
+            <tr><td class="name">尼古拉·特斯拉</td><td class="region region-for">🌐 国外</td><td class="byear">1856</td><td class="date">1943-01-07</td><td class="age">86</td><td class="field">电气工程</td><td class="note">交流电系统</td></tr>
+            <tr><td class="name">鲁迅（周树人）</td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1881</td><td class="date">1936-10-19</td><td class="age">55</td><td class="field">文学</td><td class="note">《呐喊》《彷徨》</td></tr>
+            <tr><td class="name">玛丽·居里</td><td class="region region-for">🌐 国外</td><td class="byear">1867</td><td class="date">1934-07-04</td><td class="age">66</td><td class="field">化学 · 物理</td><td class="note">两度获诺贝尔奖</td></tr>
+            <tr><td class="name">列夫·托尔斯泰</td><td class="region region-for">🌐 国外</td><td class="byear">1828</td><td class="date">1910-11-20</td><td class="age">82</td><td class="field">文学</td><td class="note">《战争与和平》《安娜·卡列尼娜》</td></tr>
+            <tr><td class="name">文森特·梵高</td><td class="region region-for">🌐 国外</td><td class="byear">1853</td><td class="date">1890-07-29</td><td class="age">37</td><td class="field">绘画</td><td class="note">《星空》《向日葵》</td></tr>
+            <tr><td class="name">查尔斯·达尔文</td><td class="region region-for">🌐 国外</td><td class="byear">1809</td><td class="date">1882-04-19</td><td class="age">73</td><td class="field">生物</td><td class="note">《物种起源》</td></tr>
+            <tr><td class="name">亚伯拉罕·林肯</td><td class="region region-for">🌐 国外</td><td class="byear">1809</td><td class="date">1865-04-15</td><td class="age">56</td><td class="field">政治</td><td class="note">美国总统</td></tr>
+            <tr><td class="name">亚历山大·普希金</td><td class="region region-for">🌐 国外</td><td class="byear">1799</td><td class="date">1837-02-10</td><td class="age">37</td><td class="field">文学</td><td class="note">俄国文学之父</td></tr>
+            <tr><td class="name">路德维希·凡·贝多芬</td><td class="region region-for">🌐 国外</td><td class="byear">1770</td><td class="date">1827-03-26</td><td class="age">56</td><td class="field">音乐</td><td class="note">作曲家《第九交响曲》</td></tr>
+            <tr><td class="name">沃尔夫冈·莫扎特</td><td class="region region-for">🌐 国外</td><td class="byear">1756</td><td class="date">1791-12-05</td><td class="age">35</td><td class="field">音乐</td><td class="note">作曲家</td></tr>
+            <tr><td class="name">艾萨克·牛顿</td><td class="region region-for">🌐 国外</td><td class="byear">1643</td><td class="date">1727-03-31</td><td class="age">84</td><td class="field">物理 · 数学</td><td class="note">经典力学（格里历）</td></tr>
+            <tr><td class="name">伽利略·伽利雷</td><td class="region region-for">🌐 国外</td><td class="byear">1564</td><td class="date">1642-01-08</td><td class="age">77</td><td class="field">天文 · 物理</td><td class="note">望远镜天文观测先驱（格里历）</td></tr>
+            <tr><td class="name">威廉·莎士比亚</td><td class="region region-for">🌐 国外</td><td class="byear">1564</td><td class="date">1616-04-23</td><td class="age">52</td><td class="field">文学</td><td class="note">《哈姆雷特》《罗密欧与朱丽叶》</td></tr>
+            <tr><td class="name">杜甫</td><td class="region region-dom">🇨🇳 国内</td><td class="byear">712</td><td class="date">770</td><td class="age">58</td><td class="field">诗歌</td><td class="note">"诗圣"</td></tr>
+            <tr><td class="name">李白</td><td class="region region-dom">🇨🇳 国内</td><td class="byear">701</td><td class="date">762</td><td class="age">61</td><td class="field">诗歌</td><td class="note">"诗仙"</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
     <section id="links">
       <div class="sec-head">
         <h2>在下面找到我</h2>
@@ -753,6 +844,7 @@
         <a href="#anime">番剧</a>
         <a href="#novels">小说</a>
         <a href="#quotes">语录</a>
+        <a href="#deaths">名人</a>
         <a href="hub.html" target="_blank" rel="noopener">二次元导航</a>
         <a href="#top">回到顶部 ↑</a>
       </span>
