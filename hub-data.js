@@ -11,7 +11,7 @@
  * 请以合法、正版的平台/社区为主。
  * ========================================================================== */
 window.HUB_DATA = {
-  updated: "2026-09-28",
+  updated: "2026-09-18",
 
   // 全网热榜：参考 https://top.open2hub.com 的聚合形式，按平台分组展示热门标题
   // 快照日期见 updated；非实时数据，标题均为各平台真实热门；点击跳对应平台搜索页
@@ -193,13 +193,7 @@ window.HUB_DATA = {
       name: "我的书签",
       icon: "🔖",
       desc: "个人收藏夹，由站长手工维护",
-      items: [
-        { title: "推理 · 电子书宝箱", url: "https://github.com/jbiaojerry/ebook-treasure-chest/blob/main/md/%E6%8E%A8%E7%90%86.md", platform: "GitHub", tags: ["推理", "电子书", "在线读"], desc: "GitHub 上的推理类电子书合集，可直接在线阅读。" },
-        { title: "MemoOf · AI 读书记忆", url: "https://memoof.me/", platform: "MemoOf", tags: ["AI", "读书", "记忆"], desc: "AI 辅助读书与记忆平台，上传书籍可生成可回顾的知识卡片。" },
-        { title: "YUC Wiki · 书库", url: "https://yuc.wiki/", platform: "YUC Wiki", tags: ["wiki", "书库", "轻小说"], desc: "轻小说 / 书籍资料 wiki，收录作品信息与下载入口。" },
-        { title: "Kindle 免费书 · 网络小说", url: "https://github.com/LeungGeorge/grimoire-kindle/tree/main/kindle_free_books/%E7%BD%91%E7%BB%9C%E5%B0%8F%E8%AF%B4", platform: "GitHub", tags: ["网络小说", "Kindle", "免费"], desc: "GitHub 开源书库，整理可免费导入 Kindle 的网络小说合集。" },
-        { title: "轻小说文库 Wenku8", url: "https://mojimoon.github.io/wenku8/index.html", platform: "GitHub Pages", tags: ["轻小说", "文库", "在线读"], desc: "轻小说文库镜像站，可在线检索与阅读轻小说。" }
-      ]
+      items: []
     },
   ]
 };

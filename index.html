@@ -716,6 +716,7 @@
       <a class="cat" href="#quotes">📖 语录</a>
       <a class="cat" href="#deaths">🕯 名人</a>
       <a class="cat" href="#links">🔗 链接</a>
+      <a class="cat" href="#bookmarks">📑 书签</a>
       <a class="cat" href="hub.html" target="_blank" rel="noopener">🌐 导航</a>
     </nav>
 
@@ -886,6 +887,14 @@
       <div class="socials" id="socialList"></div>
     </section>
 
+    <section id="bookmarks">
+      <div class="sec-head">
+        <h2>📚 我的书签</h2>
+        <span class="sub">书籍 / 阅读</span>
+      </div>
+      <div class="socials" id="bookmarkList"></div>
+    </section>
+
     <div class="empty" id="empty">没有匹配的内容，换个关键词试试～</div>
 
     <footer>
@@ -897,6 +906,7 @@
         <a href="#novels">小说</a>
         <a href="#quotes">语录</a>
         <a href="#deaths">名人</a>
+        <a href="#bookmarks">书签</a>
         <a href="hub.html" target="_blank" rel="noopener">二次元导航</a>
         <a href="#top">回到顶部 ↑</a>
       </span>
@@ -1010,6 +1020,16 @@ const profile = {
     { icon: "📺", label: "Bilibili", url: "https://space.bilibili.com/" }
   ]
 };
+
+// 书签：icon 图标 / label 显示名 / url 跳转链接 / desc 悬浮简介（点一下在新标签打开）
+const bookmarks = [
+  { icon: "📖", label: "推理 · 电子书宝箱", url: "https://github.com/jbiaojerry/ebook-treasure-chest/blob/main/md/%E6%8E%A8%E7%90%86.md", desc: "GitHub 上的推理类电子书合集，可直接在线阅读。" },
+  { icon: "🧠", label: "MemoOf · AI 读书记忆", url: "https://memoof.me/", desc: "AI 辅助读书与记忆平台，上传书籍可生成可回顾的知识卡片。" },
+  { icon: "📚", label: "YUC Wiki · 书库", url: "https://yuc.wiki/", desc: "轻小说 / 书籍资料 wiki，收录作品信息与下载入口。" },
+  { icon: "📱", label: "Kindle 免费书 · 网络小说", url: "https://github.com/LeungGeorge/grimoire-kindle/tree/main/kindle_free_books/%E7%BD%91%E7%BB%9C%E5%B0%8F%E8%AF%B4", desc: "GitHub 开源书库，整理可免费导入 Kindle 的网络小说合集。" },
+  { icon: "📘", label: "轻小说文库 Wenku8", url: "https://mojimoon.github.io/wenku8/index.html", desc: "轻小说文库镜像站，可在线检索与阅读轻小说。" }
+  // 复制上面这一段 { ... } 就能继续加书签
+];
 
 // 项目：emoji 封面图标 / corner 封面左上角小标签 / title / desc / tags / link / linkLabel
 const projects = [
@@ -1969,6 +1989,10 @@ document.getElementById("videoGrid").innerHTML = videos.map(v => {
 
 document.getElementById("socialList").innerHTML = profile.socials.map(s => `
   <a href="${s.url}" target="_blank" rel="noopener"><span>${s.icon||"🔗"}</span>${s.label}</a>
+`).join("");
+
+document.getElementById("bookmarkList").innerHTML = bookmarks.map(b => `
+  <a href="${b.url}" target="_blank" rel="noopener" title="${b.desc||""}"><span>${b.icon||"🔗"}</span>${b.label}</a>
 `).join("");
 
 /* ---------- 追番追剧 / 小说 记录 ---------- */
