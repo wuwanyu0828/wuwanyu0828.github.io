@@ -644,29 +644,10 @@
     .iw-time{font-size:21px}
   }
 
-  /* ============ 名人逝世时间 ============ */
-  .dtab{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px;background:var(--panel);
-    border:1px solid var(--panel-brd);border-radius:var(--radius);overflow:hidden}
-  .dtab th,.dtab td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--panel-brd);vertical-align:top}
-  .dtab thead th{font-size:12px;color:var(--muted);font-weight:600;background:var(--brand-soft)}
-  .dtab tbody tr:last-child td{border-bottom:none}
-  .dtab tbody tr{transition:background .14s}
-  .dtab tbody tr:hover td{background:var(--brand-soft)}
-  .dtab td.name{font-weight:600;color:var(--ink);white-space:nowrap}
-  .dtab td.name a.wlink{color:var(--brand);text-decoration:none;border-bottom:1px dashed var(--brand)}
-  .dtab td.name a.wlink:hover{color:#c0392b;border-bottom-style:solid}
-  .dtab td.region{white-space:nowrap;font-weight:600}
-  .dtab td.region-dom{color:#e0533d}
-  .dtab td.region-for{color:#3a7bd5}
-  .dtab td.date{font-variant-numeric:tabular-nums;color:var(--brand);white-space:nowrap;font-weight:600}
-  .dtab td.age{font-variant-numeric:tabular-nums;color:var(--ink-2);white-space:nowrap;text-align:center}
-  .dtab td.field{color:var(--ink-2);white-space:nowrap}
-  .dtab td.note{color:var(--muted);font-size:12px;line-height:1.5}
-  .dtab-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0 14px}
-  @media(max-width:640px){
-    .dtab{font-size:12px;min-width:580px}
-    .dtab th,.dtab td{padding:7px 8px}
-  }
+  /* 上传时间标记 */
+  .upd{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--muted);margin-top:8px;line-height:1.4}
+  .acard .upd,.vcard .upd{margin-top:6px}
+  .qmeta .upd{margin-left:6px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -714,7 +695,6 @@
       <a class="cat" href="#anime">📚 番剧</a>
       <a class="cat" href="#novels">📖 小说</a>
       <a class="cat" href="#quotes">📖 语录</a>
-      <a class="cat" href="#deaths">🕯 名人</a>
       <a class="cat" href="#links">🔗 链接</a>
       <a class="cat" href="#bookmarks">📑 书签</a>
       <a class="cat" href="hub.html" target="_blank" rel="noopener">🌐 导航</a>
@@ -761,122 +741,6 @@
       <div id="quotesBoards"></div>
     </section>
 
-        <section id="deaths">
-      <div class="sec-head">
-        <h2>🕯 名人逝世时间</h2>
-        <span class="sub">部分已故名人 · 按逝世时间排序 · 附出生与享年</span>
-      </div>
-      <div class="qsec-note">整理自公开资料，为<b>精选而非穷尽</b>（共 102 位）；其中 <b>2026 年条目据网络公开报道整理（截至 2026-09-27），以官方讣告为准</b>。地区列以 🇨🇳 国内 / 🌐 国外 标注。</div>
-      <div class="dtab-wrap">
-        <table class="dtab">
-          <thead><tr><th>姓名</th><th>地区</th><th>出生</th><th>逝世</th><th>享年</th><th>领域 / 身份</th><th>代表作 / 备注</th></tr></thead>
-          <tbody>
-            <tr><td class="name">龚爽</td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1989</td><td class="date">2026-09</td><td class="age">37</td><td class="field">歌唱家 · 金钟奖金奖</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://en.wikipedia.org/wiki/Duncan_Sheik" target="_blank" rel="noopener">邓肯·谢克</a></td><td class="region region-for">🌐 国外</td><td class="byear">1969</td><td class="date">2026-09-17</td><td class="age">56</td><td class="field">美国音乐人 ·《Spring Awakening》</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://en.wikipedia.org/wiki/Bob_Mackie" target="_blank" rel="noopener">鲍勃·麦基</a></td><td class="region region-for">🌐 国外</td><td class="byear">1940</td><td class="date">2026-09-14</td><td class="age">87</td><td class="field">美国服装设计师</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://en.wikipedia.org/wiki/Peter_Max" target="_blank" rel="noopener">彼得·马克斯</a></td><td class="region region-for">🌐 国外</td><td class="byear">1937</td><td class="date">2026-09-14</td><td class="age">88</td><td class="field">美国艺术家 · 波普</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E6%95%AC%E4%B8%80%E4%B8%B9" target="_blank" rel="noopener">敬一丹</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1955</td><td class="date">2026-09-13</td><td class="age">71</td><td class="field">央视主持人</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E8%91%A3%E5%BB%BA%E5%8D%8E" target="_blank" rel="noopener">董建华</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1937</td><td class="date">2026-09-08</td><td class="age">89</td><td class="field">政治 · 香港首任特首</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E8%8B%8F%E4%B8%87%E5%8D%8E" target="_blank" rel="noopener">苏万华</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1941</td><td class="date">2026-09-04</td><td class="age">85</td><td class="field">内燃机 · 院士</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E5%8A%89%E5%85%86%E9%8A%98" target="_blank" rel="noopener">刘兆铭</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1931</td><td class="date">2026-09-02</td><td class="age">94</td><td class="field">香港演员 ·《倩女幽魂》姥姥</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E9%99%B3%E8%A7%80%E6%B3%B0" target="_blank" rel="noopener">陈观泰</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1945</td><td class="date">2026-09-02</td><td class="age">80</td><td class="field">邵氏功夫明星</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E6%A0%BC%E6%B4%9B%E4%B8%BD%E4%BA%9A%C2%B7%E6%96%AF%E6%B3%B0%E7%BA%B3%E5%A7%86" target="_blank" rel="noopener">格洛丽亚·斯泰纳姆</a></td><td class="region region-for">🌐 国外</td><td class="byear">1934</td><td class="date">2026-09-02</td><td class="age">92</td><td class="field">美国女权运动领袖</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://en.wikipedia.org/wiki/Cassandra_Wilson" target="_blank" rel="noopener">卡桑德拉·威尔逊</a></td><td class="region region-for">🌐 国外</td><td class="byear">1955</td><td class="date">2026-09-02</td><td class="age">70</td><td class="field">美国爵士歌手</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E7%8E%8B%E6%B0%B8%E7%82%8E" target="_blank" rel="noopener">王永炎</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1938</td><td class="date">2026-08-30</td><td class="age">87</td><td class="field">中医 · 院士</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E6%9D%8E%E7%BB%B4%E5%BA%B7" target="_blank" rel="noopener">李维康</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1947</td><td class="date">2026-08-28</td><td class="age">79</td><td class="field">京剧表演艺术家</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E5%93%88%E6%8B%89%E5%B0%94%E4%BA%94%E4%B8%96" target="_blank" rel="noopener">哈拉尔五世</a></td><td class="region region-for">🌐 国外</td><td class="byear">1937</td><td class="date">2026-08-28</td><td class="age">89</td><td class="field">挪威国王</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://en.wikipedia.org/wiki/Peter_Cullen" target="_blank" rel="noopener">彼得·库伦</a></td><td class="region region-for">🌐 国外</td><td class="byear">1941</td><td class="date">2026-08-26</td><td class="age">85</td><td class="field">加拿大配音演员 · 擎天柱</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E5%A4%9A%E8%8E%89%C2%B7%E5%B8%95%E9%A1%BF" target="_blank" rel="noopener">多莉·帕顿</a></td><td class="region region-for">🌐 国外</td><td class="byear">1946</td><td class="date">2026-08-25</td><td class="age">80</td><td class="field">美国歌手 · 音乐</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E8%92%82%E5%A7%86%C2%B7%E6%9F%AF%E7%91%9E" target="_blank" rel="noopener">蒂姆·柯瑞</a></td><td class="region region-for">🌐 国外</td><td class="byear">1946</td><td class="date">2026-08-25</td><td class="age">80</td><td class="field">英国演员 ·《洛基恐怖秀》</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E8%8D%89%E9%96%93%E5%BD%8C%E7%94%9F" target="_blank" rel="noopener">草间弥生</a></td><td class="region region-for">🌐 国外</td><td class="byear">1929</td><td class="date">2026-08-14</td><td class="age">97</td><td class="field">日本艺术家 · 波点女王</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E6%9C%B1%E9%95%95%E5%9F%BA" target="_blank" rel="noopener">朱镕基</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1928</td><td class="date">2026-08-12</td><td class="age">98</td><td class="field">政治 · 国务院原总理</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E7%8E%8B%E5%B8%8C%E5%AD%A3" target="_blank" rel="noopener">王希季</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1921</td><td class="date">2026-08-12</td><td class="age">105</td><td class="field">航天工程 · 院士</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E5%94%90%E5%AE%88%E6%AD%A3" target="_blank" rel="noopener">唐守正</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1941</td><td class="date">2026-08-12</td><td class="age">85</td><td class="field">林业数学 · 院士</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E9%83%AD%E5%85%B0%E8%8B%B1" target="_blank" rel="noopener">郭兰英</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1929</td><td class="date">2026-08-11</td><td class="age">97</td><td class="field">歌唱家 · 人民艺术家</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E9%99%88%E9%92%A2_%28%E4%BD%9C%E6%9B%B2%E5%AE%B6%29" target="_blank" rel="noopener">陈钢</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1935</td><td class="date">2026-07-18</td><td class="age">91</td><td class="field">作曲家 ·《梁祝》作者</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E6%9F%A5%E5%85%8B%C2%B7%E8%AF%BA%E9%87%8C%E6%96%AF" target="_blank" rel="noopener">查克·诺里斯</a></td><td class="region region-for">🌐 国外</td><td class="byear">1940</td><td class="date">2026-03-19</td><td class="age">86</td><td class="field">美国动作演员</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E7%BD%97%E4%BC%AF%E7%89%B9%C2%B7%E6%9D%9C%E7%93%A6%E5%B0%94" target="_blank" rel="noopener">罗伯特·杜瓦尔</a></td><td class="region region-for">🌐 国外</td><td class="byear">1931</td><td class="date">2026-02-15</td><td class="age">95</td><td class="field">美国演员 ·《教父》</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E6%A2%81%E6%A0%8B%E6%9D%90" target="_blank" rel="noopener">梁栋材</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1932</td><td class="date">2026-01</td><td class="age">94</td><td class="field">分子生物物理 · 院士</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E6%9D%8E%E6%9C%AA_%28%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E5%AE%B6%29" target="_blank" rel="noopener">李未</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1943</td><td class="date">2026-01-25</td><td class="age">82</td><td class="field">计算机科学 · 院士</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://en.wikipedia.org/wiki/Bob_Weir" target="_blank" rel="noopener">鲍勃·韦尔</a></td><td class="region region-for">🌐 国外</td><td class="byear">1947</td><td class="date">2026-01-10</td><td class="age">78</td><td class="field">美国吉他手 · Grateful Dead</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E5%AE%89%E8%81%96%E5%9F%BA" target="_blank" rel="noopener">安圣基</a></td><td class="region region-for">🌐 国外</td><td class="byear">1952</td><td class="date">2026-01-05</td><td class="age">74</td><td class="field">韩国国民级演员</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E8%A2%81%E7%A5%A5%E4%BB%81" target="_blank" rel="noopener">袁祥仁</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1945</td><td class="date">2026-01-01</td><td class="age">69</td><td class="field">香港演员 · 武术指导</td><td class="note"></td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E7%A7%91%E6%AF%94%C2%B7%E5%B8%83%E8%8E%B1%E6%81%A9%E7%89%B9" target="_blank" rel="noopener">科比·布莱恩特</a></td><td class="region region-for">🌐 国外</td><td class="byear">1978</td><td class="date">2020-01-26</td><td class="age">41</td><td class="field">体育 · 篮球</td><td class="note">NBA 洛杉矶湖人队</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E8%B4%9D%E8%81%BF%E9%93%AD" target="_blank" rel="noopener">贝聿铭</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1917</td><td class="date">2019-05-16</td><td class="age">102</td><td class="field">建筑</td><td class="note">巴黎卢浮宫玻璃金字塔、苏州博物馆</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E6%96%AF%E5%9D%A6%C2%B7%E6%9D%8E" target="_blank" rel="noopener">斯坦·李</a></td><td class="region region-for">🌐 国外</td><td class="byear">1922</td><td class="date">2018-11-12</td><td class="age">95</td><td class="field">漫画</td><td class="note">漫威（Marvel）奠基人</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E9%87%91%E5%BA%B8" target="_blank" rel="noopener">金庸（查良镛）</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1924</td><td class="date">2018-10-30</td><td class="age">94</td><td class="field">文学 · 武侠</td><td class="note">《射雕英雄传》《天龙八部》等</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E6%A8%B1%E6%A1%83%E5%AD%90" target="_blank" rel="noopener">樱桃子（三浦美纪）</a></td><td class="region region-for">🌐 国外</td><td class="byear">1965</td><td class="date">2018-08-15</td><td class="age">53</td><td class="field">漫画</td><td class="note">《樱桃小丸子》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E9%AB%98%E7%95%91%E5%8B%8B" target="_blank" rel="noopener">高畑勋</a></td><td class="region region-for">🌐 国外</td><td class="byear">1935</td><td class="date">2018-04-05</td><td class="age">83</td><td class="field">动画</td><td class="note">吉卜力《萤火虫之墓》《天空之城》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E5%8F%B2%E8%92%82%E8%8A%AC%C2%B7%E9%9C%8D%E9%87%91" target="_blank" rel="noopener">史蒂芬·霍金</a></td><td class="region region-for">🌐 国外</td><td class="byear">1942</td><td class="date">2018-03-14</td><td class="age">76</td><td class="field">物理</td><td class="note">《时间简史》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E7%BD%97%E5%AE%BE%C2%B7%E5%A8%81%E5%BB%89%E5%A7%86%E6%96%AF" target="_blank" rel="noopener">罗宾·威廉姆斯</a></td><td class="region region-for">🌐 国外</td><td class="byear">1951</td><td class="date">2014-08-11</td><td class="age">63</td><td class="field">影视</td><td class="note">喜剧演员 /《死亡诗社》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E7%BA%B3%E5%B0%94%E9%80%8A%C2%B7%E6%9B%BC%E5%BE%B7%E6%8B%89" target="_blank" rel="noopener">纳尔逊·曼德拉</a></td><td class="region region-for">🌐 国外</td><td class="byear">1918</td><td class="date">2013-12-05</td><td class="age">95</td><td class="field">政治</td><td class="note">南非前总统</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E6%9C%A8%E5%BF%83" target="_blank" rel="noopener">木心</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1927</td><td class="date">2011-12-21</td><td class="age">84</td><td class="field">文学 · 绘画</td><td class="note">《从前慢》《文学回忆录》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E4%BB%8A%E6%95%8F" target="_blank" rel="noopener">今敏</a></td><td class="region region-for">🌐 国外</td><td class="byear">1963</td><td class="date">2010-08-24</td><td class="age">46</td><td class="field">动画</td><td class="note">《红辣椒》《千年女优》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E5%90%B4%E5%86%A0%E4%B8%AD" target="_blank" rel="noopener">吴冠中</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1919</td><td class="date">2010-06-25</td><td class="age">90</td><td class="field">绘画</td><td class="note">油彩与水墨结合、《长江万里图》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E8%BF%88%E5%85%8B%E5%B0%94%C2%B7%E6%9D%B0%E5%85%8B%E9%80%8A" target="_blank" rel="noopener">迈克尔·杰克逊</a></td><td class="region region-for">🌐 国外</td><td class="byear">1958</td><td class="date">2009-06-25</td><td class="age">50</td><td class="field">音乐</td><td class="note">"流行音乐之王"</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E5%B7%B4%E9%87%91" target="_blank" rel="noopener">巴金</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1904</td><td class="date">2005-10-17</td><td class="age">100</td><td class="field">文学</td><td class="note">《家》《春》《秋》《随想录》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E6%A2%85%E8%89%B3%E8%8A%B3" target="_blank" rel="noopener">梅艳芳</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1963</td><td class="date">2003-12-30</td><td class="age">40</td><td class="field">音乐 · 影视</td><td class="note">"百变天后"</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E5%BC%A0%E5%9B%BD%E8%8D%A3" target="_blank" rel="noopener">张国荣</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1956</td><td class="date">2003-04-01</td><td class="age">46</td><td class="field">音乐 · 影视</td><td class="note">"哥哥"</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E9%92%B1%E9%92%9F%E4%B9%A6" target="_blank" rel="noopener">钱钟书</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1910</td><td class="date">1998-12-19</td><td class="age">88</td><td class="field">文学</td><td class="note">《围城》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E9%BB%91%E6%B3%BD%E6%98%8E" target="_blank" rel="noopener">黑泽明</a></td><td class="region region-for">🌐 国外</td><td class="byear">1910</td><td class="date">1998-09-06</td><td class="age">88</td><td class="field">电影</td><td class="note">《罗生门》《七武士》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E9%82%93%E5%B0%8F%E5%B9%B3" target="_blank" rel="noopener">邓小平</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1904</td><td class="date">1997-02-19</td><td class="age">92</td><td class="field">政治</td><td class="note">中国改革开放总设计师</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E5%BC%A0%E7%88%B1%E7%8E%B2" target="_blank" rel="noopener">张爱玲</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1920</td><td class="date">1995-09-08</td><td class="age">74</td><td class="field">文学</td><td class="note">《倾城之恋》《红玫瑰与白玫瑰》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E9%82%93%E4%B8%BD%E5%90%9B" target="_blank" rel="noopener">邓丽君</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1953</td><td class="date">1995-05-08</td><td class="age">42</td><td class="field">音乐</td><td class="note">华语乐坛巨星</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E5%88%98%E6%B5%B7%E7%B2%9F" target="_blank" rel="noopener">刘海粟</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1896</td><td class="date">1994-08-07</td><td class="age">98</td><td class="field">绘画</td><td class="note">画家、美术教育家</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E9%A1%BE%E5%9F%8E" target="_blank" rel="noopener">顾城</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1956</td><td class="date">1993-10-08</td><td class="age">37</td><td class="field">诗歌</td><td class="note">《一代人》"黑夜给了我黑色的眼睛"</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E9%BB%84%E5%AE%B6%E9%A9%B9" target="_blank" rel="noopener">黄家驹</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1962</td><td class="date">1993-06-30</td><td class="age">31</td><td class="field">音乐</td><td class="note">Beyond 主唱</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E5%A5%A5%E9%BB%9B%E4%B8%BD%C2%B7%E8%B5%AB%E6%9C%AC" target="_blank" rel="noopener">奥黛丽·赫本</a></td><td class="region region-for">🌐 国外</td><td class="byear">1929</td><td class="date">1993-01-20</td><td class="age">63</td><td class="field">影视</td><td class="note">《罗马假日》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E6%9E%97%E9%A3%8E%E7%9C%A0" target="_blank" rel="noopener">林风眠</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1900</td><td class="date">1991-08-12</td><td class="age">90</td><td class="field">绘画</td><td class="note">中西融合画家、美院创始人</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E4%B8%89%E6%AF%9B_%28%E4%BD%9C%E5%AE%B6%29" target="_blank" rel="noopener">三毛（陈平）</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1943</td><td class="date">1991-01-04</td><td class="age">47</td><td class="field">文学</td><td class="note">《撒哈拉的故事》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E6%9D%8E%E5%8F%AF%E6%9F%93" target="_blank" rel="noopener">李可染</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1907</td><td class="date">1989-12-05</td><td class="age">82</td><td class="field">国画</td><td class="note">山水画家、《万山红遍》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E6%B5%B7%E5%AD%90" target="_blank" rel="noopener">海子</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1964</td><td class="date">1989-03-26</td><td class="age">25</td><td class="field">诗歌</td><td class="note">《面朝大海，春暖花开》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E6%89%8B%E5%86%A2%E6%B2%BB%E8%99%AB" target="_blank" rel="noopener">手冢治虫</a></td><td class="region region-for">🌐 国外</td><td class="byear">1928</td><td class="date">1989-02-09</td><td class="age">60</td><td class="field">漫画</td><td class="note">《铁臂阿童木》《森林大帝》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E8%90%A8%E5%B0%94%E7%93%A6%E5%A4%9A%C2%B7%E8%BE%BE%E5%88%A9" target="_blank" rel="noopener">萨尔瓦多·达利</a></td><td class="region region-for">🌐 国外</td><td class="byear">1904</td><td class="date">1989-01-23</td><td class="age">84</td><td class="field">绘画</td><td class="note">超现实主义、《记忆的永恒》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E6%B2%88%E4%BB%8E%E6%96%87" target="_blank" rel="noopener">沈从文</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1902</td><td class="date">1988-05-10</td><td class="age">85</td><td class="field">文学</td><td class="note">《边城》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E5%AE%89%E8%BF%AA%C2%B7%E6%B2%83%E9%9C%8D%E5%B0%94" target="_blank" rel="noopener">安迪·沃霍尔</a></td><td class="region region-for">🌐 国外</td><td class="byear">1928</td><td class="date">1987-02-22</td><td class="age">58</td><td class="field">绘画</td><td class="note">波普艺术、《金宝汤罐头》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E5%BC%A0%E5%A4%A7%E5%8D%83" target="_blank" rel="noopener">张大千</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1899</td><td class="date">1983-04-02</td><td class="age">83</td><td class="field">国画 · 绘画</td><td class="note">国画大师、泼墨山水</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E7%BA%A6%E7%BF%B0%C2%B7%E5%88%97%E4%BE%AC" target="_blank" rel="noopener">约翰·列侬</a></td><td class="region region-for">🌐 国外</td><td class="byear">1940</td><td class="date">1980-12-08</td><td class="age">40</td><td class="field">音乐</td><td class="note">披头士（The Beatles）</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E5%8D%93%E5%88%AB%E6%9E%97" target="_blank" rel="noopener">卓别林</a></td><td class="region region-for">🌐 国外</td><td class="byear">1889</td><td class="date">1977-12-25</td><td class="age">88</td><td class="field">电影</td><td class="note">喜剧大师《摩登时代》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E5%91%A8%E6%81%A9%E6%9D%A5" target="_blank" rel="noopener">周恩来</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1898</td><td class="date">1976-01-08</td><td class="age">77</td><td class="field">政治</td><td class="note">中华人民共和国国务院总理</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E6%AF%95%E5%8A%A0%E7%B4%A2" target="_blank" rel="noopener">毕加索</a></td><td class="region region-for">🌐 国外</td><td class="byear">1881</td><td class="date">1973-04-08</td><td class="age">91</td><td class="field">绘画</td><td class="note">立体主义</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E6%BD%98%E5%A4%A9%E5%AF%BF" target="_blank" rel="noopener">潘天寿</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1897</td><td class="date">1971-09-05</td><td class="age">74</td><td class="field">国画</td><td class="note">写意花鸟、指画</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E8%80%81%E8%88%8D" target="_blank" rel="noopener">老舍</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1899</td><td class="date">1966-08-24</td><td class="age">67</td><td class="field">文学</td><td class="note">《骆驼祥子》《茶馆》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E5%B8%B8%E7%8E%89" target="_blank" rel="noopener">常玉</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1901</td><td class="date">1966-08-12</td><td class="age">64</td><td class="field">绘画</td><td class="note">旅法华裔画家、《曲腿裸女》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E5%82%85%E6%8A%B1%E7%9F%B3" target="_blank" rel="noopener">傅抱石</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1904</td><td class="date">1965-09-29</td><td class="age">60</td><td class="field">国画</td><td class="note">新山水画、《江山如此多娇》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E6%B8%A9%E6%96%AF%E9%A1%BF%C2%B7%E4%B8%98%E5%90%89%E5%B0%94" target="_blank" rel="noopener">温斯顿·丘吉尔</a></td><td class="region region-for">🌐 国外</td><td class="byear">1874</td><td class="date">1965-01-24</td><td class="age">90</td><td class="field">政治</td><td class="note">英国前首相</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E7%8E%9B%E4%B8%BD%E8%8E%B2%C2%B7%E6%A2%A6%E9%9C%B2" target="_blank" rel="noopener">玛丽莲·梦露</a></td><td class="region region-for">🌐 国外</td><td class="byear">1926</td><td class="date">1962-08-05</td><td class="age">36</td><td class="field">影视</td><td class="note">《七年之痒》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E6%AC%A7%E5%86%85%E6%96%AF%E7%89%B9%C2%B7%E6%B5%B7%E6%98%8E%E5%A8%81" target="_blank" rel="noopener">欧内斯特·海明威</a></td><td class="region region-for">🌐 国外</td><td class="byear">1899</td><td class="date">1961-07-02</td><td class="age">61</td><td class="field">文学</td><td class="note">《老人与海》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E9%BD%90%E7%99%BD%E7%9F%B3" target="_blank" rel="noopener">齐白石</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1864</td><td class="date">1957-09-16</td><td class="age">93</td><td class="field">国画 · 绘画</td><td class="note">近现代国画大师、《虾》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E9%98%BF%E5%B0%94%E4%BC%AF%E7%89%B9%C2%B7%E7%88%B1%E5%9B%A0%E6%96%AF%E5%9D%A6" target="_blank" rel="noopener">阿尔伯特·爱因斯坦</a></td><td class="region region-for">🌐 国外</td><td class="byear">1879</td><td class="date">1955-04-18</td><td class="age">76</td><td class="field">物理</td><td class="note">相对论</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E9%BB%84%E5%AE%BE%E8%99%B9" target="_blank" rel="noopener">黄宾虹</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1865</td><td class="date">1955-03-25</td><td class="age">90</td><td class="field">国画</td><td class="note">山水画大师</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E5%BC%97%E9%87%8C%E8%BE%BE%C2%B7%E5%8D%A1%E7%BD%97" target="_blank" rel="noopener">弗里达·卡罗</a></td><td class="region region-for">🌐 国外</td><td class="byear">1907</td><td class="date">1954-07-13</td><td class="age">47</td><td class="field">绘画</td><td class="note">墨西哥自画像大师</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E8%89%BE%E4%BC%A6%C2%B7%E5%9B%BE%E7%81%B5" target="_blank" rel="noopener">艾伦·图灵</a></td><td class="region region-for">🌐 国外</td><td class="byear">1912</td><td class="date">1954-06-07</td><td class="age">41</td><td class="field">计算机科学</td><td class="note">图灵机 / 人工智能先驱</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E5%BE%90%E6%82%B2%E9%B8%BF" target="_blank" rel="noopener">徐悲鸿</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1895</td><td class="date">1953-09-26</td><td class="age">58</td><td class="field">绘画</td><td class="note">画家、《奔马图》《愚公移山》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E5%9C%A3%E9%9B%84%E7%94%98%E5%9C%B0" target="_blank" rel="noopener">圣雄甘地</a></td><td class="region region-for">🌐 国外</td><td class="byear">1869</td><td class="date">1948-01-30</td><td class="age">78</td><td class="field">政治</td><td class="note">印度独立运动领袖</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E5%B0%BC%E5%8F%A4%E6%8B%89%C2%B7%E7%89%B9%E6%96%AF%E6%8B%89" target="_blank" rel="noopener">尼古拉·特斯拉</a></td><td class="region region-for">🌐 国外</td><td class="byear">1856</td><td class="date">1943-01-07</td><td class="age">86</td><td class="field">电气工程</td><td class="note">交流电系统</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E9%B2%81%E8%BF%85" target="_blank" rel="noopener">鲁迅（周树人）</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">1881</td><td class="date">1936-10-19</td><td class="age">55</td><td class="field">文学</td><td class="note">《呐喊》《彷徨》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E7%8E%9B%E4%B8%BD%C2%B7%E5%B1%85%E9%87%8C" target="_blank" rel="noopener">玛丽·居里</a></td><td class="region region-for">🌐 国外</td><td class="byear">1867</td><td class="date">1934-07-04</td><td class="age">66</td><td class="field">化学 · 物理</td><td class="note">两度获诺贝尔奖</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E5%85%8B%E5%8A%B3%E5%BE%B7%C2%B7%E8%8E%AB%E5%A5%88" target="_blank" rel="noopener">克劳德·莫奈</a></td><td class="region region-for">🌐 国外</td><td class="byear">1840</td><td class="date">1926-12-05</td><td class="age">86</td><td class="field">绘画</td><td class="note">印象派、《睡莲》《日出·印象》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E5%8F%A4%E6%96%AF%E5%A1%94%E5%A4%AB%C2%B7%E5%85%8B%E9%87%8C%E5%A7%86%E7%89%B9" target="_blank" rel="noopener">古斯塔夫·克里姆特</a></td><td class="region region-for">🌐 国外</td><td class="byear">1862</td><td class="date">1918-02-06</td><td class="age">55</td><td class="field">绘画</td><td class="note">维也纳分离派、《吻》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E5%88%97%E5%A4%AB%C2%B7%E6%89%98%E5%B0%94%E6%96%AF%E6%B3%B0" target="_blank" rel="noopener">列夫·托尔斯泰</a></td><td class="region region-for">🌐 国外</td><td class="byear">1828</td><td class="date">1910-11-20</td><td class="age">82</td><td class="field">文学</td><td class="note">《战争与和平》《安娜·卡列尼娜》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E4%BF%9D%E7%BD%97%C2%B7%E5%A1%9E%E5%B0%9A" target="_blank" rel="noopener">保罗·塞尚</a></td><td class="region region-for">🌐 国外</td><td class="byear">1839</td><td class="date">1906-10-22</td><td class="age">67</td><td class="field">绘画</td><td class="note">后印象派、"现代绘画之父"</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E6%96%87%E6%A3%AE%E7%89%B9%C2%B7%E6%A2%B5%E9%AB%98" target="_blank" rel="noopener">文森特·梵高</a></td><td class="region region-for">🌐 国外</td><td class="byear">1853</td><td class="date">1890-07-29</td><td class="age">37</td><td class="field">绘画</td><td class="note">《星空》《向日葵》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E6%9F%A5%E5%B0%94%E6%96%AF%C2%B7%E8%BE%BE%E5%B0%94%E6%96%87" target="_blank" rel="noopener">查尔斯·达尔文</a></td><td class="region region-for">🌐 国外</td><td class="byear">1809</td><td class="date">1882-04-19</td><td class="age">73</td><td class="field">生物</td><td class="note">《物种起源》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E4%BA%9A%E4%BC%AF%E6%8B%89%E7%BD%95%C2%B7%E6%9E%97%E8%82%AF" target="_blank" rel="noopener">亚伯拉罕·林肯</a></td><td class="region region-for">🌐 国外</td><td class="byear">1809</td><td class="date">1865-04-15</td><td class="age">56</td><td class="field">政治</td><td class="note">美国总统</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E4%BA%9A%E5%8E%86%E5%B1%B1%E5%A4%A7%C2%B7%E6%99%AE%E5%B8%8C%E9%87%91" target="_blank" rel="noopener">亚历山大·普希金</a></td><td class="region region-for">🌐 国外</td><td class="byear">1799</td><td class="date">1837-02-10</td><td class="age">37</td><td class="field">文学</td><td class="note">俄国文学之父</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E8%B7%AF%E5%BE%B7%E7%BB%B4%E5%B8%8C%C2%B7%E5%87%A1%C2%B7%E8%B4%9D%E5%A4%9A%E8%8A%AC" target="_blank" rel="noopener">路德维希·凡·贝多芬</a></td><td class="region region-for">🌐 国外</td><td class="byear">1770</td><td class="date">1827-03-26</td><td class="age">56</td><td class="field">音乐</td><td class="note">作曲家《第九交响曲》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E8%8E%AB%E6%89%8E%E7%89%B9" target="_blank" rel="noopener">沃尔夫冈·莫扎特</a></td><td class="region region-for">🌐 国外</td><td class="byear">1756</td><td class="date">1791-12-05</td><td class="age">35</td><td class="field">音乐</td><td class="note">作曲家</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E8%89%BE%E8%90%A8%E5%85%8B%C2%B7%E7%89%9B%E9%A1%BF" target="_blank" rel="noopener">艾萨克·牛顿</a></td><td class="region region-for">🌐 国外</td><td class="byear">1643</td><td class="date">1727-03-31</td><td class="age">84</td><td class="field">物理 · 数学</td><td class="note">经典力学（格里历）</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E4%BC%A6%E5%8B%83%E6%9C%97" target="_blank" rel="noopener">伦勃朗</a></td><td class="region region-for">🌐 国外</td><td class="byear">1606</td><td class="date">1669-10-04</td><td class="age">63</td><td class="field">绘画</td><td class="note">荷兰黄金时代、《夜巡》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E4%BC%BD%E5%88%A9%E7%95%A5%C2%B7%E4%BC%BD%E5%88%A9%E9%9B%B7" target="_blank" rel="noopener">伽利略·伽利雷</a></td><td class="region region-for">🌐 国外</td><td class="byear">1564</td><td class="date">1642-01-08</td><td class="age">77</td><td class="field">天文 · 物理</td><td class="note">望远镜天文观测先驱（格里历）</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E5%A8%81%E5%BB%89%C2%B7%E8%8E%8E%E5%A3%AB%E6%AF%94%E4%BA%9A" target="_blank" rel="noopener">威廉·莎士比亚</a></td><td class="region region-for">🌐 国外</td><td class="byear">1564</td><td class="date">1616-04-23</td><td class="age">52</td><td class="field">文学</td><td class="note">《哈姆雷特》《罗密欧与朱丽叶》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E7%B1%B3%E5%BC%80%E6%9C%97%E5%9F%BA%E7%BD%97" target="_blank" rel="noopener">米开朗基罗</a></td><td class="region region-for">🌐 国外</td><td class="byear">1475</td><td class="date">1564-02-18</td><td class="age">88</td><td class="field">雕塑 · 绘画</td><td class="note">文艺复兴、《大卫》《创世纪》</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E6%9D%9C%E7%94%AB" target="_blank" rel="noopener">杜甫</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">712</td><td class="date">770</td><td class="age">58</td><td class="field">诗歌</td><td class="note">"诗圣"</td></tr>
-            <tr><td class="name"><a class="wlink" href="https://zh.wikipedia.org/wiki/%E6%9D%8E%E7%99%BD" target="_blank" rel="noopener">李白</a></td><td class="region region-dom">🇨🇳 国内</td><td class="byear">701</td><td class="date">762</td><td class="age">61</td><td class="field">诗歌</td><td class="note">"诗仙"</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
 
 
     <section id="links">
@@ -905,7 +769,6 @@
         <a href="#anime">番剧</a>
         <a href="#novels">小说</a>
         <a href="#quotes">语录</a>
-        <a href="#deaths">名人</a>
         <a href="#bookmarks">书签</a>
         <a href="hub.html" target="_blank" rel="noopener">二次元导航</a>
         <a href="#top">回到顶部 ↑</a>
@@ -1034,6 +897,7 @@ const bookmarks = [
 // 项目：emoji 封面图标 / corner 封面左上角小标签 / title / desc / tags / link / linkLabel
 const projects = [
   {
+    date: "2026-09-15",
     emoji: "🔍",
     cover: "covers/proj-and-then-there-were-none.jpg",
     corner: "互动视觉小说",
@@ -1044,6 +908,7 @@ const projects = [
     linkLabel: "开始游玩"
   },
   {
+    date: "2026-09-15",
     emoji: "🐢",
     cover: "covers/proj-turtle-soup.jpg",
     corner: "推理问答",
@@ -1059,6 +924,7 @@ const projects = [
 // 视频：title / youtube 填视频ID或完整链接 / note 封面底部小字 / badge 封面右下角角标 / kind 作者行后缀
 const videos = [
   {
+    date: "2026-09-15",
     title: "恶校游戏 · 实况录屏",
     youtube: "https://www.youtube.com/watch?v=sa1bMgWF78M&list=PLUz-_q-Bc874",
     note: "恶校游戏 通关实况",
@@ -1066,6 +932,7 @@ const videos = [
     kind: "游戏实况"
   },
   {
+    date: "2026-09-15",
     title: "与美女合租的99种死法 · 实况录屏",
     youtube: "https://www.youtube.com/watch?v=SI5ZHFjVElo&list=PLMmlNZapsSb0",
     note: "与美女合租的99种死法 录屏",
@@ -1078,466 +945,559 @@ const videos = [
 // 追番追剧记录：title 番名/剧名 / heroine 女主角 / cv 声优或演员 / wiki 维基链接(可选,留空自动生成中文维基)
 const anime = [
   {
+    date: "2026-09-15",
     "title": "HELLO WORLD",
     "heroine": "一行琉璃",
     "cv": "滨边美波"
   },
   {
+    date: "2026-09-15",
     "title": "你的名字",
     "heroine": "宫水三叶",
     "cv": "上白石萌音"
   },
   {
+    date: "2026-09-15",
     "title": "天气之子",
     "heroine": "天野阳菜",
     "cv": "森七菜"
   },
   {
+    date: "2026-09-15",
     "title": "青春猪头少年不会梦到兔女郎学姐",
     "heroine": "樱岛麻衣、梓川枫",
     "cv": "濑户麻沙美、久保由利香"
   },
   {
+    date: "2026-09-15",
     "title": "某科学的超电磁炮",
     "heroine": "御坂美琴、白井黑子",
     "cv": "佐藤利奈、新井里美"
   },
   {
+    date: "2026-09-15",
     "title": "我的青春恋爱物语果然有问题",
     "heroine": "雪之下雪乃",
     "cv": "早见沙织"
   },
   {
+    date: "2026-09-15",
     "title": "四月是你的谎言",
     "heroine": "宫园薰",
     "cv": "种田梨沙"
   },
   {
+    date: "2026-09-15",
     "title": "烟花",
     "heroine": "及川荠",
     "cv": "广濑铃"
   },
   {
+    date: "2026-09-15",
     "title": "萤火之森",
     "heroine": "竹川萤",
     "cv": "佐仓绫音"
   },
   {
+    date: "2026-09-15",
     "title": "我想吃掉你的胰脏",
     "heroine": "山内樱良",
     "cv": "lynn"
   },
   {
+    date: "2026-09-15",
     "title": "月色真美",
     "heroine": "水野茜",
     "cv": "小原好美"
   },
   {
+    date: "2026-09-15",
     "title": "我们仍未知道那天所看见的花的名字",
     "heroine": "本间芽衣子",
     "cv": "茅野爱衣"
   },
   {
+    date: "2026-09-15",
     "title": "秒速五厘米",
     "heroine": "篠原明里",
     "cv": "近藤好美、尾上绫华"
   },
   {
+    date: "2026-09-15",
     "title": "言叶之庭",
     "heroine": "雪野百香里",
     "cv": "花泽香菜"
   },
   {
+    date: "2026-09-15",
     "title": "欢迎来到实力至上的教室",
     "heroine": "堀北铃音、轻井泽惠",
     "cv": "鬼头明里、竹达彩奈"
   },
   {
+    date: "2026-09-15",
     "title": "想哭的我带上了猫面具",
     "heroine": "笹木美代",
     "cv": "志田未来"
   },
   {
+    date: "2026-09-15",
     "title": "声之形",
     "heroine": "西宫硝子",
     "cv": "早见沙织"
   },
   {
+    date: "2026-09-15",
     "title": "夏目友人帐",
     "heroine": "夏目贵志",
     "cv": "神谷浩史"
   },
   {
+    date: "2026-09-15",
     "title": "辉夜大小姐想让我告白",
     "heroine": "四宫辉夜",
     "cv": "古贺葵"
   },
   {
+    date: "2026-09-15",
     "title": "魔法禁书目录",
     "heroine": "茵蒂克丝",
     "cv": "井口裕香"
   },
   {
+    date: "2026-09-15",
     "title": "总之就是非常可爱",
     "heroine": "由崎司",
     "cv": "鬼头明里"
   },
   {
+    date: "2026-09-15",
     "title": "间谍过家家",
     "heroine": "阿尼亚·福杰、约尔·福杰",
     "cv": "种崎敦美、早见沙织"
   },
   {
+    date: "2026-09-15",
     "title": "中二病也想谈恋爱",
     "heroine": "小鸟游六花",
     "cv": "内田真礼"
   },
   {
+    date: "2026-09-15",
     "title": "Charlotte",
     "heroine": "友利奈绪",
     "cv": "佐仓绫音"
   },
   {
+    date: "2026-09-15",
     "title": "路人女主的养成方法",
     "heroine": "加藤惠",
     "cv": "安野希世乃"
   },
   {
+    date: "2026-09-15",
     "title": "堀与宫村",
     "heroine": "堀京子",
     "cv": "户松遥"
   },
   {
+    date: "2026-09-15",
     "title": "小林家的龙女仆",
     "heroine": "托尔",
     "cv": "桑原由气"
   },
   {
+    date: "2026-09-15",
     "title": "动物狂想曲",
     "heroine": "春",
     "cv": "千本木菜花"
   },
   {
+    date: "2026-09-15",
     "title": "五等分的新娘",
     "heroine": "中野一花、中野二乃、中野三玖、中野四叶、中野五月",
     "cv": "花泽香菜、竹达彩奈、伊藤美来、佐仓绫音、水濑祈"
   },
   {
+    date: "2026-09-15",
     "title": "ReLIFE",
     "heroine": "日代千鹤",
     "cv": "茅野爱衣"
   },
   {
+    date: "2026-09-15",
     "title": "Clannad",
     "heroine": "古河渚",
     "cv": "中原麻衣"
   },
   {
+    date: "2026-09-15",
     "title": "莉可丽丝",
     "heroine": "锦木千束、井上泷奈",
     "cv": "安济知佳、若山诗音"
   },
   {
+    date: "2026-09-15",
     "title": "三坪房间的侵略者",
     "heroine": "笠置静香、东本愿早苗、仓野奇莉华、虹野由莉佳、提亚蜜思林、露丝卡妮亚、樱庭晴海",
     "cv": "洲崎绫、铃木绘理、田泽茉纯、大森日雅、长绳麻理亚、早见沙织、高本惠"
   },
   {
+    date: "2026-09-15",
     "title": "孤独摇滚",
     "heroine": "后藤一里",
     "cv": "青山吉能"
   },
   {
+    date: "2026-09-15",
     "title": "知晓天空之蓝的人啊",
     "heroine": "相生葵",
     "cv": "若山诗音"
   },
   {
+    date: "2026-09-15",
     "title": "心灵想要大声呼喊",
     "heroine": "成濑顺",
     "cv": "水濑祈"
   },
   {
+    date: "2026-09-15",
     "title": "重启咲良田",
     "heroine": "春埼美空",
     "cv": "花泽香菜"
   },
   {
+    date: "2026-09-15",
     "title": "弹丸论破",
     "heroine": "苗木困、雾切响子、七海千秋、赤松枫、江之岛盾子",
     "cv": "内田彩、日笠阳子、花泽香菜、神田沙也加、丰口惠"
   },
   {
+    date: "2026-09-15",
     "title": "Angel Beats!",
     "heroine": "立华奏",
     "cv": "花泽香菜"
   },
   {
+    date: "2026-09-15",
     "title": "樱花庄的宠物女孩",
     "heroine": "椎名真白、青山七海",
     "cv": "茅野爱衣、中津真莉子"
   },
   {
+    date: "2026-09-15",
     "title": "游戏人生",
     "heroine": "白",
     "cv": "茅野爱衣"
   },
   {
+    date: "2026-09-15",
     "title": "铃芽之旅",
     "heroine": "岩护铃芽",
     "cv": "原菜乃华"
   },
   {
+    date: "2026-09-15",
     "title": "少女终末旅行",
     "heroine": "千户、尤莉",
     "cv": "水濑祈、久保由利香"
   },
   {
+    date: "2026-09-15",
     "title": "虚构推理",
     "heroine": "岩永琴子",
     "cv": "鬼头明里"
   },
   {
+    date: "2026-09-15",
     "title": "冰属性男子和酷酷女同事",
     "heroine": "冬月",
     "cv": "石川由依"
   },
   {
+    date: "2026-09-15",
     "title": "可塑性记忆",
     "heroine": "艾拉",
     "cv": "雨宫天"
   },
   {
+    date: "2026-09-15",
     "title": "某科学的一方通行",
     "heroine": "最终之作",
     "cv": "日高里菜"
   },
   {
+    date: "2026-09-15",
     "title": "我女友与青梅竹马的惨烈修罗场",
     "heroine": "春咲千和、夏川真凉、秋筱姬香、冬海爱衣",
     "cv": "丰崎爱生、斋藤千和、金元寿子、茅野爱衣"
   },
   {
+    date: "2026-09-15",
     "title": "杀戮的天使",
     "heroine": "瑞吉儿·加德纳",
     "cv": "千菅春香"
   },
   {
+    date: "2026-09-15",
     "title": "式守同学不只可爱而已",
     "heroine": "式守都",
     "cv": "大西沙织"
   },
   {
+    date: "2026-09-15",
     "title": "玉子市场",
     "heroine": "北白川玉子",
     "cv": "洲崎绫"
   },
   {
+    date: "2026-09-15",
     "title": "未确认进行式",
     "heroine": "夜之森小红、三峰真白",
     "cv": "照井春佳、吉田有里"
   },
   {
+    date: "2026-09-15",
     "title": "跃动青春",
     "heroine": "岩仓美津未",
     "cv": "黑泽朋世"
   },
   {
+    date: "2026-09-15",
     "title": "从零开始的异世界生活",
     "heroine": "爱蜜莉雅、蕾姆",
     "cv": "高桥李依、水濑祈"
   },
   {
+    date: "2026-09-15",
     "title": "夏日重现",
     "heroine": "小舟潮、小舟澪",
     "cv": "永濑安奈、白砂沙帆"
   },
   {
+    date: "2026-09-15",
     "title": "我推的孩子",
     "heroine": "星野爱、星野露比、黑川茜",
     "cv": "高桥李依、伊驹百合绘、石见舞菜香"
   },
   {
+    date: "2026-09-15",
     "title": "继母的拖油瓶是我的前女友",
     "heroine": "伊理户结女",
     "cv": "日高里菜"
   },
   {
+    date: "2026-09-15",
     "title": "缘之空",
     "heroine": "春日野穹、天女目瑛、依媛奈绪、渚一叶",
     "cv": "田口宏子、阪田佳代、猪口有佳、小野凉子"
   },
   {
+    date: "2026-09-15",
     "title": "间谍教室",
     "heroine": "百合、格蕾特、席薇亚、莫妮卡、缇雅、莎拉、安妮特、爱尔娜",
     "cv": "雨宫天、伊藤美来、东山奈央、悠木碧、上坂堇、佐仓绫音、楠木灯、水濑祈"
   },
   {
+    date: "2026-09-15",
     "title": "未来日记",
     "heroine": "我妻由乃",
     "cv": "村田知沙"
   },
   {
+    date: "2026-09-15",
     "title": "BanGDream!It’sMyGO!!!!!",
     "heroine": "高松灯、千早爱音、要乐奈、长崎爽世、椎名立希",
     "cv": "羊宫妃那、立石凛、青木阳菜、小日向美香、林鼓子"
   },
   {
+    date: "2026-09-15",
     "title": "赌博默示录",
     "heroine": "伊藤开司",
     "cv": "荻原圣人"
   },
   {
+    date: "2026-09-15",
     "title": "我内心的糟糕念头",
     "heroine": "山田杏奈",
     "cv": "羊宫妃那"
   },
   {
+    date: "2026-09-15",
     "title": "狂赌之渊",
     "heroine": "蛇喰梦子",
     "cv": "早见沙织"
   },
   {
+    date: "2026-09-15",
     "title": "关于我在无意间被隔壁的天使变成废柴这件事",
     "heroine": "椎名真昼",
     "cv": "石见舞菜香"
   },
   {
+    date: "2026-09-15",
     "title": "东京喰种",
     "heroine": "雾嶋董香",
     "cv": "雨宫天"
   },
   {
+    date: "2026-09-15",
     "title": "家有女友",
     "heroine": "橘瑠衣",
     "cv": "内田真礼"
   },
   {
+    date: "2026-09-15",
     "title": "链锯人",
     "heroine": "淀治",
     "cv": "户谷菊之介"
   },
   {
+    date: "2026-09-15",
     "title": "你想活出怎样的人生",
     "heroine": "牧真人",
     "cv": "山时聪真"
   },
   {
+    date: "2026-09-15",
     "title": "我的鬼女孩",
     "heroine": "紬",
     "cv": "富田美优"
   },
   {
+    date: "2026-09-15",
     "title": "约会大作战",
     "heroine": "夜刀神十香、鸢一折纸、五河琴里、冰芽川四糸乃、时崎狂三、本条二亚、星宫六喰、镜野七罪、八舞耶俱矢、八舞夕弦、诱宵美九、崇宫澪",
     "cv": "井上麻里奈、富㭴美铃、竹达彩奈、野水伊织、真田麻美、生天目仁美、影山灯、真野步、内田真礼、布里德卡特、茅原实里、远藤绫"
   },
   {
+    date: "2026-09-15",
     "title": "通往夏天的隧道，再见的出口",
     "heroine": "花城杏子",
     "cv": "饭丰万理江"
   },
   {
+    date: "2026-09-15",
     "title": "不时用俄语小声说真心话的邻桌艾莉同学",
     "heroine": "艾莉莎·米哈伊洛芙娜·九条、周防有希",
     "cv": "上坂堇、丸冈和佳奈"
   },
   {
+    date: "2026-09-15",
     "title": "亚托莉我挚爱的时光",
     "heroine": "亚托莉",
     "cv": "赤尾光"
   },
   {
+    date: "2026-09-15",
     "title": "小市民系列",
     "heroine": "小佐内由纪",
     "cv": "羊宫妃那"
   },
   {
+    date: "2026-09-15",
     "title": "2.5次元的诱惑",
     "heroine": "天乃理理沙、橘美花莉",
     "cv": "前田佳织里、鬼头明里"
   },
   {
+    date: "2026-09-15",
     "title": "身为VTuber的我因为忘记关台而成了传说",
     "heroine": "心音淡雪",
     "cv": "佐仓绫音"
   },
   {
+    date: "2026-09-15",
     "title": "百变的七仓同学",
     "heroine": "七仓凛",
     "cv": "早见沙织"
   },
   {
+    date: "2026-09-15",
     "title": "义妹生活",
     "heroine": "绫濑沙季",
     "cv": "中岛由贵"
   },
   {
+    date: "2026-09-15",
     "title": "在下坂本，有何贵干",
     "heroine": "坂本",
     "cv": "绿川光"
   },
   {
+    date: "2026-09-15",
     "title": "葬送的芙莉莲",
     "heroine": "芙莉莲",
     "cv": "种崎敦美"
   },
   {
+    date: "2026-09-15",
     "title": "死亡笔记",
     "heroine": "弥海砂",
     "cv": "平野绫"
   },
   {
+    date: "2026-09-15",
     "title": "替身 (Another)",
     "heroine": "见崎鸣",
     "cv": "高深奈津美"
   },
   {
+    date: "2026-09-15",
     "title": "全员恶玉",
     "heroine": "欺诈师",
     "cv": "黑泽朋世"
   },
   {
+    date: "2026-09-15",
     "title": "超时空辉夜姬",
     "heroine": "辉夜、酒寄彩叶、月见八千代",
     "cv": "夏吉优子、永濑安奈、早见沙织"
   },
   {
+    date: "2026-09-15",
     "title": "罪恶王冠",
     "heroine": "楪祈、校条祭",
     "cv": "茅野爱衣、嶋村侑"
   },
   {
+    date: "2026-09-15",
     "title": "契约之吻",
     "heroine": "木更、夕桐绫乃、沙朗 霍莉格雷尔、绪方环奈",
     "cv": "会泽纱弥、Lynn、大久保瑠美、鬼头明里"
   },
   {
+    date: "2026-09-15",
     "title": "达尔文游戏",
     "heroine": "狩野朱歌",
     "cv": "上田丽奈"
   },
   {
+    date: "2026-09-15",
     "title": "来自新世界",
     "heroine": "渡边早季",
     "cv": "种田梨沙、远藤绫"
   },
   {
+    date: "2026-09-15",
     "title": "86-不存在的战区",
     "heroine": "芙拉蒂蕾娜·米利杰",
     "cv": "长谷川育美"
   },
   {
+    date: "2026-09-15",
     "title": "靠死亡游戏混饭吃",
     "heroine": "幽鬼",
     "cv": "三浦千幸"
   },
   {
+    date: "2026-09-15",
     "title": "反叛的鲁鲁修",
     "heroine": "C.C",
     "cv": "尤加奈"
   },
   {
+    date: "2026-09-15",
     "title": "约定的梦幻岛",
     "heroine": "艾玛",
     "cv": "诸星堇"
@@ -1547,400 +1507,480 @@ const anime = [
 // 看过的小说记录：title 书名 / author 作者(可选) / wiki 维基链接(可选,留空自动生成中文维基)
 const novels = [
   {
+    date: "2026-09-16",
     "title": "了解人类行为的50个心理学实验",
     "author": "迈克尔·A.布里特",
     "file": "books/了解人类行为的50个心理学实验.txt"
   },
   {
+    date: "2026-09-16",
     "title": "全员嫌疑人",
     "author": "大山诚一郎",
     "file": "books/全员嫌疑人.txt"
   },
   {
+    date: "2026-09-16",
     "title": "西方心理学大师经典译丛（套装共11册）",
     "author": "",
     "file": "books/西方心理学大师经典译丛（套装共11册）.txt"
   },
   {
+    date: "2026-09-16",
     "title": "福尔摩斯探案全集（插图新注新译本）",
     "author": "阿瑟·柯南道尔",
     "file": "books/福尔摩斯探案全集（插图新注新译本）.txt"
   },
   {
+    date: "2026-09-16",
     "title": "解忧杂货店",
     "author": "东野圭吾",
     "file": "books/解忧杂货店.txt"
   },
   {
+    date: "2026-09-16",
     "title": "高智商犯罪（全4册）",
     "author": "紫金陈",
     "file": "books/高智商犯罪（全4册）.txt"
   },
   {
+    date: "2026-09-16",
     "title": "白卷",
     "author": "法医秦明",
     "file": "books/白卷.txt"
   },
   {
+    date: "2026-09-16",
     "title": "动物园",
     "author": "乙一",
     "file": "books/动物园.txt"
   },
   {
+    date: "2026-09-16",
     "title": "无证之罪",
     "author": "紫金陈",
     "file": "books/无证之罪.txt"
   },
   {
+    date: "2026-09-16",
     "title": "生吞",
     "author": "凪良ゆう",
     "file": "books/生吞.txt"
   },
   {
+    date: "2026-09-16",
     "title": "杀人游戏",
     "author": "雷钧",
     "file": "books/杀人游戏.txt"
   },
   {
+    date: "2026-09-16",
     "title": "天才在左，疯子在右",
     "author": "高铭",
     "file": "books/天才在左，疯子在右.txt"
   },
   {
+    date: "2026-09-16",
     "title": "无人生还（精装纪念版）",
     "author": "阿加莎·克里斯蒂",
     "file": "books/无人生还（精装纪念版）.txt"
   },
   {
+    date: "2026-09-16",
     "title": "东野圭吾年度套装（共56册）",
     "author": "东野圭吾",
     "file": "books/东野圭吾年度套装（共56册）.txt"
   },
   {
+    date: "2026-09-16",
     "title": "FBI微情绪心理学（若水集）",
     "author": "金圣荣",
     "file": "books/FBI微情绪心理学（若水集）.txt"
   },
   {
+    date: "2026-09-16",
     "title": "86—不存在的战区",
     "author": "安里アサト",
     "file": "books/86—不存在的战区.txt"
   },
   {
+    date: "2026-09-16",
     "title": "犯罪心理分析",
     "author": "张蔚",
     "file": "books/犯罪心理分析.txt"
   },
   {
+    date: "2026-09-16",
     "title": "犯罪心理档案（共4册）",
     "author": "刚雪印",
     "file": "books/犯罪心理档案（共4册）.txt"
   },
   {
+    date: "2026-09-16",
     "title": "阿加莎·克里斯蒂 88本大合集",
     "author": "阿加莎·克里斯蒂",
     "file": "books/阿加莎·克里斯蒂 88本大合集.txt"
   },
   {
+    date: "2026-09-16",
     "title": "阿加莎·克里斯蒂全集",
     "author": "阿加莎·克里斯蒂",
     "file": "books/阿加莎·克里斯蒂全集.txt"
   },
   {
+    date: "2026-09-16",
     "title": "阿加莎·克里斯蒂侦探小说大全全集（全85册）",
     "author": "阿加莎·克里斯蒂",
     "file": "books/阿加莎·克里斯蒂侦探小说大全全集（全85册）.txt"
   },
   {
+    date: "2026-09-16",
     "title": "X的悲剧",
     "author": "艾勒里·奎因",
     "file": "books/X的悲剧.txt"
   },
   {
+    date: "2026-09-16",
     "title": "替身 (Another)",
     "author": "绫辻行人",
     "file": "books/替身 (Another).txt"
   },
   {
+    date: "2026-09-16",
     "title": "白夜行",
     "author": "东野圭吾",
     "file": "books/白夜行.txt"
   },
   {
+    date: "2026-09-16",
     "title": "恶意",
     "author": "东野圭吾",
     "file": "books/恶意.txt"
   },
   {
+    date: "2026-09-16",
     "title": "九型人格：找到最真实的自己（心灵卡培第二辑）",
     "author": "陈建伟",
     "file": "books/九型人格：找到最真实的自己（心灵卡培第二辑）.txt"
   },
   {
+    date: "2026-09-16",
     "title": "人间失格：日本文学大师太宰治作品精选",
     "author": "太宰治",
     "file": "books/人间失格：日本文学大师太宰治作品精选.txt"
   },
   {
+    date: "2026-09-16",
     "title": "心理罪全集",
     "author": "雷米",
     "file": "books/心理罪全集.txt"
   },
   {
+    date: "2026-09-16",
     "title": "Y的悲剧",
     "author": "艾勒里·奎因",
     "file": "books/Y的悲剧.txt"
   },
   {
+    date: "2026-09-16",
     "title": "侦探AI",
     "author": "早坂吝",
     "file": "books/侦探AI.txt"
   },
   {
+    date: "2026-09-16",
     "title": "做自己人生的CEO：人人都需要的管理术",
     "author": "崔璀",
     "file": "books/做自己人生的CEO：人人都需要的管理术.txt"
   },
   {
+    date: "2026-09-16",
     "title": "低智商犯罪",
     "author": "紫金陈",
     "file": "books/低智商犯罪.txt"
   },
   {
+    date: "2026-09-16",
     "title": "少年股神",
     "author": "紫金陈",
     "file": "books/少年股神.txt"
   },
   {
+    date: "2026-09-15",
     "title": "心灵鸡汤",
     "author": "杰克·坎菲尔德",
     "file": "books/《心灵鸡汤》全集.txt"
   },
   {
+    date: "2026-09-16",
     "title": "所罗门的伪证",
     "author": "宫部美雪",
     "file": "books/所罗门的伪证.txt"
   },
   {
+    date: "2026-09-16",
     "title": "拉普拉斯的魔女",
     "author": "东野圭吾",
     "file": "books/拉普拉斯的魔女.txt"
   },
   {
+    date: "2026-09-16",
     "title": "玩偶",
     "author": "法医秦明",
     "file": "books/玩偶.txt"
   },
   {
+    date: "2026-09-16",
     "title": "长夜难明",
     "author": "紫金陈",
     "file": "books/长夜难明.txt"
   },
   {
+    date: "2026-09-16",
     "title": "上帝掷骰子吗",
     "author": "曹天元",
     "file": "books/上帝掷骰子吗.txt"
   },
   {
+    date: "2026-09-16",
     "title": "嫌疑犯X的獻身",
     "author": "东野圭吾",
     "file": "books/嫌疑犯X的獻身.txt"
   },
   {
+    date: "2026-09-15",
     "title": "思考，快与慢",
     "author": "丹尼尔·卡尼曼",
     "file": "books/丹尼尔·卡尼曼：思考，快与慢.txt"
   },
   {
+    date: "2026-09-16",
     "title": "动机与人格",
     "author": "亚伯拉罕·马斯洛",
     "file": "books/动机与人格.txt"
   },
   {
+    date: "2026-09-16",
     "title": "倒错的死角",
     "author": "折原一",
     "file": "books/倒错的死角.txt"
   },
   {
+    date: "2026-09-15",
     "title": "偷偷藏不住",
     "author": "顾漫",
     "file": "books/偷偷藏不住(www.yqxz.org).txt"
   },
   {
+    date: "2026-09-16",
     "title": "克莱因壶",
     "author": "冈岛二人",
     "file": "books/克莱因壶.txt"
   },
   {
+    date: "2026-09-16",
     "title": "六个说谎的大学生",
     "author": "浅仓秋成",
     "file": "books/六个说谎的大学生.txt"
   },
   {
+    date: "2026-09-15",
     "title": "冥王传说",
     "author": "霉干菜烧饼",
     "file": "books/冥王传说 作者：霉干菜烧饼.txt"
   },
   {
+    date: "2026-09-16",
     "title": "自控力",
     "author": "凯利·麦格尼格尔",
     "file": "books/自控力.txt"
   },
   {
+    date: "2026-09-16",
     "title": "占星术杀人魔法",
     "author": "岛田庄司",
     "file": "books/占星术杀人魔法.txt"
   },
   {
+    date: "2026-09-16",
     "title": "变态心理学",
     "author": "杰弗里·S.尼维德",
     "file": "books/变态心理学.txt"
   },
   {
+    date: "2026-09-15",
     "title": "天谴者（法医秦明系列7-出书版）_www.84sk",
     "author": "法医秦明",
     "file": "books/天谴者（法医秦明系列7-出书版）_www.84sk.com.txt"
   },
   {
+    date: "2026-09-15",
     "title": "审讯与反审讯文章汇集",
     "author": "",
     "file": "books/审讯与反审讯文章汇集.txt"
   },
   {
+    date: "2026-09-16",
     "title": "模仿犯",
     "author": "宫部美幸",
     "file": "books/模仿犯.txt"
   },
   {
+    date: "2026-09-15",
     "title": "密室黄金时代的杀人",
     "author": "鸭崎暖炉",
     "file": "books/密室杀人推理系列(密室黄金时代的杀人).txt"
   },
   {
+    date: "2026-09-16",
     "title": "尼尔·布朗 & 斯图尔特·基利：学会提问——批判性思维指南 (第7版)",
     "author": "尼尔·布朗 & 斯图尔特·基利",
     "file": "books/尼尔·布朗 & 斯图尔特·基利：学会提问——批判性思维指南 (第7版).txt"
   },
   {
+    date: "2026-09-15",
     "title": "必须犯规的游戏",
     "author": "宁航一",
     "file": "books/必须犯规的游戏.txt"
   },
   {
+    date: "2026-09-16",
     "title": "悬疑刑侦小说天花板（共13册）",
     "author": "",
     "file": "books/悬疑刑侦小说天花板（共13册）.txt"
   },
   {
+    date: "2026-09-16",
     "title": "明明不是我！",
     "author": "",
     "file": "books/明明不是我！.txt"
   },
   {
+    date: "2026-09-15",
     "title": "最后一个死去的孩",
     "author": "",
     "file": "books/最后一个死去的孩_15405341.pdf"
   },
   {
+    date: "2026-09-16",
     "title": "法医秦明系列全六册",
     "author": "法医秦明",
     "file": "books/法医秦明系列全六册.txt"
   },
   {
+    date: "2026-09-15",
     "title": "法医秦明系列第二卷众生卷2遗忘者",
     "author": "法医秦明",
     "file": "books/法医秦明系列第二卷众生卷2遗忘者.txt"
   },
   {
+    date: "2026-09-16",
     "title": "游戏人生",
     "author": "榎宫祐",
     "file": "books/游戏人生.txt"
   },
   {
+    date: "2026-09-15",
     "title": "火车",
     "author": "宫部美雪",
     "file": "books/火车.txt"
   },
   {
+    date: "2026-09-16",
     "title": "迷案1985—法医秦明",
     "author": "燃烧的蜂鸟",
     "file": "books/迷案1985—法医秦明.txt"
   },
   {
+    date: "2026-09-16",
     "title": "爱的告别式",
     "author": "乾胡桃",
     "file": "books/爱的告别式.txt"
   },
   {
+    date: "2026-09-16",
     "title": "爱的成人式",
     "author": "干胡桃",
     "file": "books/爱的成人式.txt"
   },
   {
+    date: "2026-09-16",
     "title": "生活中的心理学",
     "author": "牛津通识读本",
     "file": "books/生活中的心理学.txt"
   },
   {
+    date: "2026-09-15",
     "title": "生育制度",
     "author": "费孝通"
   },
   {
+    date: "2026-09-16",
     "title": "明智行动的艺术——你最好让别人去犯的52种行为错误 (插图版)",
     "author": "罗尔夫·多贝里",
     "file": "books/明智行动的艺术——你最好让别人去犯的52种行为错误 (插图版).txt"
   },
   {
+    date: "2026-09-16",
     "title": "清醒思考的艺术——你最好让别人去犯的52个错误 (精校版 插图版)",
     "author": "罗尔夫·多贝里",
     "file": "books/清醒思考的艺术——你最好让别人去犯的52个错误 (精校版 插图版).txt"
   },
   {
+    date: "2026-09-16",
     "title": "罗杰疑案",
     "author": "阿加莎·克里斯蒂",
     "file": "books/罗杰疑案.txt"
   },
   {
+    date: "2026-09-15",
     "title": "人的驯化、躲避与反叛",
     "author": "胡平",
     "file": "books/胡平：人的驯化、躲避与反叛.txt"
   },
   {
+    date: "2026-09-16",
     "title": "逝者之书",
     "author": "法医秦明",
     "file": "books/逝者之书.txt"
   },
   {
+    date: "2026-09-16",
     "title": "重赴（爱的轮回式）-全一册",
     "author": "乾胡桃",
     "file": "books/重赴（爱的轮回式）-全一册.txt"
   },
   {
+    date: "2026-09-16",
     "title": "自卑与超越",
     "author": "阿尔弗雷德·阿德勒",
     "file": "books/自卑与超越.txt"
   },
   {
+    date: "2026-09-15",
     "title": "难哄",
     "author": "竹已",
     "file": "books/难哄(www.yqxz.org).txt"
   },
   {
+    date: "2026-10-07",
     "title": "如首无作祟之物",
     "author": "三津田信三",
     "file": "books/如首无作祟之物.txt"
   },
   {
+    date: "2026-10-07",
     "title": "绝叫",
     "author": "叶真中显",
     "file": "books/绝叫.txt"
   },
   {
+    date: "2026-10-07",
     "title": "1367（修正版）",
     "author": "陈浩基",
     "file": "books/1367（修正版）.txt"
   },
   {
+    date: "2026-10-07",
     "title": "象之首",
     "author": "白井智之",
     "file": "books/象之首.txt"
@@ -1968,6 +2008,7 @@ document.getElementById("statAnime").textContent = anime.length;
 document.getElementById("statBook").textContent = novels.length;
 
 const escAttr = s => String(s==null?"":s).replace(/"/g,"&quot;");
+const fmtDate = d => { if(!d) return ""; const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(d); if(!m) return d; return m[1]+"年"+parseInt(m[2],10)+"月"+parseInt(m[3],10)+"日"; };
 document.getElementById("projectGrid").innerHTML = projects.map(p => `
   <article class="pcard" data-title="${p.title}" data-pet-line="这是主人做的「${escAttr(p.title)}」哦～高性能的我在偷偷学习♪">
     <a class="pcover" href="${p.link||"#"}" target="_blank" rel="noopener" title="${p.title}">
@@ -1978,6 +2019,7 @@ document.getElementById("projectGrid").innerHTML = projects.map(p => `
     <div class="pbody">
       <h3>${p.title}</h3>
       <p>${p.desc||""}</p>
+      ${p.date ? `<div class="upd">📅 上传于 ${fmtDate(p.date)}</div>` : ""}
       <div class="chips">${(p.tags||[]).map(t=>`<span class="chip">${t}</span>`).join("")}</div>
       <a class="pgo" href="${p.link||"#"}" target="_blank" rel="noopener">${p.linkLabel||"去看看"} ›</a>
     </div>
@@ -2004,6 +2046,7 @@ document.getElementById("videoGrid").innerHTML = videos.map(v => {
       <span class="sep">·</span>
       <span>${v.kind||"视频"}</span>
     </div>
+    ${v.date ? `<div class="upd">📅 上传于 ${fmtDate(v.date)}</div>` : ""}
   </article>`;
 }).join("");
 
@@ -2344,6 +2387,7 @@ function renderAnime(){
         <h3>${a.title||""}</h3>
         ${a.heroine ? `<div class="arow"><span class="ak">女主角</span><span class="aval">${a.heroine}</span></div>` : ""}
         ${a.cv ? `<div class="arow"><span class="ak">声优/演员</span><span class="aval">${a.cv}</span></div>` : ""}
+        ${a.date ? `<div class="upd">📅 上传于 ${fmtDate(a.date)}</div>` : ""}
       </div>
     </article>`;
   }).join("");
@@ -2383,6 +2427,7 @@ function renderNovels(){
         <div class="acard-main">
           <h3>${n.title||""}</h3>
           ${n.author ? `<div class="arow"><span class="ak">作者</span><span class="aval">${n.author}</span></div>` : ""}
+          ${n.date ? `<div class="upd">📅 上传于 ${fmtDate(n.date)}</div>` : ""}
         </div>
       </div>
     </article>
@@ -2652,105 +2697,105 @@ q.addEventListener("input", () => {
     { num:'十一月', name:'神乐' }, { num:'十二月', name:'胧月' }
   ];
   const Q_QUOTES = [
-    { cat:'net', text:'人和人交往还是少说话，克制表达欲，平静温和就行，不自卑也别炫耀。别为了获得共鸣，讲起过往没完没了。无意间表现的品质，被对方发现才更招人喜欢，胜过千言万语。仔细想想，你哪次滔滔不绝后，带来的不是悔恨。' },
-    { cat:'masters', text:'人间不值得。很多人对这句话可能有一个误解，他们会觉得人间不值得我来这一趟，而这句话本身的意思是积极的：人间本就是这样，它不值得你难过，活得洒脱一点。', src:'李诞', note:'常见其脱口秀与访谈中的观点' },
-    { cat:'masters', text:'我喜爱一切不彻底的事物。琥珀里的时间，微暗的火，一生都在半途而废，一生都怀抱热望。', src:'张定浩《我喜爱一切不彻底的事物》' },
-    { cat:'masters', text:'你应该是一场梦，我应该是一阵风。', src:'顾城《你和我》' },
-    { cat:'masters', text:'世间珍贵的事物几种：善良的手艺，慷慨的批评，微醺的唱腔，狂浪的经文。不说的过去。', src:'吕彦妮' },
-    { cat:'masters', text:'一流的情人永远不必殉陨，永远不会失恋，因为「我爱你，与你何涉。」', src:'木心' },
-    { cat:'masters', text:'刚刚好，看见你幸福的样子，于是幸福着你的幸福。', src:'村上春树《国境以南 太阳以西》' },
-    { cat:'masters', text:'若逢新雪初霁，满月当空，下面空铺着皓影，上面流转着亮银，而你带笑的向我步来，月色与雪色之间你是第三种绝色。', src:'余光中《绝色》' },
-    { cat:'masters', text:'十五岁的时候我跟你一样追赶流行，但五十岁我开始热爱俗气的一切。你觉得是我老了吗？不，我只是一如既往的热爱十五岁时喜欢上的东西。', src:'作家 姬霄', note:'网络流传语录，原载于其社交媒体' },
-    { cat:'anime', text:'我想成为一个温柔的人，因为曾被温柔的人那样对待，深深了解那种被温柔相待的感觉。', src:'《夏目友人帐》', note:'同人 / 网络流传语，非原作官方台词' },
-    { cat:'anime', text:'如果结局不如你所愿，就在尘埃落定前奋力一搏。', src:'《夏目友人帐》', note:'同人 / 网络流传语，非原作官方台词' },
-    { cat:'anime', text:'此生不悔入夏目，来世愿做账中妖。', src:'《夏目友人帐》', note:'同人 / 网络流传语，非原作官方台词' },
-    { cat:'anime', text:'我喜欢的人也能喜欢上自己，我认为这就是奇迹。', src:'《月色真美》' },
-    { cat:'anime', text:'你指尖跃动的电光，是我此生不变的信仰。你闪跃跳动的身影，是我见过最美的光景。', src:'《某科学的超电磁炮》', note:'御坂美琴（炮姐）粉丝应援语，非原作台词' },
-    { cat:'anime', text:'以声之色，塑花之形，将你之名，刻于我心。', src:'《声之形》' },
-    { cat:'anime', text:'未闻花名，但识花香，再见花时，泪已千行。', src:'《我们仍未知道那天所看见的花的名字》' },
-    { cat:'anime', text:'隐隐雷鸣，阴霾天空，但盼风雨来，能留你在此。\n隐隐雷鸣，阴霾天空，即使天无雨，我亦留此地。', src:'《言叶之庭》', note:'原出《万叶集》和歌，新海诚引用于本作' },
-    { cat:'anime', text:'音无结弦之时，天使跃动之心，立于浮华之世，奏响天籁之音。', src:'《Angel Beats!》', note:'同人语，化用主角名「音无」' },
-    { cat:'anime', text:'我喜欢了你十年，但却用整个四月编织了一个不爱你的谎言。\n入梦落樱花满香，梦醒犹记四月谎。此生无悔入四月，来世愿做友人A。', src:'《四月是你的谎言》' },
-    { cat:'anime', text:'春天 马上就要来了 让我与你相遇的春天 就要来了 再也没有你的春天 就要来了。', src:'《四月是你的谎言》' },
-    { cat:'anime', text:'山内有樱名为良，树本无名只待春。', src:'《我想吃掉你的胰脏》' },
-    { cat:'anime', text:'我深知，这之后我们无法抑制守在一起，挡在我们面前的是巨大庞然的人生，阻隔在我们中间的是广阔无际的时间，令我们无能为力。', src:'《秒速五厘米》' },
-    { cat:'anime', text:'我们只是一时幸运，活在了这个世界上。碰巧活着的我们，是不应该忌讳死亡的。', src:'日剧《非自然死亡》' },
-    { cat:'anime', text:'我们以为所谓告别一定是要一场盛大的仪式，所以我们一直在等，等着一个温暖的拥抱，等着一次畅快的大醉，等着一声由衷的再见。等到最后我们才发现，人生中大部分的告别都是悄无声息的。原来那一次的相聚，就已经是最后一面。所以啊，所以来日不一定方长，山水也未必重逢。', src:'国剧《如此可爱的我们》' },
-    { cat:'anime', text:'曾经存在于彼此日记本中的人，会在未来交换更多的秘密。踏着时光走到现在的我们啊，也会一起走向更远的岁月。世界从来不会辜负可爱的人，而我们如此可爱。', src:'国剧《如此可爱的我们》' },
-    { cat:'net', text:'生命如同戏剧，你永远预料不到转折出现在哪一篇章。' },
-    { cat:'anime', text:'总有一天，愿你和所爱之人终能重逢。', src:'《可塑性记忆》', note:'原句：「いつかまた巡り会えますように」——「时光流转，愿你与珍爱之人，能够再次重逢。」（出自《可塑性记忆》第13话）' },
-    { cat:'net', text:'少年就是少年，他们看春风不喜，看夏蝉不烦，看秋风不悲，看冬雪不叹，看满身富贵懒察觉，看不公不许敢面对，只因他们是少年。', src:'猫腻《择天记》' },
-    { cat:'net', text:'日剧里常常有句台词是「真是个温柔的人啊」。怎么说呢我太喜欢温柔的人了。是雨天行车路过水坑会故意放慢速度的人，是关门时轻手轻脚的人，是会将用过的纸巾好好折起再扔掉的人，是能照顾他人情绪的人，是能化解他人尴尬的人，是像粥温热一样的人，希望能和温柔的人交朋友，带着音乐和美食。' },
-    { cat:'net', text:'日语里「夏天结束了」其实和「今晚月色真美」一样，是有隐晦暗示的。代表着某天突然感知到河岸的风带来凉意，爱慕的心绪不了了之，没牵到的手，未送出的信，青春潦草收场后关上了门。就像睡了漫长的午觉醒来，穿衣洗漱准备去学校，找了半天却找不到课本和双肩包，才恍惚想起自己在多年前明明没有做好准备，就被推搡着长大成人。来不及跟夏天挥手告别的仓促人生，年轻时也对世间万物充满期待，眨眼间就落入了平庸之海。' },
-    { cat:'net', text:'世人慌慌张张，不过是图碎银几两，可区区几两银子却能压断世人，世间熙熙攘攘，皆为利来利往，我也一样，无一例外。' },
-    { cat:'net', text:'小时候不理解老人晒太阳，一坐就是半天。长大了才明白，目之所及皆是回忆，心之所想皆是过往，眼之所看皆是遗憾。' },
-    { cat:'net', text:'久雨生青石，青石覆古巷。古巷照人烟，人烟散微雨。' },
-    { cat:'net', text:'曼珠沙华又名彼岸花，黄泉接引之花，见花不见叶，见叶不见花。' },
-    { cat:'net', text:'其实我很早就知道我们不合适。但是我还是拒绝了所有人陪你走了一段没有结果的路，虽然时间不长，但毕生难忘。留住你和放过你，我都做不到。就像我坐在湖边，以为是海边，我吹着湖边的风，以为吹着的是海风。但湖是湖，海是海。' },
-    { cat:'masters', text:'你永远不可能真正的了解一个人，除非你穿上她的鞋子走来走去，站在她的角度思考问题，可当你走过她的路时，你连路过都觉得难过。', src:'《杀死一只知更鸟》' },
-    { cat:'net', text:'无人问津也好，技不如人也罢，你都要试着安静下来，去做自己该做的事，而不是让内心的烦躁、焦虑，毁掉你本就不多的热情和定力。' },
-    { cat:'net', text:'老先生坐而论道，少年郎起而行之。少年的肩膀，本该先挑起清风明月、杨柳依依与草长莺飞；待行至人生分岔口，再扛起属于自己的风雨与担当。不是丢掉了少年气，是揣着那颗滚烫的少年心，去做成年人该做的事——敢闯、敢试、敢犯错，眼里有光，心中有火，终活成自己最想成为的模样。' },
-{ cat:'psych', text:'罗森塔尔效应（又称皮格马利翁效应）：当一个人（尤其是教师、上级）对另一个人抱有较高期望时，后者往往会不自觉地朝那个期望靠拢，表现真的随之提升——期望本身会变成自我实现的预言。', src:'罗伯特·罗森塔尔 & 莱诺尔·雅各布森，1968' },
-    { cat:'psych', text:'破窗效应：如果一栋建筑的一扇破窗长期不修理，人们就会默认这里无人管理，进而更多人去打破更多窗、乱涂乱画，环境会加速崩坏。微小的失序若被纵容，会诱发更大的失序。', src:'詹姆斯·威尔逊 & 乔治·凯林，1982' },
-    { cat:'psych', text:'霍桑效应：当人们意识到自己正被观察、被关注时，行为表现会不自觉地改变（通常更积极）。源于西方电气霍桑工厂的系列实验。', src:'霍桑工厂实验 1924–1932，亨利·兰斯伯格命名' },
-    { cat:'psych', text:'蝴蝶效应：在一个动力系统中，初始条件的微小差异可能被指数级放大，最终导致巨大的结果偏差。通俗说，一只蝴蝶扇动翅膀，可能在远方引发一场风暴。', src:'爱德华·洛伦兹，混沌理论，1960s' },
-    { cat:'psych', text:'墨菲定律：凡是可能出错的事，就一定会出错。引申为：如果一件事有两种做法、其中一种会酿成灾难，那么总会有人选那种。', src:'爱德华·墨菲，1949' },
-    { cat:'psych', text:'帕金森定律：工作会自动膨胀，直到占满所有可用的时间。换言之，给一项任务越多时间，它就会拖得越长。', src:'西里尔·诺斯古德·帕金森，1955' },
-    { cat:'psych', text:'马太效应：强者愈强、弱者愈弱的现象——已有的优势会带来更多优势，已有的匮乏会招致更多匮乏。「凡有的，还要加给他。」', src:'罗伯特·莫顿（社会学家），1968' },
-    { cat:'psych', text:'锚定效应：人在做判断时，容易过度依赖最先接触到的信息（「锚」），即便这个锚与决策无关，也会悄悄拉偏后续的估计与决策。', src:'特沃斯基 & 卡尼曼，1974' },
-    { cat:'psych', text:'习得性无助：当一个人反复经历无法控制的负面事件后，即便后来处境可以改变，他也可能放弃尝试，陷入「再努力也没用」的被动绝望。', src:'马丁·塞利格曼，1967' },
-    { cat:'psych', text:'旁观者效应：在场的人越多，个体出手相助的概率反而越低。因为责任被分散——「总有人会管的」心理让每个人都等待别人行动。', src:'拉塔内 & 达利，1964' },
-    { cat:'psych', text:'晕轮效应（光环效应）：对一个人的某个正面特质（如外貌、名气）产生好感后，会不自觉地把这种好感泛化到其能力、品格等其他方面，以偏概全。', src:'爱德华·桑代克，1920' },
-    { cat:'psych', text:'幸存者偏差：人们只看到「幸存下来」的样本，却忽略了那些已被淘汰、无法发声的样本，从而得出错误结论。正如二战时统计返航战机弹孔，该加固的恰恰是没弹孔的部位（因为中弹的已坠毁）。', src:'亚伯拉罕·瓦尔德，二战运筹统计' },
-{ cat:'psych', text:'确认偏误：人倾向于寻找、解读、记住支持自己既有观点的信息，而忽视或贬低相反证据，结果越自信越狭隘。', src:'彼得·沃森，1960 提出确认偏误概念' },
-    { cat:'psych', text:'登门槛效应（Foot-in-the-door）：先提一个难以拒绝的小请求，对方答应后再提更大的请求，同意概率会显著提高。', src:'弗里德曼 & 弗雷泽，1966' },
-    { cat:'psych', text:'留面子效应（Door-in-the-face）：先提一个很大、必被拒绝的请求，再退一步提小请求，对方因让步互惠反而更可能答应。', src:'西奥迪尼 等，1975' },
-    { cat:'psych', text:'吊桥效应：人处于恐惧、紧张等生理唤起时，容易把心跳加速误认为是心动，从而对身边人产生好感。源于对过吊桥男性的实验。', src:'达顿 & 阿伦，1974（卡皮拉诺吊桥实验）' },
-    { cat:'psych', text:'损失厌恶：面对同等数量的得与失，失去带来的痛苦约为得到带来快乐的二倍，所以人更愿规避损失而非追求收益。', src:'卡尼曼 & 特沃斯基，1979（前景理论）' },
-    { cat:'psych', text:'沉没成本谬误：已付出且无法收回的成本本不应影响后续决策，但人常因「已投入这么多」继续在错误路上加码。', src:'行为经济学' },
-    { cat:'psych', text:'巴纳姆效应（福勒效应）：人容易认为那些模糊、普遍适用的性格描述精准说中了自己，其实放在谁身上都成立。', src:'伯特伦·福勒，1948' },
-    { cat:'psych', text:'蔡加尼克效应：相比已完成的事，人对被打断、未完成的事记忆更深刻、更挥之不去。', src:'布卢玛·蔡加尼克，1927' },
-    { cat:'psych', text:'从众效应（阿希效应）：当群体多数给出明显错误答案时，相当多人会放弃自己的判断跟着错，只为不显得孤立。', src:'所罗门·阿希，1951' },
-    { cat:'psych', text:'自我实现预言：对一个情境的错误预期会引发行事方式改变，最终让这个错误预期真的变成现实。', src:'罗伯特·莫顿，1948' },
-{ cat:'paradox', text:'忒修斯之船：如果忒修斯的船的木板被一块块替换，直到所有木板都不是原来的，它还是原来那艘船吗？若把换下的旧木板重新拼成一艘，哪一艘才是真正的忒修斯之船？', src:'普鲁塔克《希腊罗马名人传·忒修斯传》' },
-    { cat:'paradox', text:'理发师悖论：村中理发师只给不给自己刮胡子的人刮胡子。那么他该不该给自己刮胡子？给，则他属于给自己刮胡子的人，不该给；不给，则他属于不给自己刮胡子的人，又该给。', src:'伯特兰·罗素，1918' },
-    { cat:'paradox', text:'说谎者悖论：这句话是假的。若它为真，则它在说假话，它便是假；若它为假，则它说的「是假的」为真，它便是真。真与假陷入循环。', src:'古希腊（欧布里德斯等），可溯至公元前' },
-    { cat:'paradox', text:'祖父悖论：若你穿越回过去，在祖父遇见祖母之前杀了他，你就不会出生，也就不可能回去杀他——因果链自我矛盾。', src:'常见时间旅行叙事（勒内·巴雅维尔，1943 普及）' },
-    { cat:'paradox', text:'阿基里斯与乌龟：跑得快的阿基里斯永远追不上缓步的乌龟——每当他追到乌龟刚才的位置，乌龟又向前挪了一点。无限细分的距离看似不可逾越。', src:'芝诺（埃利亚），约公元前 490 年' },
-    { cat:'paradox', text:'电车难题：失控电车驶向五人，你可拉动拉杆让它改道撞向一人。救五杀一，还是不干预任五人死去？功利与道义的撕扯没有标准答案。', src:'菲利帕·富特，1967' },
-    { cat:'paradox', text:'谷堆悖论（连锁悖论）：一粒谷子不成堆，加一粒也不成堆……直到多少粒才算一堆？模糊的边界让我们无法划定成堆的确切起点。', src:'欧布里德斯（古希腊）' },
-    { cat:'paradox', text:'囚徒困境：两人分开关押，都沉默各判 1 年；一人揭发则无罪释放、另一人判 10 年；互相揭发各判 5 年。理性让两人都选择揭发，结果集体更糟。', src:'弗勒德 & 德雷舍，1950；阿尔伯特·塔克命名' },
-    { cat:'paradox', text:'薛定谔的猫：把猫放进装有毒气装置的密闭盒子，打开看之前，按量子叠加猫既死又活；一旦观测，才坍缩为死或活之一。', src:'埃尔温·薛定谔，1935' },
-    { cat:'paradox', text:'费米悖论：宇宙如此古老广阔、恒星行星如此众多，按概率应有大量外星文明，可我们至今听不到一丝信号。他们都去哪了？', src:'恩里科·费米，1950' },
-    { cat:'classic', text:'生命中曾经有过的所有绚烂，终究都需要用寂寞来偿还。', src:'加西亚·马尔克斯《百年孤独》' },
-    { cat:'classic', text:'所有的大人都曾经是小孩，虽然只有少数人记得。', src:'圣埃克苏佩里《小王子》' },
-    { cat:'classic', text:'一个人可以被毁灭，但不能被打败。', src:'海明威《老人与海》' },
-    { cat:'classic', text:'明天，又是新的一天。', src:'玛格丽特·米切尔《飘》' },
-    { cat:'classic', text:'你以为我贫穷、卑微、相貌平平就没有灵魂，没有心吗？', src:'夏洛蒂·勃朗特《简·爱》' },
-    { cat:'classic', text:'幸福的家庭都是相似的，不幸的家庭各有各的不幸。', src:'列夫·托尔斯泰《安娜·卡列尼娜》' },
-    { cat:'classic', text:'世界上最宽阔的是海洋，比海洋更宽阔的是天空，比天空更宽阔的是人的胸怀。', src:'维克多·雨果《悲惨世界》' },
-    { cat:'classic', text:'这是最好的时代，这是最坏的时代；这是智慧的年代，这也是愚蠢的年代。', src:'查尔斯·狄更斯《双城记》' },
-    { cat:'classic', text:'凡是有钱的单身汉，总想娶位太太，这已经成了一条举世公认的真理。', src:'简·奥斯汀《傲慢与偏见》' },
-    { cat:'classic', text:'人类的全部智慧就包含在这两个词中：等待和希望。', src:'大仲马《基督山伯爵》' },
-    { cat:'classic', text:'于是我们奋力向前，逆水行舟，被不断地向后推，直到回到往昔岁月。', src:'菲茨杰拉德《了不起的盖茨比》' },
-    { cat:'classic', text:'我步入丛林，因为我希望生活得有意义，只去面对生活的基本事实。', src:'亨利·戴维·梭罗《瓦尔登湖》' },
-    { cat:'classic', text:'为你，千千万万遍。', src:'卡勒德·胡赛尼《追风筝的人》' },
-    { cat:'classic', text:'压倒她的不是重，而是不能承受的生命之轻。', src:'米兰·昆德拉《不能承受的生命之轻》' },
-    { cat:'anime', text:'希望是好事，也许是最好的事，而美好的事永不消逝。', src:'电影《肖申克的救赎》' },
-    { cat:'anime', text:'生活就像一盒巧克力，你永远不知道下一颗是什么味道。', src:'电影《阿甘正传》' },
-    { cat:'anime', text:'人生总是这么痛苦吗？还是只有小时候是这样？——一直如此。', src:'电影《这个杀手不太冷》' },
-    { cat:'anime', text:'曾经有一份真挚的感情摆在我面前，我没有珍惜，等到失去时才后悔莫及。', src:'电影《大话西游》' },
-    { cat:'anime', text:'早安，公主。', src:'电影《美丽人生》' },
-  { cat:'anime', text:'曾经发生过的事不可能忘记，只是想不起来而已。', src:'动漫《千与千寻》' },
-    { cat:'anime', text:'不管你在世界的哪个地方，我一定会去见你。', src:'动漫《你的名字。》' },
-  { cat:'music', text:'成都带不走的，只有你。我回不去的，也只剩那年玉林路的尽头，和那个说好一起走的人。', src:'热评 · 赵雷《成都》' },
-    { cat:'music', text:'我们都在等一个答案，可翻过山丘那头什么都没有，只有风。原来有些路，注定只能一个人走完。', src:'热评 · 李宗盛《山丘》' },
-    { cat:'music', text:'明明是八杯酒，却敬了整个人生。我们都在用成年人的方式，消化着说不出口的委屈。', src:'热评 · 毛不易《消愁》' },
-    { cat:'music', text:'故事的小黄花还在，可那个一起淋过雨的人，早已走散在毕业那个夏天。', src:'热评 · 周杰伦《晴天》' },
-    { cat:'music', text:'十年之后，我们是朋友，还可以问候，可有些人一旦错过就不在，那句做不成恋人的遗憾终究还是成了真的。', src:'热评 · 陈奕迅《十年》' },
-    { cat:'music', text:'不打扰，是我给你的最后的温柔。你幸福就好，真的，哪怕那个给你幸福的人不是我。', src:'热评 · 五月天《温柔》' },
-    { cat:'music', text:'假如我年少有为不卑微，会不会有人陪我床前抚慰。后来才懂，有些遗憾，是给青春留的白。', src:'热评 · 李荣浩《年少有为》' },
-    { cat:'music', text:'我曾经跨过山和大海，也穿过人山人海，最后才发现，平凡才是唯一的答案。', src:'热评 · 朴树《平凡之路》' }
+    { cat:'net', text:'人和人交往还是少说话，克制表达欲，平静温和就行，不自卑也别炫耀。别为了获得共鸣，讲起过往没完没了。无意间表现的品质，被对方发现才更招人喜欢，胜过千言万语。仔细想想，你哪次滔滔不绝后，带来的不是悔恨。' , date: "2026-09-15"},
+    { cat:'masters', text:'人间不值得。很多人对这句话可能有一个误解，他们会觉得人间不值得我来这一趟，而这句话本身的意思是积极的：人间本就是这样，它不值得你难过，活得洒脱一点。', src:'李诞', note:'常见其脱口秀与访谈中的观点' , date: "2026-09-15"},
+    { cat:'masters', text:'我喜爱一切不彻底的事物。琥珀里的时间，微暗的火，一生都在半途而废，一生都怀抱热望。', src:'张定浩《我喜爱一切不彻底的事物》' , date: "2026-09-15"},
+    { cat:'masters', text:'你应该是一场梦，我应该是一阵风。', src:'顾城《你和我》' , date: "2026-09-15"},
+    { cat:'masters', text:'世间珍贵的事物几种：善良的手艺，慷慨的批评，微醺的唱腔，狂浪的经文。不说的过去。', src:'吕彦妮' , date: "2026-09-15"},
+    { cat:'masters', text:'一流的情人永远不必殉陨，永远不会失恋，因为「我爱你，与你何涉。」', src:'木心' , date: "2026-09-15"},
+    { cat:'masters', text:'刚刚好，看见你幸福的样子，于是幸福着你的幸福。', src:'村上春树《国境以南 太阳以西》' , date: "2026-09-15"},
+    { cat:'masters', text:'若逢新雪初霁，满月当空，下面空铺着皓影，上面流转着亮银，而你带笑的向我步来，月色与雪色之间你是第三种绝色。', src:'余光中《绝色》' , date: "2026-09-15"},
+    { cat:'masters', text:'十五岁的时候我跟你一样追赶流行，但五十岁我开始热爱俗气的一切。你觉得是我老了吗？不，我只是一如既往的热爱十五岁时喜欢上的东西。', src:'作家 姬霄', note:'网络流传语录，原载于其社交媒体' , date: "2026-09-15"},
+    { cat:'anime', text:'我想成为一个温柔的人，因为曾被温柔的人那样对待，深深了解那种被温柔相待的感觉。', src:'《夏目友人帐》', note:'同人 / 网络流传语，非原作官方台词' , date: "2026-09-15"},
+    { cat:'anime', text:'如果结局不如你所愿，就在尘埃落定前奋力一搏。', src:'《夏目友人帐》', note:'同人 / 网络流传语，非原作官方台词' , date: "2026-09-15"},
+    { cat:'anime', text:'此生不悔入夏目，来世愿做账中妖。', src:'《夏目友人帐》', note:'同人 / 网络流传语，非原作官方台词' , date: "2026-09-15"},
+    { cat:'anime', text:'我喜欢的人也能喜欢上自己，我认为这就是奇迹。', src:'《月色真美》' , date: "2026-09-15"},
+    { cat:'anime', text:'你指尖跃动的电光，是我此生不变的信仰。你闪跃跳动的身影，是我见过最美的光景。', src:'《某科学的超电磁炮》', note:'御坂美琴（炮姐）粉丝应援语，非原作台词' , date: "2026-09-15"},
+    { cat:'anime', text:'以声之色，塑花之形，将你之名，刻于我心。', src:'《声之形》' , date: "2026-09-15"},
+    { cat:'anime', text:'未闻花名，但识花香，再见花时，泪已千行。', src:'《我们仍未知道那天所看见的花的名字》' , date: "2026-09-15"},
+    { cat:'anime', text:'隐隐雷鸣，阴霾天空，但盼风雨来，能留你在此。\n隐隐雷鸣，阴霾天空，即使天无雨，我亦留此地。', src:'《言叶之庭》', note:'原出《万叶集》和歌，新海诚引用于本作' , date: "2026-09-15"},
+    { cat:'anime', text:'音无结弦之时，天使跃动之心，立于浮华之世，奏响天籁之音。', src:'《Angel Beats!》', note:'同人语，化用主角名「音无」' , date: "2026-09-15"},
+    { cat:'anime', text:'我喜欢了你十年，但却用整个四月编织了一个不爱你的谎言。\n入梦落樱花满香，梦醒犹记四月谎。此生无悔入四月，来世愿做友人A。', src:'《四月是你的谎言》' , date: "2026-09-15"},
+    { cat:'anime', text:'春天 马上就要来了 让我与你相遇的春天 就要来了 再也没有你的春天 就要来了。', src:'《四月是你的谎言》' , date: "2026-09-15"},
+    { cat:'anime', text:'山内有樱名为良，树本无名只待春。', src:'《我想吃掉你的胰脏》' , date: "2026-09-15"},
+    { cat:'anime', text:'我深知，这之后我们无法抑制守在一起，挡在我们面前的是巨大庞然的人生，阻隔在我们中间的是广阔无际的时间，令我们无能为力。', src:'《秒速五厘米》' , date: "2026-09-15"},
+    { cat:'anime', text:'我们只是一时幸运，活在了这个世界上。碰巧活着的我们，是不应该忌讳死亡的。', src:'日剧《非自然死亡》' , date: "2026-09-15"},
+    { cat:'anime', text:'我们以为所谓告别一定是要一场盛大的仪式，所以我们一直在等，等着一个温暖的拥抱，等着一次畅快的大醉，等着一声由衷的再见。等到最后我们才发现，人生中大部分的告别都是悄无声息的。原来那一次的相聚，就已经是最后一面。所以啊，所以来日不一定方长，山水也未必重逢。', src:'国剧《如此可爱的我们》' , date: "2026-09-15"},
+    { cat:'anime', text:'曾经存在于彼此日记本中的人，会在未来交换更多的秘密。踏着时光走到现在的我们啊，也会一起走向更远的岁月。世界从来不会辜负可爱的人，而我们如此可爱。', src:'国剧《如此可爱的我们》' , date: "2026-09-15"},
+    { cat:'net', text:'生命如同戏剧，你永远预料不到转折出现在哪一篇章。' , date: "2026-09-15"},
+    { cat:'anime', text:'总有一天，愿你和所爱之人终能重逢。', src:'《可塑性记忆》', note:'原句：「いつかまた巡り会えますように」——「时光流转，愿你与珍爱之人，能够再次重逢。」（出自《可塑性记忆》第13话）' , date: "2026-09-15"},
+    { cat:'net', text:'少年就是少年，他们看春风不喜，看夏蝉不烦，看秋风不悲，看冬雪不叹，看满身富贵懒察觉，看不公不许敢面对，只因他们是少年。', src:'猫腻《择天记》' , date: "2026-09-15"},
+    { cat:'net', text:'日剧里常常有句台词是「真是个温柔的人啊」。怎么说呢我太喜欢温柔的人了。是雨天行车路过水坑会故意放慢速度的人，是关门时轻手轻脚的人，是会将用过的纸巾好好折起再扔掉的人，是能照顾他人情绪的人，是能化解他人尴尬的人，是像粥温热一样的人，希望能和温柔的人交朋友，带着音乐和美食。' , date: "2026-09-15"},
+    { cat:'net', text:'日语里「夏天结束了」其实和「今晚月色真美」一样，是有隐晦暗示的。代表着某天突然感知到河岸的风带来凉意，爱慕的心绪不了了之，没牵到的手，未送出的信，青春潦草收场后关上了门。就像睡了漫长的午觉醒来，穿衣洗漱准备去学校，找了半天却找不到课本和双肩包，才恍惚想起自己在多年前明明没有做好准备，就被推搡着长大成人。来不及跟夏天挥手告别的仓促人生，年轻时也对世间万物充满期待，眨眼间就落入了平庸之海。' , date: "2026-09-15"},
+    { cat:'net', text:'世人慌慌张张，不过是图碎银几两，可区区几两银子却能压断世人，世间熙熙攘攘，皆为利来利往，我也一样，无一例外。' , date: "2026-09-15"},
+    { cat:'net', text:'小时候不理解老人晒太阳，一坐就是半天。长大了才明白，目之所及皆是回忆，心之所想皆是过往，眼之所看皆是遗憾。' , date: "2026-09-15"},
+    { cat:'net', text:'久雨生青石，青石覆古巷。古巷照人烟，人烟散微雨。' , date: "2026-09-15"},
+    { cat:'net', text:'曼珠沙华又名彼岸花，黄泉接引之花，见花不见叶，见叶不见花。' , date: "2026-09-15"},
+    { cat:'net', text:'其实我很早就知道我们不合适。但是我还是拒绝了所有人陪你走了一段没有结果的路，虽然时间不长，但毕生难忘。留住你和放过你，我都做不到。就像我坐在湖边，以为是海边，我吹着湖边的风，以为吹着的是海风。但湖是湖，海是海。' , date: "2026-09-15"},
+    { cat:'masters', text:'你永远不可能真正的了解一个人，除非你穿上她的鞋子走来走去，站在她的角度思考问题，可当你走过她的路时，你连路过都觉得难过。', src:'《杀死一只知更鸟》' , date: "2026-09-15"},
+    { cat:'net', text:'无人问津也好，技不如人也罢，你都要试着安静下来，去做自己该做的事，而不是让内心的烦躁、焦虑，毁掉你本就不多的热情和定力。' , date: "2026-09-15"},
+    { cat:'net', text:'老先生坐而论道，少年郎起而行之。少年的肩膀，本该先挑起清风明月、杨柳依依与草长莺飞；待行至人生分岔口，再扛起属于自己的风雨与担当。不是丢掉了少年气，是揣着那颗滚烫的少年心，去做成年人该做的事——敢闯、敢试、敢犯错，眼里有光，心中有火，终活成自己最想成为的模样。' , date: "2026-09-15"},
+{ cat:'psych', text:'罗森塔尔效应（又称皮格马利翁效应）：当一个人（尤其是教师、上级）对另一个人抱有较高期望时，后者往往会不自觉地朝那个期望靠拢，表现真的随之提升——期望本身会变成自我实现的预言。', src:'罗伯特·罗森塔尔 & 莱诺尔·雅各布森，1968' , date: "2026-09-15"},
+    { cat:'psych', text:'破窗效应：如果一栋建筑的一扇破窗长期不修理，人们就会默认这里无人管理，进而更多人去打破更多窗、乱涂乱画，环境会加速崩坏。微小的失序若被纵容，会诱发更大的失序。', src:'詹姆斯·威尔逊 & 乔治·凯林，1982' , date: "2026-09-15"},
+    { cat:'psych', text:'霍桑效应：当人们意识到自己正被观察、被关注时，行为表现会不自觉地改变（通常更积极）。源于西方电气霍桑工厂的系列实验。', src:'霍桑工厂实验 1924–1932，亨利·兰斯伯格命名' , date: "2026-09-15"},
+    { cat:'psych', text:'蝴蝶效应：在一个动力系统中，初始条件的微小差异可能被指数级放大，最终导致巨大的结果偏差。通俗说，一只蝴蝶扇动翅膀，可能在远方引发一场风暴。', src:'爱德华·洛伦兹，混沌理论，1960s' , date: "2026-09-15"},
+    { cat:'psych', text:'墨菲定律：凡是可能出错的事，就一定会出错。引申为：如果一件事有两种做法、其中一种会酿成灾难，那么总会有人选那种。', src:'爱德华·墨菲，1949' , date: "2026-09-15"},
+    { cat:'psych', text:'帕金森定律：工作会自动膨胀，直到占满所有可用的时间。换言之，给一项任务越多时间，它就会拖得越长。', src:'西里尔·诺斯古德·帕金森，1955' , date: "2026-09-15"},
+    { cat:'psych', text:'马太效应：强者愈强、弱者愈弱的现象——已有的优势会带来更多优势，已有的匮乏会招致更多匮乏。「凡有的，还要加给他。」', src:'罗伯特·莫顿（社会学家），1968' , date: "2026-09-15"},
+    { cat:'psych', text:'锚定效应：人在做判断时，容易过度依赖最先接触到的信息（「锚」），即便这个锚与决策无关，也会悄悄拉偏后续的估计与决策。', src:'特沃斯基 & 卡尼曼，1974' , date: "2026-09-15"},
+    { cat:'psych', text:'习得性无助：当一个人反复经历无法控制的负面事件后，即便后来处境可以改变，他也可能放弃尝试，陷入「再努力也没用」的被动绝望。', src:'马丁·塞利格曼，1967' , date: "2026-09-15"},
+    { cat:'psych', text:'旁观者效应：在场的人越多，个体出手相助的概率反而越低。因为责任被分散——「总有人会管的」心理让每个人都等待别人行动。', src:'拉塔内 & 达利，1964' , date: "2026-09-15"},
+    { cat:'psych', text:'晕轮效应（光环效应）：对一个人的某个正面特质（如外貌、名气）产生好感后，会不自觉地把这种好感泛化到其能力、品格等其他方面，以偏概全。', src:'爱德华·桑代克，1920' , date: "2026-09-15"},
+    { cat:'psych', text:'幸存者偏差：人们只看到「幸存下来」的样本，却忽略了那些已被淘汰、无法发声的样本，从而得出错误结论。正如二战时统计返航战机弹孔，该加固的恰恰是没弹孔的部位（因为中弹的已坠毁）。', src:'亚伯拉罕·瓦尔德，二战运筹统计' , date: "2026-09-15"},
+{ cat:'psych', text:'确认偏误：人倾向于寻找、解读、记住支持自己既有观点的信息，而忽视或贬低相反证据，结果越自信越狭隘。', src:'彼得·沃森，1960 提出确认偏误概念' , date: "2026-09-15"},
+    { cat:'psych', text:'登门槛效应（Foot-in-the-door）：先提一个难以拒绝的小请求，对方答应后再提更大的请求，同意概率会显著提高。', src:'弗里德曼 & 弗雷泽，1966' , date: "2026-09-15"},
+    { cat:'psych', text:'留面子效应（Door-in-the-face）：先提一个很大、必被拒绝的请求，再退一步提小请求，对方因让步互惠反而更可能答应。', src:'西奥迪尼 等，1975' , date: "2026-09-15"},
+    { cat:'psych', text:'吊桥效应：人处于恐惧、紧张等生理唤起时，容易把心跳加速误认为是心动，从而对身边人产生好感。源于对过吊桥男性的实验。', src:'达顿 & 阿伦，1974（卡皮拉诺吊桥实验）' , date: "2026-09-15"},
+    { cat:'psych', text:'损失厌恶：面对同等数量的得与失，失去带来的痛苦约为得到带来快乐的二倍，所以人更愿规避损失而非追求收益。', src:'卡尼曼 & 特沃斯基，1979（前景理论）' , date: "2026-09-15"},
+    { cat:'psych', text:'沉没成本谬误：已付出且无法收回的成本本不应影响后续决策，但人常因「已投入这么多」继续在错误路上加码。', src:'行为经济学' , date: "2026-09-15"},
+    { cat:'psych', text:'巴纳姆效应（福勒效应）：人容易认为那些模糊、普遍适用的性格描述精准说中了自己，其实放在谁身上都成立。', src:'伯特伦·福勒，1948' , date: "2026-09-15"},
+    { cat:'psych', text:'蔡加尼克效应：相比已完成的事，人对被打断、未完成的事记忆更深刻、更挥之不去。', src:'布卢玛·蔡加尼克，1927' , date: "2026-09-15"},
+    { cat:'psych', text:'从众效应（阿希效应）：当群体多数给出明显错误答案时，相当多人会放弃自己的判断跟着错，只为不显得孤立。', src:'所罗门·阿希，1951' , date: "2026-09-15"},
+    { cat:'psych', text:'自我实现预言：对一个情境的错误预期会引发行事方式改变，最终让这个错误预期真的变成现实。', src:'罗伯特·莫顿，1948' , date: "2026-09-15"},
+{ cat:'paradox', text:'忒修斯之船：如果忒修斯的船的木板被一块块替换，直到所有木板都不是原来的，它还是原来那艘船吗？若把换下的旧木板重新拼成一艘，哪一艘才是真正的忒修斯之船？', src:'普鲁塔克《希腊罗马名人传·忒修斯传》' , date: "2026-09-15"},
+    { cat:'paradox', text:'理发师悖论：村中理发师只给不给自己刮胡子的人刮胡子。那么他该不该给自己刮胡子？给，则他属于给自己刮胡子的人，不该给；不给，则他属于不给自己刮胡子的人，又该给。', src:'伯特兰·罗素，1918' , date: "2026-09-15"},
+    { cat:'paradox', text:'说谎者悖论：这句话是假的。若它为真，则它在说假话，它便是假；若它为假，则它说的「是假的」为真，它便是真。真与假陷入循环。', src:'古希腊（欧布里德斯等），可溯至公元前' , date: "2026-09-15"},
+    { cat:'paradox', text:'祖父悖论：若你穿越回过去，在祖父遇见祖母之前杀了他，你就不会出生，也就不可能回去杀他——因果链自我矛盾。', src:'常见时间旅行叙事（勒内·巴雅维尔，1943 普及）' , date: "2026-09-15"},
+    { cat:'paradox', text:'阿基里斯与乌龟：跑得快的阿基里斯永远追不上缓步的乌龟——每当他追到乌龟刚才的位置，乌龟又向前挪了一点。无限细分的距离看似不可逾越。', src:'芝诺（埃利亚），约公元前 490 年' , date: "2026-09-15"},
+    { cat:'paradox', text:'电车难题：失控电车驶向五人，你可拉动拉杆让它改道撞向一人。救五杀一，还是不干预任五人死去？功利与道义的撕扯没有标准答案。', src:'菲利帕·富特，1967' , date: "2026-09-15"},
+    { cat:'paradox', text:'谷堆悖论（连锁悖论）：一粒谷子不成堆，加一粒也不成堆……直到多少粒才算一堆？模糊的边界让我们无法划定成堆的确切起点。', src:'欧布里德斯（古希腊）' , date: "2026-09-15"},
+    { cat:'paradox', text:'囚徒困境：两人分开关押，都沉默各判 1 年；一人揭发则无罪释放、另一人判 10 年；互相揭发各判 5 年。理性让两人都选择揭发，结果集体更糟。', src:'弗勒德 & 德雷舍，1950；阿尔伯特·塔克命名' , date: "2026-09-15"},
+    { cat:'paradox', text:'薛定谔的猫：把猫放进装有毒气装置的密闭盒子，打开看之前，按量子叠加猫既死又活；一旦观测，才坍缩为死或活之一。', src:'埃尔温·薛定谔，1935' , date: "2026-09-15"},
+    { cat:'paradox', text:'费米悖论：宇宙如此古老广阔、恒星行星如此众多，按概率应有大量外星文明，可我们至今听不到一丝信号。他们都去哪了？', src:'恩里科·费米，1950' , date: "2026-09-15"},
+    { cat:'classic', text:'生命中曾经有过的所有绚烂，终究都需要用寂寞来偿还。', src:'加西亚·马尔克斯《百年孤独》' , date: "2026-09-15"},
+    { cat:'classic', text:'所有的大人都曾经是小孩，虽然只有少数人记得。', src:'圣埃克苏佩里《小王子》' , date: "2026-09-15"},
+    { cat:'classic', text:'一个人可以被毁灭，但不能被打败。', src:'海明威《老人与海》' , date: "2026-09-15"},
+    { cat:'classic', text:'明天，又是新的一天。', src:'玛格丽特·米切尔《飘》' , date: "2026-09-15"},
+    { cat:'classic', text:'你以为我贫穷、卑微、相貌平平就没有灵魂，没有心吗？', src:'夏洛蒂·勃朗特《简·爱》' , date: "2026-09-15"},
+    { cat:'classic', text:'幸福的家庭都是相似的，不幸的家庭各有各的不幸。', src:'列夫·托尔斯泰《安娜·卡列尼娜》' , date: "2026-09-15"},
+    { cat:'classic', text:'世界上最宽阔的是海洋，比海洋更宽阔的是天空，比天空更宽阔的是人的胸怀。', src:'维克多·雨果《悲惨世界》' , date: "2026-09-15"},
+    { cat:'classic', text:'这是最好的时代，这是最坏的时代；这是智慧的年代，这也是愚蠢的年代。', src:'查尔斯·狄更斯《双城记》' , date: "2026-09-15"},
+    { cat:'classic', text:'凡是有钱的单身汉，总想娶位太太，这已经成了一条举世公认的真理。', src:'简·奥斯汀《傲慢与偏见》' , date: "2026-09-15"},
+    { cat:'classic', text:'人类的全部智慧就包含在这两个词中：等待和希望。', src:'大仲马《基督山伯爵》' , date: "2026-09-15"},
+    { cat:'classic', text:'于是我们奋力向前，逆水行舟，被不断地向后推，直到回到往昔岁月。', src:'菲茨杰拉德《了不起的盖茨比》' , date: "2026-09-15"},
+    { cat:'classic', text:'我步入丛林，因为我希望生活得有意义，只去面对生活的基本事实。', src:'亨利·戴维·梭罗《瓦尔登湖》' , date: "2026-09-15"},
+    { cat:'classic', text:'为你，千千万万遍。', src:'卡勒德·胡赛尼《追风筝的人》' , date: "2026-09-15"},
+    { cat:'classic', text:'压倒她的不是重，而是不能承受的生命之轻。', src:'米兰·昆德拉《不能承受的生命之轻》' , date: "2026-09-15"},
+    { cat:'anime', text:'希望是好事，也许是最好的事，而美好的事永不消逝。', src:'电影《肖申克的救赎》' , date: "2026-09-15"},
+    { cat:'anime', text:'生活就像一盒巧克力，你永远不知道下一颗是什么味道。', src:'电影《阿甘正传》' , date: "2026-09-15"},
+    { cat:'anime', text:'人生总是这么痛苦吗？还是只有小时候是这样？——一直如此。', src:'电影《这个杀手不太冷》' , date: "2026-09-15"},
+    { cat:'anime', text:'曾经有一份真挚的感情摆在我面前，我没有珍惜，等到失去时才后悔莫及。', src:'电影《大话西游》' , date: "2026-09-15"},
+    { cat:'anime', text:'早安，公主。', src:'电影《美丽人生》' , date: "2026-09-15"},
+  { cat:'anime', text:'曾经发生过的事不可能忘记，只是想不起来而已。', src:'动漫《千与千寻》' , date: "2026-09-15"},
+    { cat:'anime', text:'不管你在世界的哪个地方，我一定会去见你。', src:'动漫《你的名字。》' , date: "2026-09-15"},
+  { cat:'music', text:'成都带不走的，只有你。我回不去的，也只剩那年玉林路的尽头，和那个说好一起走的人。', src:'热评 · 赵雷《成都》' , date: "2026-09-15"},
+    { cat:'music', text:'我们都在等一个答案，可翻过山丘那头什么都没有，只有风。原来有些路，注定只能一个人走完。', src:'热评 · 李宗盛《山丘》' , date: "2026-09-15"},
+    { cat:'music', text:'明明是八杯酒，却敬了整个人生。我们都在用成年人的方式，消化着说不出口的委屈。', src:'热评 · 毛不易《消愁》' , date: "2026-09-15"},
+    { cat:'music', text:'故事的小黄花还在，可那个一起淋过雨的人，早已走散在毕业那个夏天。', src:'热评 · 周杰伦《晴天》' , date: "2026-09-15"},
+    { cat:'music', text:'十年之后，我们是朋友，还可以问候，可有些人一旦错过就不在，那句做不成恋人的遗憾终究还是成了真的。', src:'热评 · 陈奕迅《十年》' , date: "2026-09-15"},
+    { cat:'music', text:'不打扰，是我给你的最后的温柔。你幸福就好，真的，哪怕那个给你幸福的人不是我。', src:'热评 · 五月天《温柔》' , date: "2026-09-15"},
+    { cat:'music', text:'假如我年少有为不卑微，会不会有人陪我床前抚慰。后来才懂，有些遗憾，是给青春留的白。', src:'热评 · 李荣浩《年少有为》' , date: "2026-09-15"},
+    { cat:'music', text:'我曾经跨过山和大海，也穿过人山人海，最后才发现，平凡才是唯一的答案。', src:'热评 · 朴树《平凡之路》' , date: "2026-09-15"}
   ];
   const Q_CATS = [
     { id:'all', name:'全部' },
@@ -2772,7 +2817,9 @@ q.addEventListener("input", () => {
     const dt = escAttr((q.src||'') + ' ' + (q.text||'').slice(0,40));
     return '<div class="qcard" data-title="'+dt+'">'
       + '<div class="qtext">'+escAttr(q.text)+'</div>'
-      + '<div class="qmeta"><span class="qsrc">'+escAttr(q.src||'')+'</span>'+note+'</div></div>';
+      + '<div class="qmeta"><span class="qsrc">'+escAttr(q.src||'')+'</span>'+note
+      + (q.date ? '<span class="upd">📅 '+fmtDate(q.date)+'</span>' : '')
+      + '</div></div>';
   }
   function mCard(m){
     const dt = escAttr(m.num + ' ' + m.name);
