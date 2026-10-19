@@ -290,6 +290,9 @@
   .arow{display:flex;gap:8px;margin-top:10px;font-size:13px;align-items:baseline}
   .arow .ak{flex:none;color:var(--muted);min-width:64px}
   .arow .aval{color:var(--ink-2);font-weight:500;flex:1;min-width:0;word-break:break-word}
+  .season-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+  .season-list .chip{font-size:11px;padding:3px 8px;border-radius:4px;color:var(--brand);background:var(--brand-soft);font-weight:500;white-space:nowrap}
+  .acard-kind.long{font-size:10px}
 
   /* 待办事项（右侧悬浮，可隐藏，存浏览器本地仅自己可见） */
   .todo-fab{
@@ -947,589 +950,892 @@ const anime = [
   {
     date: "2026-09-15",
     "title": "HELLO WORLD",
+    "type": "剧场版电影",
     "heroine": "一行琉璃",
     "cv": "滨边美波"
   },
   {
     date: "2026-09-15",
     "title": "你的名字",
+    "type": "剧场版电影",
     "heroine": "宫水三叶",
     "cv": "上白石萌音"
   },
   {
     date: "2026-09-15",
     "title": "天气之子",
+    "type": "剧场版电影",
     "heroine": "天野阳菜",
     "cv": "森七菜"
   },
   {
     date: "2026-09-15",
     "title": "青春猪头少年不会梦到兔女郎学姐",
+    "type": "TV番剧 + 剧场版",
+    "season": [
+      "TV 第1季《兔女郎学姐》(2018)",
+      "剧场版《怀梦美少女》(2019)",
+      "剧场版《娇怜外出妹》(2023)",
+      "剧场版《红书包女孩》(2023)",
+      "TV 第2期《圣诞服女郎》(2025)",
+      "剧场版《亲爱好朋友》(2026·完结篇)"
+    ],
     "heroine": "樱岛麻衣、梓川枫",
     "cv": "濑户麻沙美、久保由利香"
   },
   {
     date: "2026-09-15",
     "title": "某科学的超电磁炮",
+    "type": "TV番剧",
+    "season": [
+      "TV 第1季(2009)",
+      "TV 第2季 S(2013)",
+      "TV 第3季 T(2020)"
+    ],
     "heroine": "御坂美琴、白井黑子",
     "cv": "佐藤利奈、新井里美"
   },
   {
     date: "2026-09-15",
     "title": "我的青春恋爱物语果然有问题",
+    "type": "TV番剧",
+    "season": [
+      "TV 第1季(2013)",
+      "TV 第2季《续》(2015)",
+      "TV 第3季《完》(2020)",
+      "OVA×3(2013/2016/2023)"
+    ],
     "heroine": "雪之下雪乃",
     "cv": "早见沙织"
   },
   {
     date: "2026-09-15",
     "title": "四月是你的谎言",
+    "type": "TV番剧",
     "heroine": "宫园薰",
     "cv": "种田梨沙"
   },
   {
     date: "2026-09-15",
     "title": "烟花",
+    "type": "剧场版电影",
     "heroine": "及川荠",
     "cv": "广濑铃"
   },
   {
     date: "2026-09-15",
     "title": "萤火之森",
+    "type": "剧场版电影",
     "heroine": "竹川萤",
     "cv": "佐仓绫音"
   },
   {
     date: "2026-09-15",
     "title": "我想吃掉你的胰脏",
+    "type": "剧场版电影",
     "heroine": "山内樱良",
     "cv": "lynn"
   },
   {
     date: "2026-09-15",
     "title": "月色真美",
+    "type": "TV番剧",
     "heroine": "水野茜",
     "cv": "小原好美"
   },
   {
     date: "2026-09-15",
     "title": "我们仍未知道那天所看见的花的名字",
+    "type": "TV番剧 + 剧场版",
+    "season": [
+      "TV 本篇(2011)",
+      "剧场版(2015)"
+    ],
     "heroine": "本间芽衣子",
     "cv": "茅野爱衣"
   },
   {
     date: "2026-09-15",
     "title": "秒速五厘米",
+    "type": "剧场版电影",
     "heroine": "篠原明里",
     "cv": "近藤好美、尾上绫华"
   },
   {
     date: "2026-09-15",
     "title": "言叶之庭",
+    "type": "剧场版电影",
     "heroine": "雪野百香里",
     "cv": "花泽香菜"
   },
   {
     date: "2026-09-15",
     "title": "欢迎来到实力至上的教室",
-    "season": "已出到第4季",
+    "type": "TV番剧",
+    "season": [
+      "TV 第1季(2017)",
+      "TV 第2季(2019)",
+      "TV 第3季(2022)",
+      "TV 第4季(2026-06·完结)"
+    ],
     "heroine": "堀北铃音、轻井泽惠",
     "cv": "鬼头明里、竹达彩奈"
   },
   {
     date: "2026-09-15",
     "title": "想哭的我带上了猫面具",
+    "type": "剧场版电影",
     "heroine": "笹木美代",
     "cv": "志田未来"
   },
   {
     date: "2026-09-15",
     "title": "声之形",
+    "type": "剧场版电影",
     "heroine": "西宫硝子",
     "cv": "早见沙织"
   },
   {
     date: "2026-09-15",
     "title": "夏目友人帐",
-    "season": "已出到第7季",
+    "type": "TV番剧 + 剧场版",
+    "season": [
+      "TV 第1季(2008)",
+      "TV 第2季(2009)",
+      "TV 第3季(2011)",
+      "TV 第4季(2012)",
+      "TV 第5季(2016)",
+      "TV 第6季(2017)",
+      "TV 第7季(2024)",
+      "剧场版《缘结空蝉》(2018)"
+    ],
     "heroine": "夏目贵志",
     "cv": "神谷浩史"
   },
   {
     date: "2026-09-15",
     "title": "辉夜大小姐想让我告白",
+    "type": "TV番剧 + 剧场版",
+    "season": [
+      "TV 第1季(2019)",
+      "TV 第2季(2020)",
+      "TV 第3季 Ultra Romantic(2022)",
+      "剧场版《初吻不会结束》(2022)",
+      "TV 特别篇《通往大人的阶梯》(2025)"
+    ],
     "heroine": "四宫辉夜",
     "cv": "古贺葵"
   },
   {
     date: "2026-09-15",
     "title": "魔法禁书目录",
+    "type": "TV番剧 + 剧场版",
+    "season": [
+      "TV 第1季(2008)",
+      "TV 第2季(2010)",
+      "剧场版《恩底弥翁的奇迹》(2013)",
+      "TV 第3季(2018)"
+    ],
     "heroine": "茵蒂克丝",
     "cv": "井口裕香"
   },
   {
     date: "2026-09-15",
     "title": "总之就是非常可爱",
-    "season": "已出到第2季",
+    "type": "TV番剧",
+    "season": [
+      "TV 第1季(2020)",
+      "TV 第2季(2022)"
+    ],
     "heroine": "由崎司",
     "cv": "鬼头明里"
   },
   {
     date: "2026-09-15",
     "title": "间谍过家家",
-    "season": "已出到第3季",
+    "type": "TV番剧",
+    "season": [
+      "TV 第1季(2022)",
+      "TV 第2季(2023)",
+      "TV 第3季(2025)"
+    ],
     "heroine": "阿尼亚·福杰、约尔·福杰",
     "cv": "种崎敦美、早见沙织"
   },
   {
     date: "2026-09-15",
     "title": "中二病也想谈恋爱",
+    "type": "TV番剧 + 剧场版",
+    "season": [
+      "TV 第1季(2012)",
+      "剧场版《小鸟游六花·改》(2013·总集篇+新作)",
+      "TV 第2季《恋》(2014)",
+      "剧场版 Take On Me(2018·完结篇)"
+    ],
     "heroine": "小鸟游六花",
     "cv": "内田真礼"
   },
   {
     date: "2026-09-15",
     "title": "Charlotte",
+    "type": "TV番剧",
     "heroine": "友利奈绪",
     "cv": "佐仓绫音"
   },
   {
     date: "2026-09-15",
     "title": "路人女主的养成方法",
+    "type": "TV番剧 + 剧场版",
+    "season": [
+      "TV 第1季(2015)",
+      "TV 第2季♭(2017)",
+      "剧场版 Fine(2019·完结篇)"
+    ],
     "heroine": "加藤惠",
     "cv": "安野希世乃"
   },
   {
     date: "2026-09-15",
     "title": "堀与宫村",
+    "type": "TV番剧",
     "heroine": "堀京子",
     "cv": "户松遥"
   },
   {
     date: "2026-09-15",
     "title": "小林家的龙女仆",
-    "season": "已出到第2季",
+    "type": "TV番剧",
+    "season": [
+      "TV 第1季(2017)",
+      "TV 第2季(2021)"
+    ],
     "heroine": "托尔",
     "cv": "桑原由气"
   },
   {
     date: "2026-09-15",
     "title": "动物狂想曲",
-    "season": "全2季已完结",
+    "type": "TV番剧",
+    "season": [
+      "TV 第1季(2019)",
+      "TV 第2季(2021)",
+      "TV 最终季 Part1(2024)",
+      "TV 最终季 Part2(2026-03·完结)"
+    ],
     "heroine": "春",
     "cv": "千本木菜花"
   },
   {
     date: "2026-09-15",
     "title": "五等分的新娘",
-    "season": "TV+剧场版已完结",
+    "type": "TV番剧 + 剧场版",
+    "season": [
+      "TV 第1季(2019)",
+      "TV 第2季∬(2021)",
+      "TV 特别篇∽(2023)",
+      "剧场版(2022·实质第3季/完结篇)",
+      "TV 特别篇* 新婚旅行篇(2024)"
+    ],
     "heroine": "中野一花、中野二乃、中野三玖、中野四叶、中野五月",
     "cv": "花泽香菜、竹达彩奈、伊藤美来、佐仓绫音、水濑祈"
   },
   {
     date: "2026-09-15",
     "title": "ReLIFE",
+    "type": "TV番剧",
+    "season": [
+      "TV 本篇(2016)",
+      "OVA 完结篇(2018)"
+    ],
     "heroine": "日代千鹤",
     "cv": "茅野爱衣"
   },
   {
     date: "2026-09-15",
     "title": "Clannad",
+    "type": "TV番剧 + 剧场版",
+    "season": [
+      "TV 第1季(2007)",
+      "TV 第2季 After Story(2008)",
+      "剧场版(2007)",
+      "OVA Tomoyo篇(2008)",
+      "OVA Kyou篇(2009)"
+    ],
     "heroine": "古河渚",
     "cv": "中原麻衣"
   },
   {
     date: "2026-09-15",
     "title": "莉可丽丝",
-    "season": "已出到第1季",
+    "type": "TV番剧",
+    "season": [
+      "TV 第1季(2022)"
+    ],
     "heroine": "锦木千束、井上泷奈",
     "cv": "安济知佳、若山诗音"
   },
   {
     date: "2026-09-15",
     "title": "三坪房间的侵略者",
+    "type": "TV番剧",
     "heroine": "笠置静香、东本愿早苗、仓野奇莉华、虹野由莉佳、提亚蜜思林、露丝卡妮亚、樱庭晴海",
     "cv": "洲崎绫、铃木绘理、田泽茉纯、大森日雅、长绳麻理亚、早见沙织、高本惠"
   },
   {
     date: "2026-09-15",
     "title": "孤独摇滚",
-    "season": "已出到第1季",
+    "type": "TV番剧",
+    "season": [
+      "TV 第1季(2022)"
+    ],
     "heroine": "后藤一里",
     "cv": "青山吉能"
   },
   {
     date: "2026-09-15",
     "title": "知晓天空之蓝的人啊",
+    "type": "剧场版电影",
     "heroine": "相生葵",
     "cv": "若山诗音"
   },
   {
     date: "2026-09-15",
     "title": "心灵想要大声呼喊",
+    "type": "剧场版电影",
     "heroine": "成濑顺",
     "cv": "水濑祈"
   },
   {
     date: "2026-09-15",
     "title": "重启咲良田",
+    "type": "TV番剧",
     "heroine": "春埼美空",
     "cv": "花泽香菜"
   },
   {
     date: "2026-09-15",
     "title": "弹丸论破",
+    "type": "TV番剧",
+    "season": [
+      "TV《希望的学园与绝望的高中生》(2013)",
+      "TV 弹丸论破3 未来篇(2016)",
+      "TV 弹丸论破3 绝望篇(2016)"
+    ],
     "heroine": "苗木困、雾切响子、七海千秋、赤松枫、江之岛盾子",
     "cv": "内田彩、日笠阳子、花泽香菜、神田沙也加、丰口惠"
   },
   {
     date: "2026-09-15",
     "title": "Angel Beats!",
+    "type": "TV番剧",
+    "season": [
+      "TV 本篇(2010)",
+      "OVA SS(2015)"
+    ],
     "heroine": "立华奏",
     "cv": "花泽香菜"
   },
   {
     date: "2026-09-15",
     "title": "樱花庄的宠物女孩",
+    "type": "TV番剧",
     "heroine": "椎名真白、青山七海",
     "cv": "茅野爱衣、中津真莉子"
   },
   {
     date: "2026-09-15",
     "title": "游戏人生",
-    "season": "TV+剧场版已完结",
+    "type": "TV番剧 + 剧场版",
+    "season": [
+      "TV 第1季(2014)",
+      "剧场版 ZERO(2017·前传)"
+    ],
     "heroine": "白",
     "cv": "茅野爱衣"
   },
   {
     date: "2026-09-15",
     "title": "铃芽之旅",
+    "type": "剧场版电影",
     "heroine": "岩护铃芽",
     "cv": "原菜乃华"
   },
   {
     date: "2026-09-15",
     "title": "少女终末旅行",
+    "type": "TV番剧",
     "heroine": "千户、尤莉",
     "cv": "水濑祈、久保由利香"
   },
   {
     date: "2026-09-15",
     "title": "虚构推理",
-    "season": "已出到第2季",
+    "type": "TV番剧",
+    "season": [
+      "TV 第1季(2020)",
+      "TV 第2季(2023)"
+    ],
     "heroine": "岩永琴子",
     "cv": "鬼头明里"
   },
   {
     date: "2026-09-15",
     "title": "冰属性男子和酷酷女同事",
+    "type": "TV番剧",
     "heroine": "冬月",
     "cv": "石川由依"
   },
   {
     date: "2026-09-15",
     "title": "可塑性记忆",
+    "type": "TV番剧",
     "heroine": "艾拉",
     "cv": "雨宫天"
   },
   {
     date: "2026-09-15",
     "title": "某科学的一方通行",
+    "type": "TV番剧",
+    "season": [
+      "TV 单季(2019)"
+    ],
     "heroine": "最终之作",
     "cv": "日高里菜"
   },
   {
     date: "2026-09-15",
     "title": "我女友与青梅竹马的惨烈修罗场",
+    "type": "TV番剧",
     "heroine": "春咲千和、夏川真凉、秋筱姬香、冬海爱衣",
     "cv": "丰崎爱生、斋藤千和、金元寿子、茅野爱衣"
   },
   {
     date: "2026-09-15",
     "title": "杀戮的天使",
+    "type": "TV番剧",
     "heroine": "瑞吉儿·加德纳",
     "cv": "千菅春香"
   },
   {
     date: "2026-09-15",
     "title": "式守同学不只可爱而已",
+    "type": "TV番剧",
+    "season": [
+      "TV 第1季(2022)",
+      "TV 第2季(2023)"
+    ],
     "heroine": "式守都",
     "cv": "大西沙织"
   },
   {
     date: "2026-09-15",
     "title": "玉子市场",
+    "type": "TV番剧 + 剧场版",
+    "season": [
+      "TV 单季(2013)",
+      "剧场版《玉子爱情故事》(2014)"
+    ],
     "heroine": "北白川玉子",
     "cv": "洲崎绫"
   },
   {
     date: "2026-09-15",
     "title": "未确认进行式",
+    "type": "TV番剧",
     "heroine": "夜之森小红、三峰真白",
     "cv": "照井春佳、吉田有里"
   },
   {
     date: "2026-09-15",
     "title": "跃动青春",
-    "season": "已出到第1季",
+    "type": "TV番剧",
+    "season": [
+      "TV 第1季(2023)"
+    ],
     "heroine": "岩仓美津未",
     "cv": "黑泽朋世"
   },
   {
     date: "2026-09-15",
     "title": "从零开始的异世界生活",
-    "season": "已出到第4季",
+    "type": "TV番剧",
+    "season": [
+      "TV 第1季(2016)",
+      "OVA Memory Snow(2018)",
+      "OVA 冰结之绊(2019)",
+      "TV 第2季(2020-2021)",
+      "TV 第3季(2024-2025)",
+      "TV 第4季(2026·已完结)"
+    ],
     "heroine": "爱蜜莉雅、蕾姆",
     "cv": "高桥李依、水濑祈"
   },
   {
     date: "2026-09-15",
     "title": "夏日重现",
+    "type": "TV番剧",
     "heroine": "小舟潮、小舟澪",
     "cv": "永濑安奈、白砂沙帆"
   },
   {
     date: "2026-09-15",
     "title": "我推的孩子",
-    "season": "已出到第3季",
+    "type": "TV番剧",
+    "season": [
+      "TV 第1季(2023)",
+      "TV 第2季(2024)",
+      "TV 第3季(2026-03·完结)"
+    ],
     "heroine": "星野爱、星野露比、黑川茜",
     "cv": "高桥李依、伊驹百合绘、石见舞菜香"
   },
   {
     date: "2026-09-15",
     "title": "继母的拖油瓶是我的前女友",
+    "type": "TV番剧",
     "heroine": "伊理户结女",
     "cv": "日高里菜"
   },
   {
     date: "2026-09-15",
     "title": "缘之空",
+    "type": "OVA",
     "heroine": "春日野穹、天女目瑛、依媛奈绪、渚一叶",
     "cv": "田口宏子、阪田佳代、猪口有佳、小野凉子"
   },
   {
     date: "2026-09-15",
     "title": "间谍教室",
-    "season": "已出到第2季",
+    "type": "TV番剧",
+    "season": [
+      "TV 第1季(2023)",
+      "TV 第2季(2024)"
+    ],
     "heroine": "百合、格蕾特、席薇亚、莫妮卡、缇雅、莎拉、安妮特、爱尔娜",
     "cv": "雨宫天、伊藤美来、东山奈央、悠木碧、上坂堇、佐仓绫音、楠木灯、水濑祈"
   },
   {
     date: "2026-09-15",
     "title": "未来日记",
+    "type": "TV番剧 + 剧场版",
+    "season": [
+      "TV 本篇(2011)",
+      "剧场版 REDIAL(2013)"
+    ],
     "heroine": "我妻由乃",
     "cv": "村田知沙"
   },
   {
     date: "2026-09-15",
     "title": "BanGDream!It’sMyGO!!!!!",
-    "season": "已出到第1季",
+    "type": "TV番剧",
+    "season": [
+      "TV 第1季(2023)"
+    ],
     "heroine": "高松灯、千早爱音、要乐奈、长崎爽世、椎名立希",
     "cv": "羊宫妃那、立石凛、青木阳菜、小日向美香、林鼓子"
   },
   {
     date: "2026-09-15",
     "title": "赌博默示录",
+    "type": "TV番剧",
+    "season": [
+      "TV《逆境无赖开司》(2007)",
+      "TV 第2季《破戒录篇》(2011)"
+    ],
     "heroine": "伊藤开司",
     "cv": "荻原圣人"
   },
   {
     date: "2026-09-15",
     "title": "我内心的糟糕念头",
+    "type": "TV番剧",
+    "season": [
+      "TV 第1季(2023)",
+      "TV 第2季(2024)"
+    ],
     "heroine": "山田杏奈",
     "cv": "羊宫妃那"
   },
   {
     date: "2026-09-15",
     "title": "狂赌之渊",
+    "type": "TV番剧",
+    "season": [
+      "TV 第1季(2017)",
+      "TV 第2季(2019)"
+    ],
     "heroine": "蛇喰梦子",
     "cv": "早见沙织"
   },
   {
     date: "2026-09-15",
     "title": "关于我在无意间被隔壁的天使变成废柴这件事",
-    "season": "已出到第2季",
+    "type": "TV番剧",
+    "season": [
+      "TV 第1季(2023)",
+      "TV 第2季(2025)"
+    ],
     "heroine": "椎名真昼",
     "cv": "石见舞菜香"
   },
   {
     date: "2026-09-15",
     "title": "东京喰种",
+    "type": "TV番剧",
+    "season": [
+      "TV 第1季(2014)",
+      "TV 第2季√A(2015)",
+      "TV 第3季 re(2018)",
+      "TV 第4季 re 第2期(2018)",
+      "OVA JACK(2015)",
+      "OVA PINTO(2015)"
+    ],
     "heroine": "雾嶋董香",
     "cv": "雨宫天"
   },
   {
     date: "2026-09-15",
     "title": "家有女友",
+    "type": "TV番剧",
     "heroine": "橘瑠衣",
     "cv": "内田真礼"
   },
   {
     date: "2026-09-15",
     "title": "链锯人",
-    "season": "已出到第1季（蕾塞篇电影已上）",
+    "type": "TV番剧 + 剧场版",
+    "season": [
+      "TV 第1季(2022)",
+      "剧场版《蕾塞篇》(2024)"
+    ],
     "heroine": "淀治",
     "cv": "户谷菊之介"
   },
   {
     date: "2026-09-15",
     "title": "你想活出怎样的人生",
+    "type": "剧场版电影",
     "heroine": "牧真人",
     "cv": "山时聪真"
   },
   {
     date: "2026-09-15",
     "title": "我的鬼女孩",
+    "type": "TV番剧",
     "heroine": "紬",
     "cv": "富田美优"
   },
   {
     date: "2026-09-15",
     "title": "约会大作战",
-    "season": "已出到第5季",
+    "type": "TV番剧 + 剧场版",
+    "season": [
+      "TV 第1季(2013)",
+      "TV 第2季(2014)",
+      "剧场版《万由里裁决》(2015)",
+      "TV 第3季(2019)",
+      "外传剧场版 DATE·A·BULLET(2020)",
+      "TV 第4季(2022)",
+      "TV 第5季(2024)"
+    ],
     "heroine": "夜刀神十香、鸢一折纸、五河琴里、冰芽川四糸乃、时崎狂三、本条二亚、星宫六喰、镜野七罪、八舞耶俱矢、八舞夕弦、诱宵美九、崇宫澪",
     "cv": "井上麻里奈、富㭴美铃、竹达彩奈、野水伊织、真田麻美、生天目仁美、影山灯、真野步、内田真礼、布里德卡特、茅原实里、远藤绫"
   },
   {
     date: "2026-09-15",
     "title": "通往夏天的隧道，再见的出口",
+    "type": "剧场版电影",
     "heroine": "花城杏子",
     "cv": "饭丰万理江"
   },
   {
     date: "2026-09-15",
     "title": "不时用俄语小声说真心话的邻桌艾莉同学",
+    "type": "TV番剧",
     "heroine": "艾莉莎·米哈伊洛芙娜·九条、周防有希",
     "cv": "上坂堇、丸冈和佳奈"
   },
   {
     date: "2026-09-15",
     "title": "亚托莉我挚爱的时光",
+    "type": "TV番剧",
     "heroine": "亚托莉",
     "cv": "赤尾光"
   },
   {
     date: "2026-09-15",
     "title": "小市民系列",
+    "type": "TV番剧",
+    "season": [
+      "TV 第1季(2024)",
+      "TV 第2季(2025)"
+    ],
     "heroine": "小佐内由纪",
     "cv": "羊宫妃那"
   },
   {
     date: "2026-09-15",
     "title": "2.5次元的诱惑",
+    "type": "TV番剧",
+    "season": [
+      "TV 第1季(2024)"
+    ],
     "heroine": "天乃理理沙、橘美花莉",
     "cv": "前田佳织里、鬼头明里"
   },
   {
     date: "2026-09-15",
     "title": "身为VTuber的我因为忘记关台而成了传说",
+    "type": "TV番剧",
     "heroine": "心音淡雪",
     "cv": "佐仓绫音"
   },
   {
     date: "2026-09-15",
     "title": "百变的七仓同学",
+    "type": "TV番剧",
     "heroine": "七仓凛",
     "cv": "早见沙织"
   },
   {
     date: "2026-09-15",
     "title": "义妹生活",
+    "type": "TV番剧",
     "heroine": "绫濑沙季",
     "cv": "中岛由贵"
   },
   {
     date: "2026-09-15",
     "title": "在下坂本，有何贵干",
+    "type": "TV番剧",
     "heroine": "坂本",
     "cv": "绿川光"
   },
   {
     date: "2026-09-15",
     "title": "葬送的芙莉莲",
-    "season": "已出到第2季",
+    "type": "TV番剧",
+    "season": [
+      "TV 第1季(2023-2024)",
+      "TV 第2季(2026-01~03)"
+    ],
     "heroine": "芙莉莲",
     "cv": "种崎敦美"
   },
   {
     date: "2026-09-15",
     "title": "死亡笔记",
+    "type": "TV番剧",
+    "season": [
+      "TV 全37话(2006-2007)",
+      "总集篇 Relight 1(2007)",
+      "总集篇 Relight 2(2008)"
+    ],
     "heroine": "弥海砂",
     "cv": "平野绫"
   },
   {
     date: "2026-09-15",
     "title": "替身 (Another)",
+    "type": "TV番剧",
     "heroine": "见崎鸣",
     "cv": "高深奈津美"
   },
   {
     date: "2026-09-15",
     "title": "全员恶玉",
+    "type": "TV番剧",
     "heroine": "欺诈师",
     "cv": "黑泽朋世"
   },
   {
     date: "2026-09-15",
     "title": "超时空辉夜姬",
+    "type": "TV番剧",
     "heroine": "辉夜、酒寄彩叶、月见八千代",
     "cv": "夏吉优子、永濑安奈、早见沙织"
   },
   {
     date: "2026-09-15",
     "title": "罪恶王冠",
+    "type": "TV番剧",
     "heroine": "楪祈、校条祭",
     "cv": "茅野爱衣、嶋村侑"
   },
   {
     date: "2026-09-15",
     "title": "契约之吻",
+    "type": "TV番剧",
     "heroine": "木更、夕桐绫乃、沙朗 霍莉格雷尔、绪方环奈",
     "cv": "会泽纱弥、Lynn、大久保瑠美、鬼头明里"
   },
   {
     date: "2026-09-15",
     "title": "达尔文游戏",
+    "type": "TV番剧",
     "heroine": "狩野朱歌",
     "cv": "上田丽奈"
   },
   {
     date: "2026-09-15",
     "title": "来自新世界",
+    "type": "TV番剧",
     "heroine": "渡边早季",
     "cv": "种田梨沙、远藤绫"
   },
   {
     date: "2026-09-15",
     "title": "86-不存在的战区",
+    "type": "TV番剧",
+    "season": [
+      "TV 第1季(2021·分两章)"
+    ],
     "heroine": "芙拉蒂蕾娜·米利杰",
     "cv": "长谷川育美"
   },
   {
     date: "2026-09-15",
     "title": "靠死亡游戏混饭吃",
+    "type": "TV番剧",
     "heroine": "幽鬼",
     "cv": "三浦千幸"
   },
   {
     date: "2026-09-15",
     "title": "反叛的鲁鲁修",
-    "season": "R1、R2、Rozé 篇已完结",
+    "type": "TV番剧 + 剧场版",
+    "season": [
+      "TV R1(2006-2007)",
+      "TV R2(2008)",
+      "剧场版 三部曲(2017-2018·总集篇)",
+      "TV Rozé of the Recapture(2024)"
+    ],
     "heroine": "C.C",
     "cv": "尤加奈"
   },
   {
     date: "2026-09-15",
     "title": "约定的梦幻岛",
+    "type": "TV番剧",
+    "season": [
+      "TV 第1季(2019)",
+      "TV 第2季(2021)"
+    ],
     "heroine": "艾玛",
     "cv": "诸星堇"
   },
   {
     date: "2026-10-19",
     "title": "名侦探柯南",
+    "type": "TV番剧 + 剧场版",
+    "season": [
+      "TV 连载中(1996–·1000+集)",
+      "剧场版 29 部(1997–2026·最新 M29《高速公路的堕天使》2026-04)"
+    ],
     "heroine": "毛利兰、灰原哀",
-    "cv": "山崎和佳奈、林原惠美",
-    "season": "TV 连载中（已播出 1000+ 集）"
-  }
+    "cv": "山崎和佳奈、林原惠美"
+  },
 ];
 
 // 看过的小说记录：title 书名 / author 作者(可选) / wiki 维基链接(可选,留空自动生成中文维基)
@@ -2410,14 +2716,14 @@ function renderAnime(){
     <article class="acard${cover ? " has-cover" : ""}" data-title="${a.title||""}" data-pet-line="「${escAttr(a.title)}」也是主人喜欢的番剧呢～">
       ${cover ? `<div class="acard-bg" style="background-image:url('${cover}')"></div><div class="acard-shade"></div>` : ""}
       <div class="acard-top">
-        <span class="acard-kind">番剧</span>
+        <span class="acard-kind${a.type && a.type.length > 6 ? " long" : ""}">${a.type || "番剧"}</span>
         <a class="acard-wiki" href="${wikiUrl(a,"title","anime")}" target="_blank" rel="noopener" title="在维基百科查看">📖</a>
       </div>
       <div class="acard-main">
         <h3>${a.title||""}</h3>
         ${a.heroine ? `<div class="arow"><span class="ak">女主角</span><span class="aval">${a.heroine}</span></div>` : ""}
         ${a.cv ? `<div class="arow"><span class="ak">声优/演员</span><span class="aval">${a.cv}</span></div>` : ""}
-        ${a.season ? `<div class="arow season-row"><span class="ak">已出季度</span><span class="aval">${a.season}</span></div>` : ""}
+        ${a.season && a.season.length ? `<div class="arow season-row"><span class="ak">已出季度</span><span class="season-list">${a.season.map(s => `<span class="chip">${s}</span>`).join("")}</span></div>` : ""}
         ${a.date ? `<div class="upd">📅 上传于 ${fmtDate(a.date)}</div>` : ""}
       </div>
     </article>`;
