@@ -11,7 +11,7 @@
  * 请以合法、正版的平台/社区为主。
  * ========================================================================== */
 window.HUB_DATA = {
-  updated: "2026-10-19",
+  updated: "2026-10-22",
 
   // 全网热榜：参考 https://top.open2hub.com 的聚合形式，按平台分组展示热门标题
   // 快照日期见 updated；非实时数据，标题均为各平台真实热门；点击跳对应平台搜索页
@@ -218,7 +218,8 @@ window.HUB_DATA = {
         { title: "约会大作战", url: "https://bangumi.tv/subject_search/约会大作战", platform: "续作", tags: ["最终作"], desc: "F Last Date 最终作确认制作（约 2026 末/2027 初）。" },
         { title: "虚构推理", url: "https://bangumi.tv/subject_search/虚构推理", platform: "续作", tags: ["S3未官宣"], desc: "S3 暂未官宣（关注中）。" },
         { title: "关于我在无意间被隔壁的天使变成废柴这件事", url: "https://bangumi.tv/subject_search/关于我在无意间被隔壁的天使变成废柴这件事", platform: "续作", tags: ["S3未定"], desc: "S3 未定（约 2027，关注中）。" },
-        { title: "总之就是非常可爱", url: "https://bangumi.tv/subject_search/总之就是非常可爱", platform: "续作", tags: ["传闻"], desc: "S3 仅传闻，未官宣（关注中）。" }
+        { title: "总之就是非常可爱", url: "https://bangumi.tv/subject_search/总之就是非常可爱", platform: "续作", tags: ["传闻"], desc: "S3 仅传闻，未官宣（关注中）。" },
+        { title: "只有我不在的街道", url: "https://bangumi.tv/subject_search/只有我不在的街道", platform: "已完结", tags: ["已看完"], desc: "女主 片桐爱梨，已完结暂无续作。" }
       ]
     },
   ]
