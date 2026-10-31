@@ -11,7 +11,7 @@
  * 请以合法、正版的平台/社区为主。
  * ========================================================================== */
 window.HUB_DATA = {
-  updated: "2026-10-29",
+  updated: "2026-10-31",
 
   // 全网热榜：参考 https://top.open2hub.com 的聚合形式，按平台分组展示热门标题
   // 快照日期见 updated；非实时数据，标题均为各平台真实热门；点击跳对应平台搜索页
@@ -194,31 +194,31 @@ window.HUB_DATA = {
       icon: "💻",
       desc: "站长每周从 GitHub 精选的热门开源项目：游戏引擎 / 二次元动漫工具 / 视觉小说与推理文字冒险。每周自动刷新。",
       items: [
-        // —— 游戏 ——
-        { title: "godotengine/godot", url: "https://github.com/godotengine/godot", platform: "GitHub", tags: ["游戏","引擎"], desc: "Godot 跨平台 2D/3D 游戏引擎，开源免费，社区生态活跃。", hot: true },
-        { title: "bevyengine/bevy", url: "https://github.com/bevyengine/bevy", platform: "GitHub", tags: ["游戏","Rust"], desc: "用 Rust 写的现代化数据驱动游戏引擎，ECS 架构清爽。" },
-        { title: "raysan5/raylib", url: "https://github.com/raysan5/raylib", platform: "GitHub", tags: ["游戏","C"], desc: "极简易用的游戏编程库，适合入门与原型开发。" },
+        // —— 游戏（引擎 / 开发工具）——
+        { title: "godotengine/godot", url: "https://github.com/godotengine/godot", platform: "GitHub", tags: ["游戏","引擎"], desc: "Godot 跨平台 2D/3D 游戏引擎，开源免费，4.x 持续迭代、社区活跃。", hot: true },
+        { title: "bevyengine/bevy", url: "https://github.com/bevyengine/bevy", platform: "GitHub", tags: ["游戏","Rust"], desc: "用 Rust 写的现代化数据驱动游戏引擎，ECS 架构清爽、性能出色。", hot: true },
+        { title: "raysan5/raylib", url: "https://github.com/raysan5/raylib", platform: "GitHub", tags: ["游戏","C"], desc: "极简易用的游戏编程库，适合入门与原型开发，支持多平台。" },
         { title: "4ian/GDevelop", url: "https://github.com/4ian/GDevelop", platform: "GitHub", tags: ["游戏","无代码"], desc: "免编程的跨平台 2D/3D 游戏引擎，拖拽就能做游戏。" },
-        { title: "kitao/pyxel", url: "https://github.com/kitao/pyxel", platform: "GitHub", tags: ["游戏","Python","像素"], desc: "Python 复古像素风游戏引擎，做 8-bit 风格小游戏很香。" },
+        { title: "BabylonJS/Babylon.js", url: "https://github.com/BabylonJS/Babylon.js", platform: "GitHub", tags: ["游戏","Web","3D"], desc: "强大的 Web 3D / 游戏渲染引擎，基于 WebGL / WebGPU。" },
         { title: "OpenRA/OpenRA", url: "https://github.com/OpenRA/OpenRA", platform: "GitHub", tags: ["游戏","RTS"], desc: "开源即时战略引擎，重制红警 / 泰伯利亚等经典。" },
+        { title: "luanti-org/luanti", url: "https://github.com/luanti-org/luanti", platform: "GitHub", tags: ["游戏","沙盒","体素"], desc: "开源体素游戏创作平台（原 Minetest），MOD 与造物极易上手。" },
         // —— 二次元 / 动漫 ——
-        { title: "open-ani/animeko", url: "https://github.com/open-ani/animeko", platform: "GitHub", tags: ["二次元","追番"], desc: "一站式弹幕追番平台，云收藏同步 Bangumi，多端可用。", hot: true },
-        { title: "bloc97/Anime4K", url: "https://github.com/bloc97/Anime4K", platform: "GitHub", tags: ["二次元","超分"], desc: "动漫视频实时超分辨率放大，画质提升明显。", hot: true },
+        { title: "Predidit/Kazumi", url: "https://github.com/Predidit/Kazumi", platform: "GitHub", tags: ["二次元","追番","弹幕"], desc: "自定义规则番剧采集 APP，支持在线看、弹幕与实时超分，多端可用。", hot: true },
+        { title: "mihonapp/mihon", url: "https://github.com/mihonapp/mihon", platform: "GitHub", tags: ["二次元","漫画"], desc: "免费开源安卓漫画阅读器（Tachiyomi 继承者），扩展源丰富。" },
+        { title: "open-ani/animeko", url: "https://github.com/open-ani/animeko", platform: "GitHub", tags: ["二次元","追番","弹幕"], desc: "一站式弹幕追番平台，云收藏同步 Bangumi，离线缓存多端可用。", hot: true },
+        { title: "bloc97/Anime4K", url: "https://github.com/bloc97/Anime4K", platform: "GitHub", tags: ["二次元","超分"], desc: "动漫视频实时超分辨率放大，画质提升明显的经典方案。", hot: true },
         { title: "AaronFeng753/Waifu2x-Extension-GUI", url: "https://github.com/AaronFeng753/Waifu2x-Extension-GUI", platform: "GitHub", tags: ["二次元","超分","图片"], desc: "图片 / 视频 / GIF 超分放大与帧插值一体化 GUI。" },
-        { title: "HIllya51/LunaTranslator", url: "https://github.com/HIllya51/LunaTranslator", platform: "GitHub", tags: ["二次元","Gal","翻译"], desc: "视觉小说 / Galgame 实时机翻工具，生肉党福音。", hot: true },
-        { title: "pystardust/ani-cli", url: "https://github.com/pystardust/ani-cli", platform: "GitHub", tags: ["二次元","追番","CLI"], desc: "命令行看番神器，终端里直接搜番播番。" },
         { title: "zyddnys/manga-image-translator", url: "https://github.com/zyddnys/manga-image-translator", platform: "GitHub", tags: ["二次元","漫画","翻译"], desc: "一键翻译漫画 / 图片内文字，汉化利器。" },
-        { title: "miru-project/miru-app", url: "https://github.com/miru-project/miru-app", platform: "GitHub", tags: ["二次元","聚合"], desc: "开源免费的视频 / 漫画 / 小说聚合 app，支持扩展源。" },
-        { title: "shinyflvre/Mate-Engine", url: "https://github.com/shinyflvre/Mate-Engine", platform: "GitHub", tags: ["二次元","桌宠"], desc: "开源桌面伴侣 / 桌宠引擎，支持自定义 VRM 模型。" },
+        { title: "HIllya51/LunaTranslator", url: "https://github.com/HIllya51/LunaTranslator", platform: "GitHub", tags: ["二次元","Gal","翻译"], desc: "视觉小说 / Galgame 实时机翻工具，生肉党福音。", hot: true },
+        { title: "shinyflvre/Mate-Engine", url: "https://github.com/shinyflvre/Mate-Engine", platform: "GitHub", tags: ["二次元","桌宠"], desc: "开源桌面伴侣 / 桌宠引擎，轻量且支持自定义 VRM 模型。" },
         // —— 视觉小说 / 推理悬疑 ——
         { title: "renpy/renpy", url: "https://github.com/renpy/renpy", platform: "GitHub", tags: ["视觉小说","引擎"], desc: "Ren'Py 视觉小说引擎，做 ADV / Gal 最主流的选择。", hot: true },
         { title: "OpenWebGAL/WebGAL", url: "https://github.com/OpenWebGAL/WebGAL", platform: "GitHub", tags: ["视觉小说","网页"], desc: "全新网页端视觉小说引擎，浏览器里就能跑。", hot: true },
         { title: "dialogic-godot/dialogic", url: "https://github.com/dialogic-godot/dialogic", platform: "GitHub", tags: ["视觉小说","Godot"], desc: "Godot 的对话 / 视觉小说 / RPG 创作插件。" },
-        { title: "Monogatari/Monogatari", url: "https://github.com/Monogatari/Monogatari", platform: "GitHub", tags: ["视觉小说","网页"], desc: "轻量网页视觉小说引擎，把 VN 搬到 Web。" },
-        { title: "RimoChan/Librian", url: "https://github.com/RimoChan/Librian", platform: "GitHub", tags: ["视觉小说","Gal"], desc: "简明强大的 Galgame / 视觉小说引擎。" },
+        { title: "ganelson/inform", url: "https://github.com/ganelson/inform", platform: "GitHub", tags: ["推理","互动小说"], desc: "Inform 7 互动小说编程语言，写文字冒险 / 推理游戏的利器。" },
         { title: "zenstory-ai/novel-to-game", url: "https://github.com/zenstory-ai/novel-to-game", platform: "GitHub", tags: ["推理","小说改编"], desc: "AI 把小说改编成可玩游戏的 agent 技能集（含证据 QA）。" },
-        { title: "ganelson/inform", url: "https://github.com/ganelson/inform", platform: "GitHub", tags: ["推理","互动小说"], desc: "Inform 7 互动小说编程语言，写文字冒险 / 推理游戏。" },
-        { title: "hanmin0822/MisakaTranslator", url: "https://github.com/hanmin0822/MisakaTranslator", platform: "GitHub", tags: ["视觉小说","翻译"], desc: "御坂翻译器，Gal / 文字游戏 / 漫画多语种实时机翻。" }
+        { title: "RimoChan/Librian", url: "https://github.com/RimoChan/Librian", platform: "GitHub", tags: ["视觉小说","Gal"], desc: "简明强大的 Galgame / 视觉小说引擎。" },
+        { title: "Monogatari/Monogatari", url: "https://github.com/Monogatari/Monogatari", platform: "GitHub", tags: ["视觉小说","网页"], desc: "轻量网页视觉小说引擎，把 VN 搬到 Web。" }
       ]
     },
     {
