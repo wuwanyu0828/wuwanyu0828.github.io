@@ -251,8 +251,7 @@ window.HUB_DATA = {
         { title: "约会大作战", url: "https://bangumi.tv/subject_search/约会大作战", platform: "续作", tags: ["最终作"], desc: "F Last Date 最终作确认制作（约 2026 末/2027 初）。" },
         { title: "虚构推理", url: "https://bangumi.tv/subject_search/虚构推理", platform: "续作", tags: ["S3未官宣"], desc: "S3 暂未官宣（关注中）。" },
         { title: "关于我在无意间被隔壁的天使变成废柴这件事", url: "https://bangumi.tv/subject_search/关于我在无意间被隔壁的天使变成废柴这件事", platform: "续作", tags: ["S3未定"], desc: "S3 未定（约 2027，关注中）。" },
-        { title: "总之就是非常可爱", url: "https://bangumi.tv/subject_search/总之就是非常可爱", platform: "续作", tags: ["传闻"], desc: "S3 仅传闻，未官宣（关注中）。" },
-        { title: "影之刃零", url: "https://www.youtube.com/watch?v=lxd223HeNag&list=PLB6iI1EDLMJ0", platform: "第一章·实况", tags: ["动作游戏","无解说","续作更新中"], desc: "《影之刃零》第一章实况 P1–P5，后续章节持续更新。" }
+        { title: "总之就是非常可爱", url: "https://bangumi.tv/subject_search/总之就是非常可爱", platform: "续作", tags: ["传闻"], desc: "S3 仅传闻，未官宣（关注中）。" }
       ]
     },
   ]
