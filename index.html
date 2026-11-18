@@ -577,6 +577,38 @@
   .chat-ai-on{flex-direction:row !important;align-items:center;gap:6px !important;color:var(--ink) !important}
   .chat-ai-tip{font-size:10.5px;color:var(--muted);line-height:1.5}
 
+  /* ============ 追番续作速览（从导航页搬来） ============ */
+  .uqlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px;padding-bottom:24px}
+  .uqcard{
+    background:var(--panel);border:1px solid var(--panel-brd);border-radius:var(--radius);
+    padding:13px 15px;box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s;
+    display:flex;align-items:flex-start;gap:12px;
+  }
+  .uqcard:hover{transform:translateY(-2px);box-shadow:var(--shadow-hi)}
+  .uqmain{flex:1;min-width:0}
+  .uqtop{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+  .uqtop h3{font-size:14.5px;font-weight:700;color:var(--ink);line-height:1.4}
+  .uqcard:hover .uqtop h3{color:var(--brand)}
+  .uqkind{
+    flex:none;font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:4px;
+    color:var(--brand);background:var(--brand-soft);
+  }
+  .uqkind.movie{color:#e5623c;background:rgba(229,98,60,.12)}
+  .uqhot{flex:none;font-size:10px;font-weight:700;color:#fff;
+    background:linear-gradient(135deg,#ff6a88,#ff9966);padding:1px 6px;border-radius:99px}
+  .uqdesc{font-size:12.5px;color:var(--ink-2);margin-top:5px;line-height:1.55}
+  .uqtags{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}
+  .uqtags .chip{font-size:10.5px;padding:2px 8px}
+  .uqgo{
+    flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;
+    border:1px solid var(--panel-brd);background:var(--page);color:var(--brand);
+    font-size:14px;transition:.16s;text-decoration:none;
+  }
+  .uqcard:hover .uqgo{border-color:var(--brand);background:var(--brand);color:#fff}
+  .uqnote{font-size:12px;color:var(--muted);line-height:1.7;margin:2px 0 14px;padding:8px 12px;
+    border-left:3px solid var(--brand-soft);background:var(--brand-soft);border-radius:0 6px 6px 0}
+  @media(max-width:520px){ .uqlist{grid-template-columns:1fr} }
+
   /* ============ 语录摘抄（内嵌主页） ============ */
   .qcats{display:flex;gap:8px;overflow-x:auto;padding:0 22px 4px;scrollbar-width:none}
   .qcats::-webkit-scrollbar{display:none}
@@ -664,7 +696,6 @@
       <input id="q" type="search" placeholder="搜索项目 / 视频 / 番剧 / 小说…" autocomplete="off" />
     </div>
     <div class="acts">
-      <a class="icon-btn" href="hub.html" target="_blank" rel="noopener" title="二次元聚合导航" style="text-decoration:none;display:grid;place-items:center">🌐</a>
       <button class="icon-btn" id="themeToggle" title="切换昼 / 夜">🌙</button>
     </div>
   </div>
@@ -696,11 +727,11 @@
       <a class="cat" href="#projects">🎮 项目</a>
       <a class="cat" href="#videos">📺 视频</a>
       <a class="cat" href="#anime">📚 番剧</a>
+      <a class="cat" href="#anime-update">🆕 续作</a>
       <a class="cat" href="#novels">📖 小说</a>
       <a class="cat" href="#quotes">📖 语录</a>
       <a class="cat" href="#links">🔗 链接</a>
       <a class="cat" href="#bookmarks">📑 书签</a>
-      <a class="cat" href="hub.html" target="_blank" rel="noopener">🌐 导航</a>
     </nav>
 
     <section id="projects">
@@ -725,6 +756,15 @@
         <span class="sub">看过的番 / 剧 · 点 📖 查维基</span>
       </div>
       <div class="agrid" id="animeGrid"></div>
+    </section>
+
+    <section id="anime-update">
+      <div class="sec-head">
+        <h2>🆕 追番续作速览</h2>
+        <span class="sub">已看完的番 · 近期续作 / 新季动态</span>
+      </div>
+      <p class="uqnote">已看完的番近期有新一季 / 续作的动态一览（截至 2026-10，手工整理非实时）。已完结季度见上方「追番追剧记录」，点击卡片可去 Bangumi 查看词条。</p>
+      <div class="uqlist" id="animeUpdateGrid"></div>
     </section>
 
     <section id="novels">
@@ -770,10 +810,10 @@
         <a href="#projects">项目</a>
         <a href="#videos">视频</a>
         <a href="#anime">番剧</a>
+        <a href="#anime-update">续作</a>
         <a href="#novels">小说</a>
         <a href="#quotes">语录</a>
         <a href="#bookmarks">书签</a>
-        <a href="hub.html" target="_blank" rel="noopener">二次元导航</a>
         <a href="#top">回到顶部 ↑</a>
       </span>
     </footer>
@@ -1896,6 +1936,29 @@ const anime = [
   },
 ];
 
+// 追番续作速览：从原导航页搬来（已看完的番，近期续作 / 新季动态，手工整理非实时）
+// title 番名 / url 跳转 Bangumi 搜索 / platform 续作|剧场版 / tags 状态标签 / desc 一句话动态 / hot 可选
+const animeUpdates = [
+  { title: "葬送的芙莉莲", url: "https://bangumi.tv/subject_search/葬送的芙莉莲", platform: "续作", tags: ["S3官宣"], desc: "S3 已官宣（待播）。" },
+  { title: "我推的孩子", url: "https://bangumi.tv/subject_search/我推的孩子", platform: "续作", tags: ["Final定"], desc: "Final Season 已定。" },
+  { title: "小林家的龙女仆", url: "https://bangumi.tv/subject_search/小林家的龙女仆", platform: "续作", tags: ["S3定档"], desc: "S3 定档 2026 秋（10 月）。", hot: true },
+  { title: "某科学的超电磁炮", url: "https://bangumi.tv/subject_search/某科学的超电磁炮", platform: "续作", tags: ["S4定档"], desc: "S4 已定 2026。" },
+  { title: "跃动青春", url: "https://bangumi.tv/subject_search/跃动青春", platform: "续作", tags: ["S2定档"], desc: "S2 定档 2026-10。", hot: true },
+  { title: "2.5次元的诱惑", url: "https://bangumi.tv/subject_search/2.5次元的诱惑", platform: "续作", tags: ["S2定档"], desc: "S2 已定 2026。" },
+  { title: "五等分的新娘", url: "https://bangumi.tv/subject_search/五等分的新娘", platform: "续作", tags: ["新续作"], desc: "新续作《The Four Seasons》TV+OVA 已定（2026-05 公布）。" },
+  { title: "BanG Dream!It's MyGO!!!!!", url: "https://bangumi.tv/subject_search/BanG%20Dream", platform: "剧场版", tags: ["2026-10"], desc: "Ave Mujica 剧场版 prima aurora 定档 2026-10-16。" },
+  { title: "青春猪头少年", url: "https://bangumi.tv/subject_search/青春猪头少年", platform: "剧场版", tags: ["终章"], desc: "终章电影《Dear Friend》定档 2026-10-16。" },
+  { title: "反叛的鲁鲁修", url: "https://bangumi.tv/subject_search/反叛的鲁鲁修", platform: "续作", tags: ["新作官宣"], desc: "新作 Hoshioi no Aspar 官宣。" },
+  { title: "间谍过家家", url: "https://bangumi.tv/subject_search/间谍过家家", platform: "续作", tags: ["S4未定"], desc: "S3 已完结；S4 未定。" },
+  { title: "孤独摇滚", url: "https://bangumi.tv/subject_search/孤独摇滚", platform: "续作", tags: ["制作中"], desc: "S2 已定制作、暂无档期。" },
+  { title: "链锯人", url: "https://bangumi.tv/subject_search/链锯人", platform: "续作", tags: ["S2约2027"], desc: "S2/刺客篇确认制作（约 2027）。" },
+  { title: "莉可丽丝", url: "https://bangumi.tv/subject_search/莉可丽丝", platform: "剧场版", tags: ["制作中"], desc: "新作改为剧场版（非 TV S2）制作中。" },
+  { title: "约会大作战", url: "https://bangumi.tv/subject_search/约会大作战", platform: "续作", tags: ["最终作"], desc: "F Last Date 最终作确认制作（约 2026 末/2027 初）。" },
+  { title: "虚构推理", url: "https://bangumi.tv/subject_search/虚构推理", platform: "续作", tags: ["S3未官宣"], desc: "S3 暂未官宣（关注中）。" },
+  { title: "关于我在无意间被隔壁的天使变成废柴这件事", url: "https://bangumi.tv/subject_search/关于我在无意间被隔壁的天使变成废柴这件事", platform: "续作", tags: ["S3未定"], desc: "S3 未定（约 2027，关注中）。" },
+  { title: "总之就是非常可爱", url: "https://bangumi.tv/subject_search/总之就是非常可爱", platform: "续作", tags: ["传闻"], desc: "S3 仅传闻，未官宣（关注中）。" }
+];
+
 // 看过的小说记录：title 书名 / author 作者(可选) / wiki 维基链接(可选,留空自动生成中文维基)
 const novels = [
   {
@@ -2831,6 +2894,29 @@ function renderNovels(){
 }
 renderAnime();
 renderNovels();
+
+// 追番续作速览：从原导航页搬来，数据写在上方 animeUpdates 数组
+function renderAnimeUpdates(){
+  const grid = document.getElementById("animeUpdateGrid");
+  if(!grid) return;
+  grid.innerHTML = animeUpdates.map(u => {
+    const movie = u.platform === "剧场版";
+    return `
+    <a class="uqcard" href="${u.url}" target="_blank" rel="noopener" data-title="${u.title}" data-pet-line="「${escAttr(u.title)}」有新动向啦～主人快去看！">
+      <div class="uqmain">
+        <div class="uqtop">
+          <h3>${u.title||""}</h3>
+          ${u.hot ? '<span class="uqhot">🔥 热门</span>' : ""}
+          <span class="uqkind${movie ? " movie" : ""}">${u.platform||"续作"}</span>
+        </div>
+        ${u.desc ? `<div class="uqdesc">${u.desc}</div>` : ""}
+        ${u.tags && u.tags.length ? `<div class="uqtags">${u.tags.map(t => `<span class="chip">${t}</span>`).join("")}</div>` : ""}
+      </div>
+      <span class="uqgo">↗</span>
+    </a>`;
+  }).join("");
+}
+renderAnimeUpdates();
 
 /* ---------- 音乐播放器：自建本地播放器 ----------
    曲目文件放 music/ 目录，清单由 music/playlist.json 描述：
