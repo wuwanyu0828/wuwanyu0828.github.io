@@ -763,7 +763,7 @@
         <h2>🆕 追番续作速览</h2>
         <span class="sub">已看完的番 · 近期续作 / 新季动态</span>
       </div>
-      <p class="uqnote">已看完的番近期有新一季 / 续作的动态一览（截至 2026-10，手工整理非实时）。已完结季度见上方「追番追剧记录」，点击卡片可去 Bangumi 查看词条。</p>
+      <p class="uqnote">已看完的番近期有新一季 / 续作的动态一览（截至 2026-11，手工整理非实时）。已完结季度见上方「追番追剧记录」，点击卡片可去 Bangumi 查看词条。</p>
       <div class="uqlist" id="animeUpdateGrid"></div>
     </section>
 
@@ -1952,24 +1952,31 @@ const anime = [
 // 追番续作速览：从原导航页搬来（已看完的番，近期续作 / 新季动态，手工整理非实时）
 // title 番名 / url 跳转 Bangumi 搜索 / platform 续作|剧场版 / tags 状态标签 / desc 一句话动态 / hot 可选
 const animeUpdates = [
-  { title: "葬送的芙莉莲", url: "https://bangumi.tv/subject_search/葬送的芙莉莲", platform: "续作", tags: ["S3官宣"], desc: "S3 已官宣（待播）。" },
-  { title: "我推的孩子", url: "https://bangumi.tv/subject_search/我推的孩子", platform: "续作", tags: ["Final定"], desc: "Final Season 已定。" },
-  { title: "小林家的龙女仆", url: "https://bangumi.tv/subject_search/小林家的龙女仆", platform: "续作", tags: ["S3定档"], desc: "S3 定档 2026 秋（10 月）。", hot: true },
-  { title: "某科学的超电磁炮", url: "https://bangumi.tv/subject_search/某科学的超电磁炮", platform: "续作", tags: ["S4定档"], desc: "S4 已定 2026。" },
-  { title: "跃动青春", url: "https://bangumi.tv/subject_search/跃动青春", platform: "续作", tags: ["S2定档"], desc: "S2 定档 2026-10。", hot: true },
-  { title: "2.5次元的诱惑", url: "https://bangumi.tv/subject_search/2.5次元的诱惑", platform: "续作", tags: ["S2定档"], desc: "S2 已定 2026。" },
-  { title: "五等分的新娘", url: "https://bangumi.tv/subject_search/五等分的新娘", platform: "续作", tags: ["新续作"], desc: "新续作《The Four Seasons》TV+OVA 已定（2026-05 公布）。" },
-  { title: "BanG Dream!It's MyGO!!!!!", url: "https://bangumi.tv/subject_search/BanG%20Dream", platform: "剧场版", tags: ["2026-10"], desc: "Ave Mujica 剧场版 prima aurora 定档 2026-10-16。" },
-  { title: "青春猪头少年", url: "https://bangumi.tv/subject_search/青春猪头少年", platform: "剧场版", tags: ["终章"], desc: "终章电影《Dear Friend》定档 2026-10-16。" },
-  { title: "反叛的鲁鲁修", url: "https://bangumi.tv/subject_search/反叛的鲁鲁修", platform: "续作", tags: ["新作官宣"], desc: "新作 Hoshioi no Aspar 官宣。" },
-  { title: "间谍过家家", url: "https://bangumi.tv/subject_search/间谍过家家", platform: "续作", tags: ["S4未定"], desc: "S3 已完结；S4 未定。" },
-  { title: "孤独摇滚", url: "https://bangumi.tv/subject_search/孤独摇滚", platform: "续作", tags: ["制作中"], desc: "S2 已定制作、暂无档期。" },
-  { title: "链锯人", url: "https://bangumi.tv/subject_search/链锯人", platform: "续作", tags: ["S2约2027"], desc: "S2/刺客篇确认制作（约 2027）。" },
-  { title: "莉可丽丝", url: "https://bangumi.tv/subject_search/莉可丽丝", platform: "剧场版", tags: ["制作中"], desc: "新作改为剧场版（非 TV S2）制作中。" },
-  { title: "约会大作战", url: "https://bangumi.tv/subject_search/约会大作战", platform: "续作", tags: ["最终作"], desc: "F Last Date 最终作确认制作（约 2026 末/2027 初）。" },
-  { title: "虚构推理", url: "https://bangumi.tv/subject_search/虚构推理", platform: "续作", tags: ["S3未官宣"], desc: "S3 暂未官宣（关注中）。" },
-  { title: "关于我在无意间被隔壁的天使变成废柴这件事", url: "https://bangumi.tv/subject_search/关于我在无意间被隔壁的天使变成废柴这件事", platform: "续作", tags: ["S3未定"], desc: "S3 未定（约 2027，关注中）。" },
-  { title: "总之就是非常可爱", url: "https://bangumi.tv/subject_search/总之就是非常可爱", platform: "续作", tags: ["传闻"], desc: "S3 仅传闻，未官宣（关注中）。" }
+  { title: "青春猪头少年不会梦到兔女郎学姐", url: "https://bangumi.tv/subject_search/青春猪头少年不会梦到兔女郎学姐", platform: "剧场版", tags: ["完结篇", "2026-10"], desc: "完结篇《亲爱的朋友》2026年10月上映。" },
+  { title: "某科学的超电磁炮", url: "https://bangumi.tv/subject_search/某科学的超电磁炮", platform: "续作", tags: ["S4制作决定"], desc: "第4季制作决定，预计2026播出。" },
+  { title: "欢迎来到实力至上的教室", url: "https://bangumi.tv/subject_search/欢迎来到实力至上的教室", platform: "续作", tags: ["S5官宣", "2026秋"], desc: "第5季2026年6月官宣，秋季播出。" },
+  { title: "辉夜大小姐想让我告白", url: "https://bangumi.tv/subject_search/辉夜大小姐想让我告白", platform: "剧场版", tags: ["完结篇", "制作决定"], desc: "完全新作完结篇剧场版制作决定。" },
+  { title: "间谍过家家", url: "https://bangumi.tv/subject_search/间谍过家家", platform: "续作", tags: ["S4官宣", "2027"], desc: "S4与第2部剧场版官宣，2027上映。" },
+  { title: "小林家的龙女仆", url: "https://bangumi.tv/subject_search/小林家的龙女仆", platform: "剧场版", tags: ["剧场版", "2025-06"], desc: "剧场版《怕寂寞的龙》2025年6月上映。", hot: true },
+  { title: "动物狂想曲", url: "https://bangumi.tv/subject_search/动物狂想曲", platform: "续作", tags: ["最终季", "2026-03"], desc: "最终季Part2 2026年3月上线（完结）。" },
+  { title: "五等分的新娘", url: "https://bangumi.tv/subject_search/五等分的新娘", platform: "续作", tags: ["新作官宣", "2026-05"], desc: "《春夏秋冬》TV与新OVA 2026年5月官宣。" },
+  { title: "莉可丽丝", url: "https://bangumi.tv/subject_search/莉可丽丝", platform: "剧场版", tags: ["新作", "制作决定"], desc: "新作动画制作决定（形式未定）。" },
+  { title: "孤独摇滚", url: "https://bangumi.tv/subject_search/孤独摇滚", platform: "续作", tags: ["S2制作中", "2027剧场版"], desc: "S2制作中，剧场版前传2027上映。" },
+  { title: "跃动青春", url: "https://bangumi.tv/subject_search/跃动青春", platform: "续作", tags: ["S2定档", "2027-04"], desc: "第2季定档2027年4月。", hot: true },
+  { title: "从零开始的异世界生活", url: "https://bangumi.tv/subject_search/从零开始的异世界生活", platform: "续作", tags: ["S5官宣", "2026-11"], desc: "第5季制作决定2026年11月官宣。" },
+  { title: "我推的孩子", url: "https://bangumi.tv/subject_search/我推的孩子", platform: "续作", tags: ["最终季", "官宣"], desc: "第4期最终季2026年3月官宣。" },
+  { title: "BanGDream!It’sMyGO!!!!!", url: "https://bangumi.tv/subject_search/BanG%20Dream", platform: "剧场版", tags: ["AveMujica", "2026-10"], desc: "Ave Mujica续篇剧场版2026年10月上映。" },
+  { title: "我内心的糟糕念头", url: "https://bangumi.tv/subject_search/我内心的糟糕念头", platform: "续作", tags: ["S3定档", "2027-04"], desc: "第3季定档2027年4月。" },
+  { title: "关于我在无意间被隔壁的天使变成废柴这件事", url: "https://bangumi.tv/subject_search/关于我在无意间被隔壁的天使变成废柴这件事", platform: "续作", tags: ["S2已播", "2026-04"], desc: "第2季2026年4月播出。" },
+  { title: "链锯人", url: "https://bangumi.tv/subject_search/链锯人", platform: "剧场版", tags: ["蕾塞篇", "刺客篇"], desc: "《蕾塞篇》2025上映，刺客篇制作决定。" },
+  { title: "约会大作战", url: "https://bangumi.tv/subject_search/约会大作战", platform: "剧场版", tags: ["完结篇", "2027-03"], desc: "完结篇Last Date 2027年3月上映。" },
+  { title: "不时用俄语小声说真心话的邻桌艾莉同学", url: "https://bangumi.tv/subject_search/不时用俄语小声说真心话的邻桌艾莉同学", platform: "续作", tags: ["S2定档", "2027"], desc: "第2季定档2027年。" },
+  { title: "小市民系列", url: "https://bangumi.tv/subject_search/小市民系列", platform: "续作", tags: ["S2已播", "2025-04"], desc: "第2季2025年4月已播出。" },
+  { title: "2.5次元的诱惑", url: "https://bangumi.tv/subject_search/2.5次元的诱惑", platform: "续作", tags: ["S2已播", "2025-07"], desc: "第2季2025年7月已播出。" },
+  { title: "葬送的芙莉莲", url: "https://bangumi.tv/subject_search/葬送的芙莉莲", platform: "续作", tags: ["S3官宣", "2027-10"], desc: "S3黄金乡篇2027年10月播出。" },
+  { title: "靠死亡游戏混饭吃", url: "https://bangumi.tv/subject_search/靠死亡游戏混饭吃", platform: "剧场版", tags: ["剧场版", "2026-07"], desc: "剧场版2026年7月10日上映。" },
+  { title: "反叛的鲁鲁修", url: "https://bangumi.tv/subject_search/反叛的鲁鲁修", platform: "续作", tags: ["新作", "2027"], desc: "新作《逐星的阿斯帕尔》2027播出。" },
+  { title: "名侦探柯南", url: "https://bangumi.tv/subject_search/名侦探柯南", platform: "剧场版", tags: ["M30", "2027"], desc: "M30剧场版2027年春上映，TV连载中。" }
 ];
 
 // 看过的小说记录：title 书名 / author 作者(可选) / wiki 维基链接(可选,留空自动生成中文维基)
