@@ -599,6 +599,43 @@
   .mcard .m-num{font-size:12px;color:var(--muted)}
   .mcard .m-name{font-size:21px;font-weight:700;color:var(--brand);margin-top:5px;letter-spacing:2px}
 
+  /* ============ 语录分类卡片主题背景（文字仍用深色 / 浅色，保证清晰） ============ */
+  /* 月份雅称 · 淡樱花粉 */
+  .qboard[data-qcat="months"] .mcard{background:#FDEBF3;border-color:rgba(180,86,138,.18)}
+  .qboard[data-qcat="months"] .m-name{color:#C2185B}
+  /* 名家语录 · 羊皮纸米黄 */
+  .qboard[data-qcat="masters"] .qcard{background:#F8F1E0;border-color:rgba(138,109,47,.18)}
+  .qboard[data-qcat="masters"] .qcard::before{color:#B08A3E}
+  /* 动漫影视 · 梦幻淡紫 */
+  .qboard[data-qcat="anime"] .qcard{background:#F1ECFB;border-color:rgba(111,86,168,.18)}
+  .qboard[data-qcat="anime"] .qcard::before{color:#8E74C4}
+  /* 网络随笔 · 薄荷青绿 */
+  .qboard[data-qcat="net"] .qcard{background:#E7F6F1;border-color:rgba(46,139,120,.18)}
+  .qboard[data-qcat="net"] .qcard::before{color:#4FA893}
+  /* 心理学效应 · 理性淡蓝 */
+  .qboard[data-qcat="psych"] .qcard{background:#E8F2FC;border-color:rgba(58,111,168,.18)}
+  .qboard[data-qcat="psych"] .qcard::before{color:#6C9ED0}
+  /* 经典悖论 · 思辨灰紫 */
+  .qboard[data-qcat="paradox"] .qcard{background:#EDECF7;border-color:rgba(91,87,135,.18)}
+  .qboard[data-qcat="paradox"] .qcard::before{color:#8A86B8}
+  /* 世界名著 · 复古米棕 */
+  .qboard[data-qcat="classic"] .qcard{background:#F6EFE5;border-color:rgba(138,106,72,.18)}
+  .qboard[data-qcat="classic"] .qcard::before{color:#B08C63}
+  /* 音乐热评 · 柔粉紫 */
+  .qboard[data-qcat="music"] .qcard{background:#FCEBF2;border-color:rgba(180,82,126,.18)}
+  .qboard[data-qcat="music"] .qcard::before{color:#CE7FA2}
+
+  /* 夜间模式：对应深色调低饱和背景 */
+  [data-theme="dark"] .qboard[data-qcat="months"] .mcard{background:#3a2836;border-color:rgba(244,151,184,.22)}
+  [data-theme="dark"] .qboard[data-qcat="months"] .m-name{color:#f7a9c6}
+  [data-theme="dark"] .qboard[data-qcat="masters"] .qcard,
+  [data-theme="dark"] .qboard[data-qcat="classic"] .qcard{background:#37302a;border-color:rgba(255,227,168,.18)}
+  [data-theme="dark"] .qboard[data-qcat="anime"] .qcard,
+  [data-theme="dark"] .qboard[data-qcat="music"] .qcard{background:#332839;border-color:rgba(247,169,198,.2)}
+  [data-theme="dark"] .qboard[data-qcat="net"] .qcard{background:#203430;border-color:rgba(168,228,214,.18)}
+  [data-theme="dark"] .qboard[data-qcat="psych"] .qcard{background:#202e3d;border-color:rgba(124,196,242,.18)}
+  [data-theme="dark"] .qboard[data-qcat="paradox"] .qcard{background:#2c2b3a;border-color:rgba(180,176,220,.18)}
+
   /* ============ 模块折叠（点一下隐藏 / 再点显示） ============ */
   .sec-toggle{margin-left:14px;align-self:center;width:30px;height:30px;border-radius:8px;
     border:1px solid var(--panel-brd);background:var(--panel);color:var(--ink-2);cursor:pointer;
